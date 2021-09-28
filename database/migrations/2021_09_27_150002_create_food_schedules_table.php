@@ -15,8 +15,8 @@ class CreateFoodSchedulesTable extends Migration
     {
         Schema::create('food_schedules', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_user');
-            $table->integer('id_food');
+            $table->foreign('id_user')->references('id')->on('users');
+            $table->foreign('id_food')->references('id')->on('foods');
             $table->date('schedule_date');
             $table->timestamps();
         });

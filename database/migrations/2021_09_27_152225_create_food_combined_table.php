@@ -15,8 +15,8 @@ class CreateFoodCombinedTable extends Migration
     {
         Schema::create('food_combined', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_food');
-            $table->integer('id_food_material');
+            $table->foreign('id_food')->references('id')->on('foods');
+            $table->foreign('id_food_material')->references('id')->on('food_materials');
             $table->timestamps();
         });
     }
