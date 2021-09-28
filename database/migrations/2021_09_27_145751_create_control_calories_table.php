@@ -15,7 +15,7 @@ class CreateControlCaloriesTable extends Migration
     {
         Schema::create('control_calories', function (Blueprint $table) {
             $table->id();
-            $table->foreign('id_user')->references('id')->on('users');
+            $table->integer('id_user')->unsigned();
             $table->float('user_calory');
             $table->date('reminder_date');
             $table->timestamps();
