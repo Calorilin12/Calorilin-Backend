@@ -22,7 +22,7 @@ class UserController extends Controller
         $createUser->born = $input->born;
         $createUser->email = $input->email;
         $createUser->password = $input->password;
-        
+
         $input->validate([
             'image' => 'mimes:jpeg,png,jpg|max:2048'
         ]);
