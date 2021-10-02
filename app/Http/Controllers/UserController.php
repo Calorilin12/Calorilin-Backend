@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -25,9 +26,8 @@ class UserController extends Controller
         $input->validate([
             'image' => 'mimes:jpeg,png,jpg|max:2048'
         ]);
-
-        $image = $input->image->store('public');
-        $createUser->image = $image;
+        $createUser->image = $input->image;
+        $input->image->store('public');
         $createUser->save();
 
         return response([
@@ -37,5 +37,35 @@ class UserController extends Controller
         ], 200);
 
         // return response()->json(200);
+    }
+
+    public function login(Request $request) {
+        $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
+
+        $data = [
+            'email'     => $request->email,
+            'password'  => $request->password,
+        ];
+
+        $user = User::where('email', $request->email)->first();
+
+        if($user)
+        {
+            if($user->password == $request->password)
+            {
+                return response()->json(200);
+            }
+            else
+            {
+                return response()->json(422);
+            }
+        }
+        else
+        {
+            return response()->json(401);
+        }
     }
 }
