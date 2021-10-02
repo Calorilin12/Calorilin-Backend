@@ -16,6 +16,10 @@ class UserController extends Controller
     }
 
     public function register(Request $input) {
+        $input->validate([
+            'image' => 'mimes:jpeg,png,jpg|max:2048'
+        ]);
+
         $createUser = new User;
         $createUser->name = $input->name;
         $createUser->phone = $input->phone;
@@ -23,11 +27,8 @@ class UserController extends Controller
         $createUser->email = $input->email;
         $createUser->password = $input->password;
 
-        $input->validate([
-            'image' => 'mimes:jpeg,png,jpg|max:2048'
-        ]);
-        $createUser->image = $input->image;
-        $input->image->store('public');
+        $storeImage = $input->image->store('public/storage');
+        $createUser->image = $storeImage;
         $createUser->save();
 
         return response([
@@ -56,7 +57,7 @@ class UserController extends Controller
         {
             if($user->password == $request->password)
             {
-                return response()->json(200);
+                return response()->json($user, 200);
             }
             else
             {
