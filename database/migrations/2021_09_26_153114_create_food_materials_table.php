@@ -17,6 +17,7 @@ class CreateFoodMaterialsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('descriptions');
+            $table->string('image');
             $table->float('fat');
             $table->float('carbo');
             $table->float('calory');

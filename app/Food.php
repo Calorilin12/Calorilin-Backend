@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Food extends Model
 {
+    public $table = "foods";
     protected $fillable = [
         'name',
         'publish',
         'category',
         'level',
+        'image',
         'video',
         'alarm',
         'steps',

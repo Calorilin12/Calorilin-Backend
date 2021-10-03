@@ -19,6 +19,7 @@ class CreateFoodsTable extends Migration
             $table->date('publish');
             $table->string('category');
             $table->string('level');
+            $table->string('image');
             $table->string('video');
             $table->time('alarm');
             $table->string('steps');
