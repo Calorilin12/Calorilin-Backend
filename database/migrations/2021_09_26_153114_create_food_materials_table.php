@@ -16,13 +16,14 @@ class CreateFoodMaterialsTable extends Migration
         Schema::create('food_materials', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('descriptions');
+            $table->longText('descriptions');
             $table->string('image');
             $table->float('fat');
             $table->float('carbo');
             $table->float('calory');
             $table->float('protein');
-            $table->float('burn_calories');
+            $table->float('cycling');
+            $table->float('running');
             $table->timestamps();
         });
     }

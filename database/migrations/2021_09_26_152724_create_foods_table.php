@@ -22,10 +22,10 @@ class CreateFoodsTable extends Migration
             $table->string('image');
             $table->string('video');
             $table->time('alarm');
-            $table->string('steps');
-            $table->string('compositions');
+            $table->longText('steps');
+            $table->longText('compositions');
             $table->float('protein');
-            $table->string('check');
+            $table->boolean('check');
             $table->string('made');
             $table->float('carbo');
             $table->float('fat');
