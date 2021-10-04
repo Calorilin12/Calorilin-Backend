@@ -15,6 +15,7 @@ class FoodMaterial extends Model
         'carbo',
         'calory',
         'protein',
-        'burn_calories',
+        'cycling',
+        'running',
     ];
 }

@@ -28,7 +28,8 @@ class FoodMaterialController extends Controller
         $createFood->carbo = $input->carbo;
         $createFood->calory = $input->calory;
         $createFood->protein = $input->protein;
-        $createFood->burn_calories = $input->burn_calories;
+        $createFood->running = $input->running;
+        $createFood->cycling = $input->cycling;
 
         $createFood->save();
 
