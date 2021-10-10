@@ -22,8 +22,10 @@ class AuthController extends Controller
         $createUser->email = $input->email;
         $createUser->password = Hash::make($input->password);
 
-        $storeImage = $input->image->store('public/storage');
-        $createUser->image = $storeImage;
+        if ($input->image != null){
+            $storeImage = $input->image->store('public/storage');
+            $createUser->image = $storeImage;
+        }
 
         $createUser->check = $input->check;
         $createUser->save();
