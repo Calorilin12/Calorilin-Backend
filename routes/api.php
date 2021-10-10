@@ -26,13 +26,13 @@ Route::post('login', [AuthController::class, 'login']);
 Route::middleware(['auth:sanctum'])->group(function ()
 {
     Route::post('logout', [AuthController::class, 'logout']);
-    
+
     Route::get('users', [UserController::class, 'users']);
     Route::put('users/update/{id}', [UserController::class, 'update']);
 
     Route::get('food', [FoodController::class,'foods']);
     Route::post('food/create', [FoodController::class, 'create']);
-    
+
     Route::get('food-material', [FoodMaterialController::class, 'food_materials']);
     Route::post('food-material/create', [FoodMaterialController::class, 'create']);
 
