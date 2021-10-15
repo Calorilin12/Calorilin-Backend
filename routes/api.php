@@ -6,6 +6,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\ControlCaloryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FoodScheduleController;
+use App\Http\Controllers\FoodMaterialController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,15 +32,19 @@ Route::middleware(['auth:sanctum'])->group(function ()
     Route::put('users/update/{id}', [UserController::class, 'update']);
 
     Route::get('food', [FoodController::class,'foods']);
-    Route::post('food/create', [FoodController::class, 'create']);
+    Route::post('food', [FoodController::class, 'create']);
 
     Route::get('food-material', [FoodMaterialController::class, 'food_materials']);
-    Route::post('food-material/create', [FoodMaterialController::class, 'create']);
+    Route::post('food-material', [FoodMaterialController::class, 'create']);
+    Route::put('food-material/update/{id}', [FoodMaterialController::class, 'update']);
+    Route::delete('food-material/delete/{id}', [FoodMaterialController::class, 'delete']);
 
-    Route::post('control-calory/create', [ControlCaloryController::class, 'create']);
+    Route::post('control-calory', [ControlCaloryController::class, 'create']);
     Route::get('control-calory', [ControlCaloryController::class, 'control_calories']);
+    Route::put('control-calory/update/{id}', [ControlCaloryController::class, 'update']);
+    Route::delete('control-calory/delete/{id}', [ControlCaloryController::class, 'delete']);
 
-    Route::post('food-schedule/create', [FoodScheduleController::class, 'create']);
+    Route::post('food-schedule', [FoodScheduleController::class, 'create']);
     Route::get('food-schedule', [FoodScheduleController::class, 'food_schedules']);
 });
 

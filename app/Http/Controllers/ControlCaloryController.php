@@ -19,12 +19,31 @@ class ControlCaloryController extends Controller
             'status' => 'OK',
             'message' => 'Control Calory telah dibuat',
             'data' => $createControlCalory
-        ], 200);
+        ], 201);
     }
 
     public function control_calories()
     {
         $control_calories = ControlCalory::all();
         return response($control_calories, 200);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $updateControlCalory = ControlCalory::find($id);
+
+        $updateControlCalory->update($request->all());
+        return response($updateControlCalory, 200);
+    }
+
+    public function delete($id)
+    {
+        $deleteControlCalory = ControlCalory::find($id);
+        $deleteControlCalory->delete();
+
+        return response([
+            'status' => 'OK',
+            'message' => 'Control Calory telah dihapus',
+        ], 202);
     }
 }

@@ -22,11 +22,12 @@ class AuthController extends Controller
         $createUser->email = $input->email;
         $createUser->password = Hash::make($input->password);
 
-        if ($input->image != null){
-            $storeImage = $input->image->store('public/storage');
-            $createUser->image = $storeImage;
-        }
+        $file = $input->file('image');
+        $nama_file = $file->getClientOriginalName();
+        $tujuan_upload = 'user-images';
+        $file->move($tujuan_upload, $nama_file);
 
+        $createUser->image = $nama_file;
         $createUser->check = $input->check;
         $createUser->save();
 
@@ -48,16 +49,16 @@ class AuthController extends Controller
         ]);
 
         $user = User::where('email', $request->email)->first();
- 
+
         if($user || Hash::check($request->password, $user->password))
         {
             $token = $user->createToken('CalorilinTokenLogin')->plainTextToken;
-            
+
             $response = [
                 'user' => $user,
                 'token' => $token,
             ];
-    
+
             return response($response, 201);
         }
         else
