@@ -24,9 +24,12 @@ class FoodController extends Controller
         $createFood->category = $input->category;
         $createFood->level = $input->level;
 
-        $storeImage = $input->image->store('public/food-images');
-        $createFood->image = $storeImage;
+        $file = $input->file('image');
+        $nama_file = $file->getClientOriginalName();
+        $tujuan_upload = 'food-images';
+        $file->move($tujuan_upload, $nama_file);
 
+        $createFood->image = $nama_file;
         $createFood->video = $input->video;
         $createFood->alarm = $input->alarm;
         $createFood->steps = $input->steps;

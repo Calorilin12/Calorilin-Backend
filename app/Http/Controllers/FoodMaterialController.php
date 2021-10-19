@@ -18,7 +18,7 @@ class FoodMaterialController extends Controller
             'image' => 'mimes:jpeg,png,jpg|max:2048'
         ]);
 
-        $createFood = new FoodMaterial();
+        $createFood = new FoodMaterial;
         $createFood->name = $input->name;
         $createFood->descriptions = $input->descriptions;
 
