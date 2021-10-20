@@ -73,7 +73,7 @@ class FoodController extends Controller
     public function delete($id)
     {
         $deleteFood = Food::find($id);
-        File::delete('food-material-images/'. $deleteFood->image);
+        File::delete('food-images/'. $deleteFood->image);
         $deleteFood->delete();
 
         return response([
