@@ -62,14 +62,15 @@ class FoodMaterialController extends Controller
     {
         $updateFoodMaterial = FoodMaterial::find($id);
 
-        File::delete('food-material-images/'. $updateFoodMaterial->image);
+        if($request->gambar != null){
+            File::delete('food-material-images/'. $updateFoodMaterial->image);
+            $file = $request->file('image');
+            $nama_file = $file->getClientOriginalName();
+            $tujuan_upload = 'user-images';
+            $file->move($tujuan_upload, $nama_file);
+            $updateFoodMaterial->image = $nama_file;
+        }
 
-        $file = $request->file('image');
-        $nama_file = $file->getClientOriginalName();
-        $tujuan_upload = 'user-images';
-        $file->move($tujuan_upload, $nama_file);
-
-        $updateFoodMaterial->image = $nama_file;
         $updateFoodMaterial->update($request->all());
         return response($updateFoodMaterial, 200);
 

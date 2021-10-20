@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2021 at 06:04 AM
+-- Generation Time: Oct 20, 2021 at 05:46 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.3.31
 
@@ -63,7 +63,7 @@ CREATE TABLE `foods` (
   `publish` date NOT NULL,
   `category` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `level` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `video` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `alarm` time NOT NULL,
   `steps` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -77,13 +77,6 @@ CREATE TABLE `foods` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `foods`
---
-
-INSERT INTO `foods` (`id`, `name`, `publish`, `category`, `level`, `image`, `video`, `alarm`, `steps`, `compositions`, `protein`, `check`, `made`, `carbo`, `fat`, `calory`, `created_at`, `updated_at`) VALUES
-(1, 'Salmon dan brokoli dengan taburan sea salt dan seasoning chicken', '2021-10-03', 'Menu Utama', 'Mudah', 'public/food-images/blXnZCjBjD3xZK1cfB1IivNFiYvHxJ9wZdxPqPzb.jpg', 'Qwq3XNL5dts', '09:00:00', 'Siapkan wajan, panaskan minyak zaitu lalu masak salmon (kulit dahulu)', '200 gram Ikan Salmon / Salmon Fish sayat bagian kulit,1 sdm Air Lemon / Lemon Juice,200 gram Brokoli / Broccoli potong kecil,150 ml Susu / Milk,100 ml Air / Water,2 siung Bawang Putih / Garlic cincang halus,½ buah Bawang Bombay / Onion cincang halus,½ sdt Rosemary,½ sdt thyme,1 sdm Minyak Zaitun / Olive Oil', 7.00, 0, 'Pura Kitchen', 8.00, 6.00, 107.00, '2021-10-04 08:05:31', '2021-10-04 08:05:31');
 
 -- --------------------------------------------------------
 
@@ -107,15 +100,15 @@ CREATE TABLE `food_combined` (
 
 CREATE TABLE `food_materials` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `descriptions` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descriptions` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `fat` double(8,2) DEFAULT NULL,
-  `carbo` double(8,2) DEFAULT NULL,
-  `calory` double(8,2) DEFAULT NULL,
-  `protein` double(8,2) DEFAULT NULL,
-  `cycling` double(8,2) DEFAULT NULL,
-  `running` double(8,2) DEFAULT NULL,
+  `fat` double(8,2) NOT NULL,
+  `carbo` double(8,2) NOT NULL,
+  `calory` double(8,2) NOT NULL,
+  `protein` double(8,2) NOT NULL,
+  `cycling` double(8,2) NOT NULL,
+  `running` double(8,2) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -134,14 +127,6 @@ CREATE TABLE `food_schedules` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `food_schedules`
---
-
-INSERT INTO `food_schedules` (`id`, `schedule_date`, `id_user`, `id_food`, `created_at`, `updated_at`) VALUES
-(1, '2021-10-04', 1, 1, '2021-10-04 09:16:36', '2021-10-04 09:16:36'),
-(2, '2021-10-14', 1, 1, '2021-10-13 09:20:09', '2021-10-13 09:20:09');
 
 -- --------------------------------------------------------
 
@@ -200,16 +185,6 @@ CREATE TABLE `personal_access_tokens` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `personal_access_tokens`
---
-
-INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `name`, `token`, `abilities`, `last_used_at`, `created_at`, `updated_at`) VALUES
-(9, 'App\\User', 1, 'CalorilinTokenLogin', 'b2ddfc909b8bddba9e632f598a60f5cabf3373ed95180ff3afc45398a07cd4cb', '[\"*\"]', '2021-10-13 09:20:09', '2021-10-13 09:19:33', '2021-10-13 09:20:09'),
-(10, 'App\\User', 1, 'CalorilinTokenLogin', '7276dff18403a1e6728637beb6333f75f3c73e9b69af8abeffef17b1b28518de', '[\"*\"]', '2021-10-14 20:54:39', '2021-10-14 19:03:16', '2021-10-14 20:54:39'),
-(12, 'App\\User', 5, 'CalorilinToken', 'd3ef134ad298818e3c011bf77ea60ea70011736a554ba4ce99e9c3f75c659371', '[\"*\"]', NULL, '2021-10-14 20:49:02', '2021-10-14 20:49:02'),
-(13, 'App\\User', 6, 'CalorilinToken', '302e6804de6d01b0c49efa146dbef0d19027b25cf274f1859ff091c56ce94111', '[\"*\"]', NULL, '2021-10-14 20:50:10', '2021-10-14 20:50:10');
-
 -- --------------------------------------------------------
 
 --
@@ -236,9 +211,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `phone`, `born`, `email`, `email_verified_at`, `password`, `image`, `check`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Fabyan Kindarya', '0851577808074', '2001-09-15', 'fkindarya@email.com', NULL, '$2y$10$Zl80feVY1iLkY.kOflQ.ZesioHWIGpUThXiz91voTWya9gT6QLlFa', 'public/storage/CIzBQJ1yeDY3faLD0M593TsshnMFUJKXuhyfR5as.jpg', 0, NULL, '2021-10-04 07:44:43', '2021-10-10 06:10:01'),
-(2, 'Faiq Kukli', '082136311241', '0200-09-15', 'Faikukli@gmail.com', NULL, '$2y$10$DAumsdnZtV69vuWHp6Du9OgbxpHXSUxwyOHFfeayzTaOY6qqyelby', NULL, 0, NULL, '2021-10-09 21:51:36', '2021-10-09 21:51:36'),
-(6, 'Made Rahano', '082136311241', '2000-09-15', 'rakukli@gmail.com', NULL, '$2y$10$OIgNIEByhqpQvy0WKf7uKete2whtNeWa9lFiqP8Zc3SSlxaSURAHq', 'Foto Jas.jpg', 0, NULL, '2021-10-14 20:50:10', '2021-10-14 20:50:10');
+(1, 'Admin Calorilin', '0', '2000-12-12', 'admin@admin.com', NULL, '$2y$10$RniG/HAFxXkVgAyWjePFcePxBuO.JhmM2bSwn4AXKQ9U7KzN1NwoS', NULL, 1, NULL, '2021-10-18 13:56:52', '2021-10-18 13:56:52');
 
 --
 -- Indexes for dumped tables
@@ -320,7 +293,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `control_calories`
 --
 ALTER TABLE `control_calories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -332,7 +305,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `foods`
 --
 ALTER TABLE `foods`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `food_combined`
@@ -344,13 +317,13 @@ ALTER TABLE `food_combined`
 -- AUTO_INCREMENT for table `food_materials`
 --
 ALTER TABLE `food_materials`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `food_schedules`
 --
 ALTER TABLE `food_schedules`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -362,13 +335,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables

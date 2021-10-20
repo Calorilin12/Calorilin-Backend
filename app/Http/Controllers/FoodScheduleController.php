@@ -27,4 +27,23 @@ class FoodScheduleController extends Controller
         $food_schedules = FoodSchedule::all();
         return response($food_schedules, 200);
     }
+
+    public function update(Request $request, $id)
+    {
+        $updateFoodSchedule = FoodSchedule::find($id);
+
+        $updateFoodSchedule->update($request->all());
+        return response($updateFoodSchedule, 200);
+    }
+
+    public function delete($id)
+    {
+        $deleteFoodSchedule = FoodSchedule::find($id);
+        $deleteFoodSchedule->delete();
+
+        return response([
+            'status' => 'OK',
+            'message' => 'Food Schedule telah dihapus',
+        ], 202);
+    }
 }

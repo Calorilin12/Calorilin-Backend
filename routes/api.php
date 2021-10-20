@@ -33,6 +33,8 @@ Route::middleware(['auth:sanctum'])->group(function ()
 
     Route::get('food', [FoodController::class,'foods']);
     Route::post('food', [FoodController::class, 'create']);
+    Route::put('food/update/{id}', [FoodController::class, 'update']);
+    Route::delete('food/delete/{id}', [FoodController::class, 'delete']);
 
     Route::get('food-material', [FoodMaterialController::class, 'food_materials']);
     Route::post('food-material', [FoodMaterialController::class, 'create']);
@@ -46,6 +48,8 @@ Route::middleware(['auth:sanctum'])->group(function ()
 
     Route::post('food-schedule', [FoodScheduleController::class, 'create']);
     Route::get('food-schedule', [FoodScheduleController::class, 'food_schedules']);
+    Route::put('food-schedule/update/{id}', [FoodScheduleController::class, 'update']);
+    Route::delete('food-schedule/delete/{id}', [FoodScheduleController::class, 'delete']);
 });
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {

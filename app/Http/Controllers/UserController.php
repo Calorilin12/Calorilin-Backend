@@ -20,14 +20,15 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        File::delete('user-images/'. $user->image);
+        if($request->image != null){
+            File::delete('user-images/'. $user->image);
 
-        $file = $request->file('image');
-        $nama_file = $file->getClientOriginalName();
-        $tujuan_upload = 'user-images';
-        $file->move($tujuan_upload, $nama_file);
-
-        $user->image = $nama_file;
+            $file = $request->file('image');
+            $nama_file = $file->getClientOriginalName();
+            $tujuan_upload = 'user-images';
+            $file->move($tujuan_upload, $nama_file);
+            $user->image = $nama_file;
+        }
         $user->update($request->all());
         return response($user, 200);
     }

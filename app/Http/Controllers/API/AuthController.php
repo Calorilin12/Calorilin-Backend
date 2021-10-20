@@ -31,7 +31,7 @@ class AuthController extends Controller
         $createUser->check = $input->check;
         $createUser->save();
 
-        $token = $createUser->createToken('CalorilinToken')->plainTextToken;
+        $token = $createUser->createToken('CalorilinRegisterToken')->plainTextToken;
 
         $response = [
             'user' => $createUser,
@@ -52,7 +52,7 @@ class AuthController extends Controller
 
         if($user || Hash::check($request->password, $user->password))
         {
-            $token = $user->createToken('CalorilinTokenLogin')->plainTextToken;
+            $token = $user->createToken('CalorilinLoginToken')->plainTextToken;
 
             $response = [
                 'user' => $user,
