@@ -23,13 +23,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::get('/users', [UserController::class, 'users']);
 
 Route::middleware(['auth:sanctum'])->group(function ()
 {
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    // Route::get('/users', [UserController::class, 'users']);
+    Route::get('/users', [UserController::class, 'users']);
     Route::put('/users/update/{id}', [UserController::class, 'update']);
 
     Route::get('/food', [FoodController::class,'foods']);
