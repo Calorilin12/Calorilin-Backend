@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'paths' => ['api/*'],
+    'paths' => ['api/*', 'laravel/sanctum'],
 
     'allowed_methods' => ['*'],
 
