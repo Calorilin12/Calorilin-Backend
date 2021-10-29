@@ -13,4 +13,12 @@ class FoodSchedule extends Model
         'id_user',
         'id_food',
     ];
+
+    public function user(){
+        return $this->belongsTo('App\User', 'id_user');
+    }
+
+    public function food(){
+        return $this->belongsTo('App\Food', 'id_food');
+    }
 }

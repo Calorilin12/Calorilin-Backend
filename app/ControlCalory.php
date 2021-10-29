@@ -12,4 +12,8 @@ class ControlCalory extends Model
         'id_user',
         'reminder',
     ];
+
+    public function user(){
+        return $this->belongsTo('App\User', 'id_user');
+    }
 }
