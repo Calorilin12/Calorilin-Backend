@@ -1,0 +1,72 @@
+version: "3.8"
+
+services:
+  # Router
+  router:
+    build:
+      context: .
+      dockerfile: ./Dockerfile/Dockerfile-RO
+    container_name: calorilin-router
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - calorilin-network
+
+  # Backend Service
+  backend-app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile/Dockerfile-BE
+    container_name: calorilin-backend
+    restart: unless-stopped
+    tty: true
+    networks:
+      - calorilin-network
+
+  # Web Service
+  web-app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile/Dockerfile-FE
+    container_name: calorilin-frontend
+    restart: unless-stopped
+    tty: true
+    networks:
+      - calorilin-network
+
+  # Database Service
+  mysql:
+    image: mysql:latest
+    container_name: calorilin-database-mysql
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: calorilin
+      MYSQL_ROOT_PASSWORD: root
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - calorilin-data:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - calorilin-network
+
+# Docker Network
+networks:
+  calorilin-network:
+    driver: bridge
+
+# Volumes
+volumes:
+  certbot-etc:
+  certbot-var:
+  calorilin-data:
+    driver: local
