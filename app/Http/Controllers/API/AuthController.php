@@ -17,18 +17,18 @@ class AuthController extends Controller
 
         $createUser = new User;
         $createUser->name = $input->name;
-        $createUser->phone = $input->phone;
-        $createUser->born = $input->born;
         $createUser->email = $input->email;
         $createUser->password = Hash::make($input->password);
 
-        $file = $input->file('image');
-        $nama_file = $file->getClientOriginalName();
-        $tujuan_upload = 'user-images';
-        $file->move($tujuan_upload, $nama_file);
+        if ($input->image != null) {
+            $file = $input->file('image');
+            $nama_file = $file->getClientOriginalName();
+            $tujuan_upload = 'user-images';
+            $file->move($tujuan_upload, $nama_file);
+            $createUser->image = $nama_file;
+        }
 
-        $createUser->image = $nama_file;
-        $createUser->check = $input->check;
+        $createUser->check = 0;
         $createUser->save();
 
         $token = $createUser->createToken('CalorilinRegisterToken')->plainTextToken;
@@ -50,8 +50,7 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if($user || Hash::check($request->password, $user->password))
-        {
+        if ($user || Hash::check($request->password, $user->password)) {
             $token = $user->createToken('CalorilinLoginToken')->plainTextToken;
 
             $response = [
@@ -60,9 +59,7 @@ class AuthController extends Controller
             ];
 
             return response($response, 201);
-        }
-        else
-        {
+        } else {
             return response()->json(401);
         }
     }
