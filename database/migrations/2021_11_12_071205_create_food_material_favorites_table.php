@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFoodCombinedTable extends Migration
+class CreateFoodMaterialFavoritesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateFoodCombinedTable extends Migration
      */
     public function up()
     {
-        Schema::create('food_combined', function (Blueprint $table) {
+        Schema::create('food_material_favorites', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_food')->constrained('foods');
+            $table->foreignId('id_user')->constrained('users');
             $table->foreignId('id_food_material')->constrained('food_materials');
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ class CreateFoodCombinedTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('food_combined');
+        Schema::dropIfExists('food_material_favorites');
     }
 }

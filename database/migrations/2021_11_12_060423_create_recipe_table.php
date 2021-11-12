@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFoodMaterialsTable extends Migration
+class CreateRecipeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ class CreateFoodMaterialsTable extends Migration
      */
     public function up()
     {
-        Schema::create('food_materials', function (Blueprint $table) {
+        Schema::create('recipes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->longText('descriptions');
-            $table->string('image');
-            $table->float('fat');
-            $table->float('carbo');
-            $table->float('calory');
-            $table->float('protein');
+            $table->string('made_by');
+            $table->string('level_of_difficult');
+            $table->date('publish_date');
             $table->timestamps();
         });
     }
@@ -33,6 +30,6 @@ class CreateFoodMaterialsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('food_materials');
+        Schema::dropIfExists('recipe');
     }
 }
