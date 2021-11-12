@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Recipe extends Model
 {
-    public $table = "recipe";
-
     protected $fillable = [
         'name',
         'made_by',

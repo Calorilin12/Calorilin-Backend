@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class RecipeDetail extends Model
 {
-    public $table = "recipe_detail";
-
     protected $fillable = [
         'duration',
         'total_eater',
