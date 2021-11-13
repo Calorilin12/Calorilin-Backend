@@ -10,7 +10,7 @@ class FoodMaterial extends Model
 
     protected $fillable = [
         'name',
-        'descriptions',
+        'serve',
         'fat',
         'carbo',
         'calory',

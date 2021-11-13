@@ -77,7 +77,7 @@ class RecipeController extends Controller
 
         if (Gate::allows('admin-only')) {
             // Hanya User dengan role admin yang dapat mengakses ini
-            $recipes = Recipe::find($id)
+            Recipe::find($id)
                 ->update([
                     'name' => $request->name,
                     'made_by' => $request->made_by,

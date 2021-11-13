@@ -7,6 +7,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserDetailController;
 use App\Http\Controllers\FoodScheduleController;
 use App\Http\Controllers\FoodMaterialController;
+use App\Http\Controllers\RecipeFavoriteController;
+use App\RecipeFavorite;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,11 +46,15 @@ Route::middleware(['auth:sanctum'])->group(function ()
     Route::delete('/recipes/{id}', [RecipeController::class, 'recipes_delete']);
     //Gate::allows('admin-only')
 
-    Route::get('/food-material', [FoodMaterialController::class, 'food_materials']);
+    Route::post('/recipe-favorites/{id_user}/{id_recipe}', [RecipeFavoriteController::class, 'recipe_favorites']);
+    Route::get('/recipe-favorites/{id}', [RecipeFavoriteController::class, 'recipe_favorites_show']);
+
+    Route::get('/food-materials', [FoodMaterialController::class, 'food_materials']);
+    Route::get('/food-materials/{id}', [FoodMaterialController::class, 'food_materials_find']);
     //Gate::allows('admin-only')
-    Route::post('/food-material', [FoodMaterialController::class, 'create']);
-    Route::put('/food-material/{id}', [FoodMaterialController::class, 'update']);
-    Route::delete('/food-material/{id}', [FoodMaterialController::class, 'delete']);
+    Route::post('/food-materials', [FoodMaterialController::class, 'food_materials_create']);
+    Route::put('/food-materials/{id}', [FoodMaterialController::class, 'food_materials_update']);
+    Route::delete('/food-materials/{id}', [FoodMaterialController::class, 'food_materials_delete']);
     //Gate::allows('admin-only')
 
     Route::get('/control-calory', [ControlCaloryController::class, 'control_calories']);

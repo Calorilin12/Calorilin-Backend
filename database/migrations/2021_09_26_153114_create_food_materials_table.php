@@ -16,8 +16,8 @@ class CreateFoodMaterialsTable extends Migration
         Schema::create('food_materials', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->longText('descriptions');
-            $table->string('image');
+            $table->string('serve');
+            $table->string('image')->nullable();
             $table->float('fat');
             $table->float('carbo');
             $table->float('calory');
