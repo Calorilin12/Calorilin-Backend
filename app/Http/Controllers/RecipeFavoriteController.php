@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\RecipeFavorite;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class RecipeFavoriteController extends Controller
@@ -27,5 +26,14 @@ class RecipeFavoriteController extends Controller
             ->get();
 
         return response()->json($recipe_favorites, 201);
+    }
+
+    public function recipe_favorites_delete($id_user, $id_recipe)
+    {
+        RecipeFavorite::where('id_user', '=', $id_user)
+            ->where('id_recipe', '=', $id_recipe)
+            ->delete();
+
+        return response()->json(["message" => "Resep berhasil dihapus"], 201);
     }
 }

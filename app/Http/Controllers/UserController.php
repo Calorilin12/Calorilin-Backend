@@ -12,12 +12,16 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function users(){
-        $users = DB::table('users')
-            ->leftJoin('user_details', 'user_details.id_user', '=', 'users.id')
-            ->select('users.id', 'users.name', 'users.email', 'user_details.born_date', 'user_details.phone_number', 'user_details.image', 'user_details.weight', 'user_details.height', 'user_details.tension')
-            ->get();
-        return response()->json($users, 200);
+    public function users()
+    {
+        if (Gate::allows('admin-only')) {
+            $users = DB::table('users')
+                ->leftJoin('user_details', 'user_details.id_user', '=', 'users.id')
+                ->select('users.id', 'users.name', 'users.email', 'users.check', 'user_details.born_date', 'user_details.phone_number', 'user_details.image', 'user_details.weight', 'user_details.height', 'user_details.tension')
+                ->get();
+            return response()->json($users, 200);
+        }
+        return response()->json(["message" => "Anda tidak memiliki akses"], 403);
     }
 
     public function users_find($id)
@@ -25,8 +29,8 @@ class UserController extends Controller
         $users = DB::table('users')
             ->leftJoin('user_details', 'user_details.id_user', '=', 'users.id')
             ->where('users.id', '=', $id)
-            ->select('users.id', 'users.name', 'users.email', 'user_details.born_date', 'user_details.phone_number', 'user_details.image', 'user_details.weight', 'user_details.height', 'user_details.tension')
-            ->get();
+            ->select('users.id', 'users.name', 'users.email', 'users.check', 'user_details.born_date', 'user_details.phone_number', 'user_details.image', 'user_details.weight', 'user_details.height', 'user_details.tension')
+            ->first();
 
         return response()->json($users, 200);
     }
