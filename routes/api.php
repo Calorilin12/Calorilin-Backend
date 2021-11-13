@@ -1,13 +1,12 @@
 <?php
 
-use App\FoodSchedule;
-use App\Http\Controllers\FoodController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\ControlCaloryController;
+use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserDetailController;
 use App\Http\Controllers\FoodScheduleController;
 use App\Http\Controllers\FoodMaterialController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,14 +27,18 @@ Route::middleware(['auth:sanctum'])->group(function ()
 {
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::get('/users', [UserController::class, 'users']);
-    Route::put('/users/{id}', [UserController::class, 'update']);
+    Route::put('/user-details/{id}', [UserDetailController::class, 'user_details_update']);
 
-    Route::get('/food', [FoodController::class,'foods']);
+    Route::get('/users', [UserController::class, 'users']);
+    Route::get('/users/{id}', [UserController::class, 'users_find']);
+    Route::put('/users/{id}', [UserController::class, 'users_update']);
+
+    Route::get('/recipes', [RecipeController::class, 'recipes']);
+    Route::get('/recipes/{id}', [RecipeController::class, 'recipes_find']);
     //Perlu Authorization
-    Route::post('/food', [FoodController::class, 'create']);
-    Route::put('/food/{id}', [FoodController::class, 'update']);
-    Route::delete('/food/{id}', [FoodController::class, 'delete']);
+    Route::post('/recipes', [RecipeController::class, 'recipes_create']);
+    Route::put('/recipes/{id}', [RecipeController::class, 'recipes_update']);
+    Route::delete('/recipes/{id}', [RecipeController::class, 'recipes_delete']);
 
     Route::get('/food-material', [FoodMaterialController::class, 'food_materials']);
     //Perlu Authorization
