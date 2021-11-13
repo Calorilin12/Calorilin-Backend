@@ -3,30 +3,57 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\UserDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function users(User $user){
-        $users = $user->all();
+    public function users(){
+        $users = DB::table('users')
+            ->leftJoin('user_details', 'user_details.id_user', '=', 'users.id')
+            ->select('users.id', 'users.name', 'users.email', 'user_details.born_date', 'user_details.phone_number', 'user_details.image', 'user_details.weight', 'user_details.height', 'user_details.tension')
+            ->get();
         return response()->json($users, 200);
     }
 
-    public function update(Request $request, $id)
+    public function users_find($id)
     {
-        $user = User::find($id);
+        $users = DB::table('users')
+            ->leftJoin('user_details', 'user_details.id_user', '=', 'users.id')
+            ->where('users.id', '=', $id)
+            ->select('users.id', 'users.name', 'users.email', 'user_details.born_date', 'user_details.phone_number', 'user_details.image', 'user_details.weight', 'user_details.height', 'user_details.tension')
+            ->get();
 
-        if($request->image != null){
-            File::delete('user-images/'. $user->image);
+        return response()->json($users, 200);
+    }
 
-            $file = $request->file('image');
-            $nama_file = $file->getClientOriginalName();
-            $tujuan_upload = 'user-images';
-            $file->move($tujuan_upload, $nama_file);
-            $user->image = $nama_file;
+    public function users_update($id, Request $request)
+    {
+        User::find($id)
+            ->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
+
+        return response()->json(["message" => "User berhasil diubah"], 201);
+    }
+
+    public function users_delete($id)
+    {
+        if (Gate::allows('admin-only')) {
+            // Hanya User dengan role admin yang dapat mengakses ini
+            User::find($id)->delete();
+            $user_details = UserDetail::find($id);
+            File::delete('user-detail-images/' . $user_details->image);
+            $user_details->delete();
+
+            return response()->json(["message" => "User telah dihapus"], 201);
         }
-        $user->update($request->all());
-        return response($user, 200);
+        return response()->json(["message" => "Anda tidak memiliki akses"], 403);
     }
 }

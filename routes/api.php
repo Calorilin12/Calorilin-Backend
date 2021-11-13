@@ -32,31 +32,38 @@ Route::middleware(['auth:sanctum'])->group(function ()
     Route::get('/users', [UserController::class, 'users']);
     Route::get('/users/{id}', [UserController::class, 'users_find']);
     Route::put('/users/{id}', [UserController::class, 'users_update']);
+    //Gate::allows('admin-only')
+    Route::delete('/users/{id}', [UserController::class, 'users_delete']);
+    //Gate::allows('admin-only')
 
     Route::get('/recipes', [RecipeController::class, 'recipes']);
     Route::get('/recipes/{id}', [RecipeController::class, 'recipes_find']);
-    //Perlu Authorization
+    //Gate::allows('admin-only')
     Route::post('/recipes', [RecipeController::class, 'recipes_create']);
     Route::put('/recipes/{id}', [RecipeController::class, 'recipes_update']);
     Route::delete('/recipes/{id}', [RecipeController::class, 'recipes_delete']);
+    //Gate::allows('admin-only')
 
     Route::get('/food-material', [FoodMaterialController::class, 'food_materials']);
-    //Perlu Authorization
+    //Gate::allows('admin-only')
     Route::post('/food-material', [FoodMaterialController::class, 'create']);
     Route::put('/food-material/{id}', [FoodMaterialController::class, 'update']);
     Route::delete('/food-material/{id}', [FoodMaterialController::class, 'delete']);
+    //Gate::allows('admin-only')
 
     Route::get('/control-calory', [ControlCaloryController::class, 'control_calories']);
-    //Perlu Authorization
+    //Gate::allows('admin-only')
     Route::post('/control-calory', [ControlCaloryController::class, 'create']);
     Route::put('/control-calory/{id}', [ControlCaloryController::class, 'update']);
     Route::delete('/control-calory/{id}', [ControlCaloryController::class, 'delete']);
+    //Gate::allows('admin-only')
 
     Route::get('/food-schedule', [FoodScheduleController::class, 'food_schedules']);
-    //Perlu Authorization
+    //Gate::allows('admin-only')
     Route::post('/food-schedule', [FoodScheduleController::class, 'create']);
     Route::put('/food-schedule/{id}', [FoodScheduleController::class, 'update']);
     Route::delete('/food-schedule/{id}', [FoodScheduleController::class, 'delete']);
+    //Gate::allows('admin-only')
 });
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {

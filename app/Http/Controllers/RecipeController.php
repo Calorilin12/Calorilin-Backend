@@ -17,7 +17,7 @@ class RecipeController extends Controller
             ->leftJoin('recipe_details', 'recipe_details.id_recipe', '=', 'recipes.id')
             ->get();
 
-        return response($recipes, 200);
+        return response()->json($recipes, 200);
     }
 
     public function recipes_find($id)
@@ -27,7 +27,7 @@ class RecipeController extends Controller
             ->where('recipes.id', '=', $id)
             ->get();
 
-        return response($recipes, 200);
+        return response()->json($recipes, 200);
     }
 
     public function recipes_create(Request $request)
