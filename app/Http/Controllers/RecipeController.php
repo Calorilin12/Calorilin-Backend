@@ -132,4 +132,30 @@ class RecipeController extends Controller
         }
         return response()->json(["message" => "Anda tidak memiliki akses"], 403);
     }
+
+    public function recipes_find_by_disease(Request $request)
+    {
+        if ($request->disease == "Cholesterol") {
+            $cholesterol = 1;
+        } else if ($request->disease == "Diabetes") {
+            $diabetes = 1;
+        } else if ($request->disease == "Asam Urat") {
+            $uric_acid = 1;
+        } else if ($request->disease == "Asam Lambung") {
+            $stomach_acid = 1;
+        } else if ($request->disease == "Hipertensi") {
+            $hyper_tension = 1;
+        }
+
+        $recipes = DB::table('recipes')
+            ->leftJoin('recipe_details', 'recipe_details.id_recipe', '=', 'recipes.id')
+            ->where('recipe_details.cholesterol', '=', $cholesterol)
+            ->orWhere('recipe_details.diabetes', '=', $diabetes)
+            ->orWhere('recipe_details.uric_acid', '=', $uric_acid)
+            ->orWhere('recipe_details.stomach', '=', $stomach_acid)
+            ->orWhere('recipe_details.hyper_tension', '=', $hyper_tension)
+            ->get();
+
+        return response()->json($recipes, 200);
+    }
 }
