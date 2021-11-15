@@ -149,11 +149,11 @@ class RecipeController extends Controller
 
         $recipes = DB::table('recipes')
             ->leftJoin('recipe_details', 'recipe_details.id_recipe', '=', 'recipes.id')
-            ->where('recipe_details.cholesterol', '=', $cholesterol)
-            ->orWhere('recipe_details.diabetes', '=', $diabetes)
-            ->orWhere('recipe_details.uric_acid', '=', $uric_acid)
-            ->orWhere('recipe_details.stomach', '=', $stomach_acid)
-            ->orWhere('recipe_details.hyper_tension', '=', $hyper_tension)
+            ->where('recipe_details.cholesterol', '!=', $cholesterol)
+            ->orWhere('recipe_details.diabetes', '!=', $diabetes)
+            ->orWhere('recipe_details.uric_acid', '!=', $uric_acid)
+            ->orWhere('recipe_details.stomach', '!=', $stomach_acid)
+            ->orWhere('recipe_details.hyper_tension', '!=', $hyper_tension)
             ->get();
 
         return response()->json($recipes, 200);
