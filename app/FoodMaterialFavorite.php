@@ -9,5 +9,6 @@ class FoodMaterialFavorite extends Model
     protected $fillable = [
         'id_user',
         'id_food_material',
+        'time_show',
     ];
 }

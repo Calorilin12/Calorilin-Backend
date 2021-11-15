@@ -40,7 +40,7 @@ Route::middleware(['auth:sanctum'])->group(function ()
 
     Route::get('/recipes', [RecipeController::class, 'recipes']);
     Route::get('/recipes/{id}', [RecipeController::class, 'recipes_find']);
-    Route::get('/recipes', [RecipeController::class, 'recipes_find_by_disease']);
+    Route::get('/recipes-find-by-disease', [RecipeController::class, 'recipes_find_by_disease']);
     //Gate::allows('admin-only')
     Route::post('/recipes', [RecipeController::class, 'recipes_create']);
     Route::put('/recipes/{id}', [RecipeController::class, 'recipes_update']);
@@ -61,7 +61,7 @@ Route::middleware(['auth:sanctum'])->group(function ()
 
     Route::post('/food-material-favorites/{id_user}/{id_food_material}', [FoodMaterialFavoriteController::class, 'food_material_favorites']);
     Route::get('/food-material-favorites/{id}', [FoodMaterialFavoriteController::class, 'food_material_favorites_show']);
-    Route::delete('/food-material-favorites/{id_user}/{id_food_material}', [FoodMaterialFavoriteController::class, 'food_material_favorites_delete']);
+    Route::delete('/food-material-favorites/{id}', [FoodMaterialFavoriteController::class, 'food_material_favorites_delete']);
 
     Route::get('/control-calory', [ControlCaloryController::class, 'control_calories']);
     //Gate::allows('admin-only')

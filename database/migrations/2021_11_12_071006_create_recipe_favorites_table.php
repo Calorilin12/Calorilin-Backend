@@ -17,6 +17,7 @@ class CreateRecipeFavoritesTable extends Migration
             $table->id();
             $table->foreignId('id_user')->constrained('users');
             $table->foreignId('id_recipe')->constrained('recipe');
+            $table->string('time_show');
             $table->timestamps();
         });
     }
