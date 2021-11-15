@@ -19,6 +19,7 @@ class CreateUserDetailTable extends Migration
             $table->date('born_date')->nullable();
             $table->integer('phone_number')->nullable();
             $table->string('image')->nullable();
+            $table->string('body_mass_index')->nullable();
             $table->float('weight')->nullable();
             $table->float('height')->nullable();
             $table->string('tension')->nullable();

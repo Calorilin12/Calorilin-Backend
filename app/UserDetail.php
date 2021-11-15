@@ -11,6 +11,7 @@ class UserDetail extends Model
         'born_date',
         'phone_number',
         'image',
+        'body_mass_index',
         'weight',
         'height',
         'tension',
