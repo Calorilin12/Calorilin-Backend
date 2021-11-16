@@ -36,7 +36,7 @@ class RecipeController extends Controller
         if (Gate::allows('admin-only')) {
             // Hanya User dengan role admin yang dapat mengakses ini
 
-            $recipes = Recipe::create([
+            $recipe = Recipe::create([
                 'name' => $request->name,
                 'made_by' => $request->made_by,
                 'level_of_difficult' => $request->level_of_difficult,
@@ -53,7 +53,7 @@ class RecipeController extends Controller
             }
 
             RecipeDetail::create([
-                'id_recipe' => $recipes->id,
+                'id_recipe' => $recipe->id,
                 'recipe_image' => $nama_file,
                 'duration' => $request->duration,
                 'total_eater' => $request->total_eater,
@@ -66,6 +66,11 @@ class RecipeController extends Controller
                 'uric_acid' => $request->uric_acid,
                 'stomach_acid' => $request->stomach_acid,
             ]);
+
+            $recipes = DB::table('recipes')
+            ->leftJoin('recipe_details', 'recipe_details.id_recipe', '=', 'recipes.id')
+            ->where('recipes.id', '=', $recipe->id)
+            ->get();
 
             return response()->json(["message" => "Sukses membuat resep", "data" => $recipes], 201);
         }
