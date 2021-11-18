@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\RecipeFavorite;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class RecipeFavoriteController extends Controller
 {
-    public function recipe_favorites($id_user, $id_recipe)
+    public function recipe_favorites($id_user, $id_recipe, Request $request)
     {
         RecipeFavorite::create([
             'id_user' => $id_user,
             'id_recipe' => $id_recipe,
+            'time_show' => $request->time_show,
         ]);
 
         return response()->json(["message" => "Resep berhasil disimpan"], 201);
@@ -22,17 +24,15 @@ class RecipeFavoriteController extends Controller
         $recipe_favorites = DB::table('recipe_favorites')
             ->leftJoin('recipes', 'recipes.id', '=', 'recipe_favorites.id_recipe')
             ->where('recipe_favorites.id_user', '=', $id_user)
-            ->select('recipes.id', 'recipes.name', 'recipes.made_by', 'recipes.level_of_difficult', 'recipes.publish_date')
+            ->select('recipe_favorites.id', 'recipes.name', 'recipes.made_by', 'recipes.level_of_difficult', 'recipes.publish_date', 'recipe_favorites.time_show')
             ->get();
 
         return response()->json($recipe_favorites, 201);
     }
 
-    public function recipe_favorites_delete($id_user, $id_recipe)
+    public function recipe_favorites_delete($id)
     {
-        RecipeFavorite::where('id_user', '=', $id_user)
-            ->where('id_recipe', '=', $id_recipe)
-            ->delete();
+        RecipeFavorite::find($id)->delete();
 
         return response()->json(["message" => "Resep berhasil dihapus"], 201);
     }

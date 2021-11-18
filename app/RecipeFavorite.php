@@ -9,5 +9,6 @@ class RecipeFavorite extends Model
     protected $fillable = [
         'id_user',
         'id_recipe',
+        'time_show',
     ];
 }
