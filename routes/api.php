@@ -41,6 +41,7 @@ Route::middleware(['auth:sanctum'])->group(function ()
     Route::get('/recipes', [RecipeController::class, 'recipes']);
     Route::get('/recipes/{id}', [RecipeController::class, 'recipes_find']);
     Route::get('/recipes-find-by-disease', [RecipeController::class, 'recipes_find_by_disease']);
+    Route::get('/recipes-find-by-name', [RecipeController::class, 'recipes_find_by_name']);
     //Gate::allows('admin-only')
     Route::post('/recipes', [RecipeController::class, 'recipes_create']);
     Route::put('/recipes/{id}', [RecipeController::class, 'recipes_update']);
@@ -49,7 +50,7 @@ Route::middleware(['auth:sanctum'])->group(function ()
 
     Route::post('/recipe-favorites/{id_user}/{id_recipe}', [RecipeFavoriteController::class, 'recipe_favorites']);
     Route::get('/recipe-favorites/{id}', [RecipeFavoriteController::class, 'recipe_favorites_show']);
-    Route::delete('/recipe-favorites/{id_user}/{id_recipe}', [RecipeFavoriteController::class, 'recipe_favorites_delete']);
+    Route::delete('/recipe-favorites/{id_recipe_favorites}', [RecipeFavoriteController::class, 'recipe_favorites_delete']);
 
     Route::get('/food-materials', [FoodMaterialController::class, 'food_materials']);
     Route::get('/food-materials/{id}', [FoodMaterialController::class, 'food_materials_find']);

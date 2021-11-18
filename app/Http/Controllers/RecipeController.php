@@ -68,9 +68,9 @@ class RecipeController extends Controller
             ]);
 
             $recipes = DB::table('recipes')
-            ->leftJoin('recipe_details', 'recipe_details.id_recipe', '=', 'recipes.id')
-            ->where('recipes.id', '=', $recipe->id)
-            ->get();
+                ->leftJoin('recipe_details', 'recipe_details.id_recipe', '=', 'recipes.id')
+                ->where('recipes.id', '=', $recipe->id)
+                ->get();
 
             return response()->json(["message" => "Sukses membuat resep", "data" => $recipes], 201);
         }
@@ -142,13 +142,33 @@ class RecipeController extends Controller
     {
         if ($request->disease == "Cholesterol") {
             $cholesterol = 1;
+            $diabetes = 0;
+            $uric_acid = 0;
+            $stomach_acid = 0;
+            $hyper_tension = 0;
         } else if ($request->disease == "Diabetes") {
+            $cholesterol = 0;
             $diabetes = 1;
+            $uric_acid = 0;
+            $stomach_acid = 0;
+            $hyper_tension = 0;
         } else if ($request->disease == "Asam Urat") {
+            $cholesterol = 0;
+            $diabetes = 0;
             $uric_acid = 1;
+            $stomach_acid = 0;
+            $hyper_tension = 0;
         } else if ($request->disease == "Asam Lambung") {
+            $cholesterol = 0;
+            $diabetes = 0;
+            $uric_acid = 0;
             $stomach_acid = 1;
+            $hyper_tension = 0;
         } else if ($request->disease == "Hipertensi") {
+            $cholesterol = 0;
+            $diabetes = 0;
+            $uric_acid = 0;
+            $stomach_acid = 0;
             $hyper_tension = 1;
         }
 
@@ -157,9 +177,16 @@ class RecipeController extends Controller
             ->where('recipe_details.cholesterol', '!=', $cholesterol)
             ->orWhere('recipe_details.diabetes', '!=', $diabetes)
             ->orWhere('recipe_details.uric_acid', '!=', $uric_acid)
-            ->orWhere('recipe_details.stomach', '!=', $stomach_acid)
+            ->orWhere('recipe_details.stomach_acid', '!=', $stomach_acid)
             ->orWhere('recipe_details.hyper_tension', '!=', $hyper_tension)
             ->get();
+
+        return response()->json($recipes, 200);
+    }
+
+    public function recipes_find_by_name(Request $request)
+    {
+        $recipes = Recipe::where('name', 'LIKE', "%" . $request->name . "%")->get();
 
         return response()->json($recipes, 200);
     }
