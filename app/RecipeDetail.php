@@ -8,6 +8,7 @@ class RecipeDetail extends Model
 {
     protected $fillable = [
         'id_recipe',
+        'short_description',
         'recipe_image',
         'duration',
         'total_eater',

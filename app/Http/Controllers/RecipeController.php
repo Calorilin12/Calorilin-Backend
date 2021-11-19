@@ -54,6 +54,7 @@ class RecipeController extends Controller
 
             RecipeDetail::create([
                 'id_recipe' => $recipe->id,
+                'short_description' => $request->short_description,
                 'recipe_image' => $nama_file,
                 'duration' => $request->duration,
                 'total_eater' => $request->total_eater,
@@ -105,6 +106,7 @@ class RecipeController extends Controller
 
             RecipeDetail::find($id)
                 ->update([
+                    'short_description' => $request->short_description,
                     'recipe_image' => $nama_file,
                     'duration' => $request->duration,
                     'total_eater' => $request->total_eater,
