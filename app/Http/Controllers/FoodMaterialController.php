@@ -58,19 +58,19 @@ class FoodMaterialController extends Controller
 
         if (Gate::allows('admin-only')) {
             // Hanya User dengan role admin yang dapat mengakses ini
-            $food_materials = FoodMaterial::find($id);
+            $food_material = FoodMaterial::find($id);
 
-            if ($request->gambar != null) {
-                File::delete('food-material-images/' . $food_materials->image);
+            if ($request->file('image') != null) {
+                File::delete('food-material-images/' . $food_material->image);
                 $file = $request->file('image');
                 $nama_file = $file->getClientOriginalName();
                 $tujuan_upload = 'food-material-images';
                 $file->move($tujuan_upload, $nama_file);
             } else {
-                $nama_file = $food_materials->image;
+                $nama_file = $food_material->image;
             }
 
-            FoodMaterial::find($id)
+            $food_materials = FoodMaterial::find($id)
                 ->update([
                     'name' => $request->name,
                     'serve' => $request->serve,
@@ -81,7 +81,7 @@ class FoodMaterialController extends Controller
                     'protein' => $request->protein,
                 ]);
 
-            return response()->json(["message" => "Food material berhasil diubah", "data" => $food_materials], 201);
+            return response()->json(["message" => "Food material berhasil diubah"], 201);
         }
         return response()->json(["message" => "Anda tidak memiliki akses"], 403);
     }

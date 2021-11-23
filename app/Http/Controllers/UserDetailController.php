@@ -14,7 +14,7 @@ class UserDetailController extends Controller
         $user = UserDetail::find($id);
         File::delete('user-detail-images/' . $user->image);
         
-        if ($request->image != null) {
+        if ($request->file('image') != null) {
             $file = $request->file('image');
             $nama_file = $file->getClientOriginalName();
             $tujuan_upload = 'user-detail-images';

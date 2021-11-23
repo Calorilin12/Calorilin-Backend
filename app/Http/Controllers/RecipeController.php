@@ -80,7 +80,7 @@ class RecipeController extends Controller
 
     public function recipes_update($id, Request $request)
     {
-
+        
         if (Gate::allows('admin-only')) {
             // Hanya User dengan role admin yang dapat mengakses ini
             Recipe::find($id)
@@ -93,7 +93,7 @@ class RecipeController extends Controller
 
             $recipe_details = RecipeDetail::find($id);
 
-            if ($request->recipe_image != null) {
+            if ($request->file('recipe_image') != null) {
                 File::delete('recipe-detail-images/' . $recipe_details->recipe_image);
 
                 $file = $request->file('recipe_image');
