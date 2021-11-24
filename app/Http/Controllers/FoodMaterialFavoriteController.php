@@ -24,7 +24,7 @@ class FoodMaterialFavoriteController extends Controller
         $food_material_favorites = DB::table('food_material_favorites')
             ->leftJoin('food_materials', 'food_materials.id', '=', 'food_material_favorites.id_food_material')
             ->where('food_material_favorites.id_user', '=', $id_user)
-            ->select('food_materials.id', 'food_materials.name', 'food_materials.serve', 'food_materials.fat', 'food_materials.carbo', 'food_materials.calory', 'food_materials.protein', 'food_material_favorites.time_show')
+            ->select('food_materials.id', 'food_materials.name', 'food_materials.serve', 'food_materials.type', 'food_materials.fat', 'food_materials.carbo', 'food_materials.calory', 'food_materials.protein', 'food_material_favorites.time_show')
             ->first();
 
         return response()->json($food_material_favorites, 200);

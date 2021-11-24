@@ -28,7 +28,7 @@ class FoodMaterialController extends Controller
     {
         if (Gate::allows('admin-only')) {
             // Hanya User dengan role admin yang dapat mengakses ini
-            if ($request->image != null) {
+            if ($request->file('image') != null) {
                 $file = $request->file('image');
                 $nama_file = $file->getClientOriginalName();
                 $tujuan_upload = 'food-material-images';
@@ -40,6 +40,7 @@ class FoodMaterialController extends Controller
             $food_materials = FoodMaterial::create([
                 'name' => $request->name,
                 'serve' => $request->serve,
+                'type' => $request->type,
                 'image' => $nama_file,
                 'fat' => $request->fat,
                 'carbo' => $request->carbo,
@@ -70,10 +71,11 @@ class FoodMaterialController extends Controller
                 $nama_file = $food_material->image;
             }
 
-            $food_materials = FoodMaterial::find($id)
+            FoodMaterial::find($id)
                 ->update([
                     'name' => $request->name,
                     'serve' => $request->serve,
+                    'type' => $request->type,
                     'image' => $nama_file,
                     'fat' => $request->fat,
                     'carbo' => $request->carbo,
