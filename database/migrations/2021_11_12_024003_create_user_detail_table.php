@@ -23,6 +23,11 @@ class CreateUserDetailTable extends Migration
             $table->float('weight')->nullable();
             $table->float('height')->nullable();
             $table->string('tension')->nullable();
+            $table->boolean('cholesterol')->nullable();
+            $table->boolean('diabetes')->nullable();
+            $table->boolean('uric_acid')->nullable();
+            $table->boolean('stomach_acid')->nullable();
+            $table->boolean('hyper_tension')->nullable();
             $table->timestamps();
         });
     }

@@ -17,7 +17,7 @@ class UserController extends Controller
         if (Gate::allows('admin-only')) {
             $users = DB::table('users')
                 ->leftJoin('user_details', 'user_details.id_user', '=', 'users.id')
-                ->select('users.id', 'users.name', 'users.email', 'users.check', 'user_details.born_date', 'user_details.phone_number', 'user_details.image', 'user_details.weight', 'user_details.height', 'user_details.tension')
+                ->select('users.id', 'users.name', 'users.email', 'users.check', 'user_details.born_date', 'user_details.phone_number', 'user_details.image', 'user_details.weight', 'user_details.height', 'user_details.tension', 'user_details.cholesterol', 'user_details.diabetes', 'user_details.uric_acid', 'user_details.stomach_acid', 'user_details.hyper_tension')
                 ->get();
             return response()->json($users, 200);
         }
@@ -29,7 +29,7 @@ class UserController extends Controller
         $users = DB::table('users')
             ->leftJoin('user_details', 'user_details.id_user', '=', 'users.id')
             ->where('users.id', '=', $id)
-            ->select('users.id', 'users.name', 'users.email', 'users.check', 'user_details.born_date', 'user_details.phone_number', 'user_details.image', 'user_details.weight', 'user_details.height', 'user_details.tension')
+            ->select('users.id', 'users.name', 'users.email', 'users.check', 'user_details.born_date', 'user_details.phone_number', 'user_details.image', 'user_details.weight', 'user_details.height', 'user_details.tension', 'user_details.cholesterol', 'user_details.diabetes', 'user_details.uric_acid', 'user_details.stomach_acid', 'user_details.hyper_tension')
             ->first();
 
         return response()->json($users, 200);

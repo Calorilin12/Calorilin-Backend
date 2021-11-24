@@ -23,7 +23,7 @@ class UserDetailController extends Controller
             $nama_file = $user->image;
         }
 
-        $users = UserDetail::find($id)
+        UserDetail::find($id)
             ->update([
                 'id_user' => $id,
                 'born_date' => $request->born_date,
@@ -32,6 +32,11 @@ class UserDetailController extends Controller
                 'weight' => $request->weight,
                 'height' => $request->height,
                 'tension' => $request->tension,
+                'cholesterol' => $request->cholesterol,
+                'diabetes' => $request->diabetes,
+                'uric_acid' => $request->uric_acid,
+                'stomach_acid' => $request->stomach_acid,
+                'hyper_tension' => $request->hyper_tension,
             ]);
         
         $tinggi_badan_kuadrat = ((($request->height / 100)) * (($request->height / 100)));

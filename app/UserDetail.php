@@ -15,5 +15,10 @@ class UserDetail extends Model
         'weight',
         'height',
         'tension',
+        'cholesterol',
+        'diabetes',
+        'uric_acid',
+        'stomach_acid',
+        'hyper_tension',
     ];
 }

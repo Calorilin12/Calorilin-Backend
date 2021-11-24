@@ -24,7 +24,7 @@ class RecipeFavoriteController extends Controller
         $recipe_favorites = DB::table('recipe_favorites')
             ->leftJoin('recipes', 'recipes.id', '=', 'recipe_favorites.id_recipe')
             ->where('recipe_favorites.id_user', '=', $id_user)
-            ->select('recipe_favorites.id', 'recipes.name', 'recipes.made_by', 'recipes.level_of_difficult', 'recipes.publish_date', 'recipe_favorites.time_show')
+            ->select('recipe_favorites.time_show', 'recipe_favorites.id', 'recipes.name', 'recipes.made_by', 'recipes.level_of_difficult', 'recipes.publish_date')
             ->get();
 
         return response()->json($recipe_favorites, 201);
