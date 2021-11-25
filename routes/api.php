@@ -2,13 +2,13 @@
 
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\ControlCaloryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserDetailController;
 use App\Http\Controllers\FoodMaterialController;
 use App\Http\Controllers\FoodMaterialFavoriteController;
 use App\Http\Controllers\RecipeFavoriteController;
-use App\RecipeFavorite;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -69,6 +69,10 @@ Route::middleware(['auth:sanctum'])->group(function ()
     Route::post('/control-calory', [ControlCaloryController::class, 'create']);
     Route::put('/control-calory/{id}', [ControlCaloryController::class, 'update']);
     Route::delete('/control-calory/{id}', [ControlCaloryController::class, 'delete']);
+    //Gate::allows('admin-only')
+
+    //Gate::allows('admin-only')
+    Route::get('/dashboard', [DashboardController::class, 'dashboard']);
     //Gate::allows('admin-only')
 });
 
