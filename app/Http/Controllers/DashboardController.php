@@ -12,10 +12,16 @@ class DashboardController extends Controller
     {
         if (Gate::allows('admin-only')) {
             $users = DB::table('users')->count();
-            $food_material_calories = DB::table('food_materials')->count();
+            $food_materials = DB::table('food_materials')->count();
             $recipes = DB::table('recipes')->count();
 
-            return response()->json([$users, $food_material_calories, $recipes], 200);
+            $response = [
+                'users' => $users,
+                'food_material' => $food_materials,
+                'recipes' => $recipes,
+            ];
+
+            return response()->json($response, 200);
         }
 
         return response()->json(["message" => "Anda tidak memiliki akses"], 403);
