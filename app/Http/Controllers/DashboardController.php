@@ -17,7 +17,7 @@ class DashboardController extends Controller
 
             $response = [
                 'users' => $users,
-                'food_material' => $food_materials,
+                'food_materials' => $food_materials,
                 'recipes' => $recipes,
             ];
 
