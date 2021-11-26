@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 24, 2021 at 11:36 AM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.12
+-- Host: 127.0.0.1:3308
+-- Generation Time: Nov 26, 2021 at 03:19 AM
+-- Server version: 8.0.21
+-- PHP Version: 7.4.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,13 +27,16 @@ SET time_zone = "+00:00";
 -- Table structure for table `control_calories`
 --
 
-CREATE TABLE `control_calories` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `control_calories`;
+CREATE TABLE IF NOT EXISTS `control_calories` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_calory` double(8,2) NOT NULL,
   `reminder` date NOT NULL,
-  `id_user` bigint(20) UNSIGNED NOT NULL,
+  `id_user` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `control_calories_id_user_foreign` (`id_user`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -42,13 +45,15 @@ CREATE TABLE `control_calories` (
 -- Table structure for table `failed_jobs`
 --
 
-CREATE TABLE `failed_jobs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+DROP TABLE IF EXISTS `failed_jobs`;
+CREATE TABLE IF NOT EXISTS `failed_jobs` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -57,27 +62,31 @@ CREATE TABLE `failed_jobs` (
 -- Table structure for table `food_materials`
 --
 
-CREATE TABLE `food_materials` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `serve` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+DROP TABLE IF EXISTS `food_materials`;
+CREATE TABLE IF NOT EXISTS `food_materials` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `serve` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `fat` double(8,2) NOT NULL,
   `carbo` double(8,2) NOT NULL,
   `calory` double(8,2) NOT NULL,
   `protein` double(8,2) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `food_materials`
 --
 
 INSERT INTO `food_materials` (`id`, `name`, `serve`, `type`, `image`, `fat`, `carbo`, `calory`, `protein`, `created_at`, `updated_at`) VALUES
-(2, 'Telur Ceplok', '1 Butir', 'Telur Ayam', 'egg-ceplok.jpg', 28.50, 1.20, 480.00, 6.50, '2021-11-13 06:28:53', '2021-11-24 10:35:39'),
-(8, 'Susu', '100 gram', NULL, 'susu.png', 1.00, 0.00, 42.00, 3.40, '2021-11-15 00:16:56', '2021-11-15 00:16:56');
+(2, 'Telur Ceplok', '1 Butir', 'Telur Ayam', 'telur-ceplok.jpeg', 28.50, 1.20, 480.00, 6.50, '2021-11-13 06:28:53', '2021-11-25 09:06:33'),
+(8, 'Susu', '100 gram', NULL, 'susu.png', 1.00, 0.00, 42.00, 3.40, '2021-11-15 00:16:56', '2021-11-15 00:16:56'),
+(9, 'Telur Rebus', '1 Butir', 'Telur Ayam', 'telur-rebus.jpg', 5.28, 0.56, 77.00, 6.26, '2021-11-25 08:44:15', '2021-11-25 08:44:15'),
+(11, 'Kentang Goreng', '100 gram', 'Kentang', 'kentang-goreng.jpg', 15.00, 41.00, 312.00, 3.40, '2021-11-26 03:13:59', '2021-11-26 03:13:59');
 
 -- --------------------------------------------------------
 
@@ -85,14 +94,18 @@ INSERT INTO `food_materials` (`id`, `name`, `serve`, `type`, `image`, `fat`, `ca
 -- Table structure for table `food_material_favorites`
 --
 
-CREATE TABLE `food_material_favorites` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `id_user` bigint(20) UNSIGNED NOT NULL,
-  `id_food_material` bigint(20) UNSIGNED NOT NULL,
-  `time_show` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `food_material_favorites`;
+CREATE TABLE IF NOT EXISTS `food_material_favorites` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_user` bigint UNSIGNED NOT NULL,
+  `id_food_material` bigint UNSIGNED NOT NULL,
+  `time_show` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `food_material_favorites_id_user_foreign` (`id_user`),
+  KEY `food_material_favorites_id_food_material_foreign` (`id_food_material`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `food_material_favorites`
@@ -107,11 +120,13 @@ INSERT INTO `food_material_favorites` (`id`, `id_user`, `id_food_material`, `tim
 -- Table structure for table `migrations`
 --
 
-CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+DROP TABLE IF EXISTS `migrations`;
+CREATE TABLE IF NOT EXISTS `migrations` (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `migration` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `migrations`
@@ -136,10 +151,12 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- Table structure for table `password_resets`
 --
 
-CREATE TABLE `password_resets` (
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
+DROP TABLE IF EXISTS `password_resets`;
+CREATE TABLE IF NOT EXISTS `password_resets` (
+  `email` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  KEY `password_resets_email_index` (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -148,24 +165,28 @@ CREATE TABLE `password_resets` (
 -- Table structure for table `personal_access_tokens`
 --
 
-CREATE TABLE `personal_access_tokens` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+DROP TABLE IF EXISTS `personal_access_tokens`;
+CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `tokenable_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_id` bigint UNSIGNED NOT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+  KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=174 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `personal_access_tokens`
 --
 
 INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `name`, `token`, `abilities`, `last_used_at`, `created_at`, `updated_at`) VALUES
-(1, 'App\\User', 1, 'Login Token', '602619b4fa4fd9f2330e0078b2bfd5d8031e7c593ad8e583a3b134f235914578', '[\"*\"]', '2021-11-24 10:35:59', '2021-11-12 20:29:01', '2021-11-24 10:35:59'),
+(1, 'App\\User', 1, 'Login Token', '602619b4fa4fd9f2330e0078b2bfd5d8031e7c593ad8e583a3b134f235914578', '[\"*\"]', '2021-11-26 03:14:32', '2021-11-12 20:29:01', '2021-11-26 03:14:32'),
 (2, 'App\\User', 2, 'Register Token', '95cc4db4acccc3f1495cffc94f1b6cb5fad5eace400dc23edb686cb1ae1ebeca', '[\"*\"]', NULL, '2021-11-12 22:22:51', '2021-11-12 22:22:51'),
 (3, 'App\\User', 3, 'Register Token', 'e55363915b041ee5ff6973ccef42e6a6c971ec2e9ba2a27f6113f7194a4c1b16', '[\"*\"]', NULL, '2021-11-12 22:38:20', '2021-11-12 22:38:20'),
 (4, 'App\\User', 4, 'Register Token', 'f0acbbfd3668b2cc02f93a16258d770c0e22e75feb2b8149d3005dcc508176cf', '[\"*\"]', NULL, '2021-11-12 23:36:41', '2021-11-12 23:36:41'),
@@ -308,7 +329,36 @@ INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `n
 (141, 'App\\User', 1, 'Login Token', 'd2c6f8f7d2c4e6c2756fec37f7a964367e493d1709dc654a1153bc7f79f9b6d8', '[\"*\"]', '2021-11-23 04:14:09', '2021-11-23 04:14:09', '2021-11-23 04:14:09'),
 (142, 'App\\User', 1, 'Login Token', '1f543bd82f201f306ca66c6f5019dd2770d1a4e44877ad1ff8c57957629e6b92', '[\"*\"]', '2021-11-23 04:17:34', '2021-11-23 04:17:34', '2021-11-23 04:17:34'),
 (143, 'App\\User', 1, 'Login Token', '98e101cc536794d4e0538aee29058d5bf4fa5da6dbd50493fe635bb6cdba7e8e', '[\"*\"]', '2021-11-23 04:20:36', '2021-11-23 04:19:16', '2021-11-23 04:20:36'),
-(144, 'App\\User', 1, 'Login Token', 'fa25d28e3364c01e9a0e72610104c816d20b8d17e6852c155ba0a892c491cddc', '[\"*\"]', '2021-11-24 10:03:48', '2021-11-24 10:02:48', '2021-11-24 10:03:48');
+(144, 'App\\User', 1, 'Login Token', 'fa25d28e3364c01e9a0e72610104c816d20b8d17e6852c155ba0a892c491cddc', '[\"*\"]', '2021-11-24 10:03:48', '2021-11-24 10:02:48', '2021-11-24 10:03:48'),
+(145, 'App\\User', 1, 'Login Token', '91fa6f1a6fd0dc1cb13997cf7733df0c16e2eea24a23e28e0a2e1e6f80460338', '[\"*\"]', '2021-11-25 02:35:33', '2021-11-25 02:34:38', '2021-11-25 02:35:33'),
+(146, 'App\\User', 1, 'Login Token', '59d5cc854842cfabc872cf10c918b84124541fe30303074de883d61d3a085406', '[\"*\"]', NULL, '2021-11-25 02:58:29', '2021-11-25 02:58:29'),
+(147, 'App\\User', 1, 'Login Token', '29790964ea5ff738ab29bf6900c7a7bc95eaa7b9937023aa58f84e6348a59617', '[\"*\"]', NULL, '2021-11-25 02:58:39', '2021-11-25 02:58:39'),
+(148, 'App\\User', 1, 'Login Token', '88fe0301fff6a8142684e562c9ba105cce52dd2b8b065407f6e8f74b784a2f29', '[\"*\"]', '2021-11-25 03:23:06', '2021-11-25 03:22:51', '2021-11-25 03:23:06'),
+(149, 'App\\User', 1, 'Login Token', 'fafbb267775a5a0d074b435787211cf799f9e28dea3024e12e957109f1bea951', '[\"*\"]', '2021-11-25 03:29:36', '2021-11-25 03:29:34', '2021-11-25 03:29:36'),
+(150, 'App\\User', 1, 'Login Token', '259b06fb52bde296a55dbf24a1e68e838b445cd33b5ed251d3eeb980ae41ba8d', '[\"*\"]', '2021-11-25 03:30:00', '2021-11-25 03:30:00', '2021-11-25 03:30:00'),
+(151, 'App\\User', 1, 'Login Token', '4d027b0bad2a1cca22eb0b3bcf1671d6f29f22145d9a44baa7005fbc0e8f96f5', '[\"*\"]', '2021-11-25 03:32:38', '2021-11-25 03:31:32', '2021-11-25 03:32:38'),
+(152, 'App\\User', 1, 'Login Token', 'c251f01d693afa69d8cae6c8d19e898bc956a50dbc85eb853f84064a7fa7d32d', '[\"*\"]', NULL, '2021-11-25 03:48:40', '2021-11-25 03:48:40'),
+(153, 'App\\User', 1, 'Login Token', '963e5f0cf3b5ebe27c5a81875879fd14f9f592d045f5aed585cee02e7e7f9fc8', '[\"*\"]', '2021-11-25 04:07:25', '2021-11-25 03:57:18', '2021-11-25 04:07:25'),
+(154, 'App\\User', 1, 'Login Token', '570b1957f5232d815006504c417fcf45f2b1cd5d8a3da7b48bd765e80aaec62b', '[\"*\"]', '2021-11-25 04:28:43', '2021-11-25 04:10:14', '2021-11-25 04:28:43'),
+(155, 'App\\User', 1, 'Login Token', 'c50a5d8c79b8d58d628b51eee3d12164abe868c4dfb92b98aa0693b1d769c5d6', '[\"*\"]', '2021-11-25 06:33:00', '2021-11-25 04:31:38', '2021-11-25 06:33:00'),
+(156, 'App\\User', 1, 'Login Token', '6695f92187e3485cabc74ac23ea915bc65f594f58127ab802d8341b2008aa490', '[\"*\"]', '2021-11-25 06:34:50', '2021-11-25 06:34:49', '2021-11-25 06:34:50'),
+(157, 'App\\User', 1, 'Login Token', '83e340e8399b85be3188e0d3fc5bdbef64537b307b59e315935bfe76e9baffcc', '[\"*\"]', '2021-11-25 06:35:30', '2021-11-25 06:35:29', '2021-11-25 06:35:30'),
+(158, 'App\\User', 1, 'Login Token', '0591cfde36905f3f00372ee663152ee29102a6d0487373af3be7f70f795f4a52', '[\"*\"]', '2021-11-25 06:48:04', '2021-11-25 06:48:00', '2021-11-25 06:48:04'),
+(159, 'App\\User', 1, 'Login Token', '83e75542dce89a4a9c886801b91c2f2ca5aa80186fed0eed61a575bf44e8b439', '[\"*\"]', '2021-11-25 06:48:06', '2021-11-25 06:48:05', '2021-11-25 06:48:06'),
+(160, 'App\\User', 1, 'Login Token', 'd59e36723abb48c5f52be90935b025777ea713d765f367fa3354cc09da2decef', '[\"*\"]', '2021-11-25 06:48:13', '2021-11-25 06:48:12', '2021-11-25 06:48:13'),
+(161, 'App\\User', 1, 'Login Token', 'fdd6cebec461727725beea6002716dba42a06333481337ffbbff1bdc22b695e6', '[\"*\"]', '2021-11-25 06:49:23', '2021-11-25 06:49:22', '2021-11-25 06:49:23'),
+(162, 'App\\User', 1, 'Login Token', '3dcc10b7bfc13c35e8498a56affc3d9e9677805b94971045c6036b99102664c5', '[\"*\"]', '2021-11-25 06:50:29', '2021-11-25 06:50:29', '2021-11-25 06:50:29'),
+(163, 'App\\User', 1, 'Login Token', '0c9071b04df40b9b807ddc9a7713aa58929b503a92ee0aab18aea55ff48a1747', '[\"*\"]', '2021-11-25 06:55:03', '2021-11-25 06:55:03', '2021-11-25 06:55:03'),
+(164, 'App\\User', 1, 'Login Token', 'bbaf67da61d62b8b6d82a1ad9943b2560c6bdb430a51e43f7c15f07dbc7c7c00', '[\"*\"]', '2021-11-25 07:44:05', '2021-11-25 07:39:25', '2021-11-25 07:44:05'),
+(165, 'App\\User', 1, 'Login Token', '737606195a473b6025175756e00a71141f1de3f0c6120c63bfc77cccf0c3522a', '[\"*\"]', '2021-11-25 07:39:36', '2021-11-25 07:39:36', '2021-11-25 07:39:36'),
+(166, 'App\\User', 1, 'Login Token', 'd877f1d1f4f3e0fca41b303b72146ab83a973d1a0314bc33cd836324497d3b53', '[\"*\"]', '2021-11-25 07:44:49', '2021-11-25 07:44:49', '2021-11-25 07:44:49'),
+(167, 'App\\User', 1, 'Login Token', '57a58d3cf056d2a4db183ed98838a9024b30349f46180735cf1c3f49df401d24', '[\"*\"]', '2021-11-25 09:23:27', '2021-11-25 07:49:42', '2021-11-25 09:23:27'),
+(168, 'App\\User', 1, 'Login Token', 'a7768ca84305b6113b1059a31f350c3435d7ad9daca6349e417f51c233b0b52d', '[\"*\"]', '2021-11-25 08:47:25', '2021-11-25 08:46:16', '2021-11-25 08:47:25'),
+(169, 'App\\User', 1, 'Login Token', '7e3cfdcba5e17ed59f46bccdcdf7fa4235b18e7d77942f87214b29a6327cbf1c', '[\"*\"]', '2021-11-25 08:51:01', '2021-11-25 08:51:00', '2021-11-25 08:51:01'),
+(170, 'App\\User', 1, 'Login Token', 'e0eb5883c0a4780c05259b6318c536074506798a1d9d92c0e3168c0318ae13f2', '[\"*\"]', '2021-11-25 08:52:48', '2021-11-25 08:52:48', '2021-11-25 08:52:48'),
+(171, 'App\\User', 1, 'Login Token', '2f08a3ef4c25e969f25e573bbe3094beecfb7cc3269843bc6669cf5e258828c8', '[\"*\"]', '2021-11-25 12:46:19', '2021-11-25 12:45:42', '2021-11-25 12:46:19'),
+(172, 'App\\User', 1, 'Login Token', '44ee3d9270f0a517ec14807c12a9e18564adeb37fb2a3fd0be113ff8301127ff', '[\"*\"]', '2021-11-25 13:12:41', '2021-11-25 13:11:25', '2021-11-25 13:12:41'),
+(173, 'App\\User', 1, 'Login Token', '4d549f2134969e420d1d97265ac8cc5bea9bc9611d39d78fd3a2ae864c635e30', '[\"*\"]', '2021-11-26 03:18:13', '2021-11-26 02:45:01', '2021-11-26 03:18:13');
 
 -- --------------------------------------------------------
 
@@ -316,15 +366,17 @@ INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `n
 -- Table structure for table `recipes`
 --
 
-CREATE TABLE `recipes` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `made_by` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `level_of_difficult` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `recipes`;
+CREATE TABLE IF NOT EXISTS `recipes` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `made_by` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `level_of_difficult` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `publish_date` date NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `recipes`
@@ -353,9 +405,7 @@ INSERT INTO `recipes` (`id`, `name`, `made_by`, `level_of_difficult`, `publish_d
 (22, 'Lodeh Salmon', 'Pura Kitchen', 'Sedang', '2021-01-15', '2021-11-17 11:27:37', '2021-11-17 11:27:37'),
 (23, 'Spicy Bulgogi Pasta', 'Pura Kitchen', 'Mudah', '2021-11-18', '2021-11-18 03:56:20', '2021-11-18 03:56:20'),
 (30, 'Kue Sus Spesial', 'Dapur Umami', 'Sedang', '2021-11-23', '2021-11-23 03:35:46', '2021-11-23 03:38:14'),
-(29, 'Salmon & Brokoli Rebus Krim', 'Pura Kitchen', 'Sedang', '2021-07-18', '2021-11-22 03:41:51', '2021-11-22 03:41:51'),
-(31, 'Bulgogi Pasta', 'Dapur Umami', 'Sedang', '2021-11-23', '2021-11-23 03:41:17', '2021-11-23 03:41:17'),
-(32, 'Bulgogi Pasta Spesial', 'Pura Kitchen', 'Sedang', '2021-11-23', '2021-11-23 03:41:58', '2021-11-23 03:46:30');
+(29, 'Salmon & Brokoli Rebus Krim', 'Pura Kitchen', 'Sedang', '2021-07-18', '2021-11-22 03:41:51', '2021-11-22 03:41:51');
 
 -- --------------------------------------------------------
 
@@ -363,24 +413,27 @@ INSERT INTO `recipes` (`id`, `name`, `made_by`, `level_of_difficult`, `publish_d
 -- Table structure for table `recipe_details`
 --
 
-CREATE TABLE `recipe_details` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `id_recipe` bigint(20) UNSIGNED NOT NULL,
-  `short_description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `recipe_image` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `duration` int(11) NOT NULL,
-  `total_eater` int(11) NOT NULL,
-  `total_calory` int(11) NOT NULL,
-  `compositions` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `steps_of_make` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `recipe_details`;
+CREATE TABLE IF NOT EXISTS `recipe_details` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_recipe` bigint UNSIGNED NOT NULL,
+  `short_description` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `recipe_image` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `duration` int NOT NULL,
+  `total_eater` int NOT NULL,
+  `total_calory` int NOT NULL,
+  `compositions` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `steps_of_make` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `cholesterol` tinyint(1) NOT NULL,
   `diabetes` tinyint(1) NOT NULL,
   `uric_acid` tinyint(1) NOT NULL,
   `stomach_acid` tinyint(1) NOT NULL,
   `hyper_tension` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `recipe_details_id_recipe_foreign` (`id_recipe`)
+) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `recipe_details`
@@ -390,8 +443,6 @@ INSERT INTO `recipe_details` (`id`, `id_recipe`, `short_description`, `recipe_im
 (3, 3, NULL, 'bulgogi-pasta.PNG', 25, 2, 880, '400gr Mie Kuning / Egg Noodle\r\n1 tbsp Canola Oil\r\n2 siung Bawang Putih / Garlic\r\n2 butir Telur / Eggs\r\n50gr Daya Ayam / Chicken Breast\r\n50gr Bakso Sapi / Meatball\r\n50gr Udang / Shrimp\r\n50gr Pok Coy / Bhok Coy\r\n50gr Wortel / Carrot\r\n100ml Air / Water\r\n2 tsp PURA Himalayan Salt\r\n1gr Lada Purih / White Pepper\r\n2 tsp Gula Putih / White Sugar\r\n2 tsp PURA Chicken Extract\r\n2 tsp Kecap Ikan / Fish Sauce\r\n2 tsp Saus Tiram / Oyster Sauce\r\n2 tbsp Kecap Manis / Sweet Soy Sauce\r\n2 tsp Minyak Wijen / Sesame Oil', '1. panaskan minyak di wajan, masukan telur, aduk sebentar\r\n2. masukan bawang putih, baso sapi, ayam dan udang, aduk sampai warna daging berubah\r\n3. masukan pok coy dan wortel. aduk rata\r\n4. masukan air, pura himalayan salt, chicken extract, lada putih, gula, kecap ikan, saus tiram dan kecap manis, aduk rata\r\n5. masukan mie, aduk rata sampai air mengering lalu masukan minyak wijen', 1, 0, 0, 0, 0, '2021-11-14 01:44:48', '2021-11-22 15:54:51'),
 (4, 4, 'Ikan dapat menyebabkan asam urat', 'steamed-fish.jpg', 20, 2, 80, '5 buah jeruk sunkist\n200ml perasan jeruk sunkist\n1 bungkus besar nutrijel rasa jeruk\n500ml air\n100 gram gula', 'Siapkan semua bahan. Isi jeruk diperas, ambil sarinya 200ml\nMasak air lalu masukkan agar - agar dan gula sambil diaduk hingga mendidih. Gunakan api kecil\nMatikan api kompor. Sesaat sebelum diangkat tuang air perasan jeruk  lalu diaduk\nMasukkan kedalam cetakan lalu  letakkan potongan jeruk dan diamkan hingga set. Simpan dalam kulkas agar lebih segar.\nPudding jeruk siap disajikan.', 0, 0, 1, 0, 0, '2021-11-14 01:47:18', '2021-11-23 01:04:45'),
 (30, 30, NULL, 'bulgogi-pasta.PNG', 45, 10, 80, 'Tepung Terigu', 'Aduk bahan hingga merata', 1, 0, 0, 0, 0, '2021-11-23 03:35:46', '2021-11-23 03:38:14'),
-(31, 31, NULL, 'bulgogi-pasta.PNG', 30, 2, 100, 'Mie', 'Rebus Mie', 1, 0, 0, 0, 0, '2021-11-23 03:41:17', '2021-11-23 03:41:17'),
-(32, 32, NULL, 'bulgogi-pasta.PNG', 30, 2, 50, 'Mie', 'Rebus Mie', 0, 1, 1, 1, 1, '2021-11-23 03:41:58', '2021-11-24 10:03:44'),
 (5, 5, NULL, 'shrimp-dumpling.jpg', 40, 2, 80, '10.0 lembar Kulit Pangsit / Wonton Skin\n1 lt Minyak Kanola / Canola Oil (untuk Menggoreng)\n250 gram Udang / Prawn Potong Kasar\n2 gram Daun Bawang / Spring Onion Iris tipis\n2 siung Bawang Putih / Garlic cincang halus\n2 sdm Tepung Tapioka / Tapioca Flour cincang halus\n1/2 sdt PURA Himalayan Salt\n1/2 sdt PURA Chicken Extract\n1 sdm Gula Putih / White Sugar\n1 sdm Minyak Wijen / Sesame Oil', '1. masukan udang kedalam mangkuk\n2. masukan bawang putih, daun bawang, tepung tapioka, pura himalayan salt, chicken extract, gula dan minyak wijen. aduk sampai tercampur rata\n3. bungkus udang dengan kulit pangsit sesuai instruksi *lihat video*\n4. panaskan minyak 5 menit, atur api sedang\n5. goreng pangsit udang dengan api sedang selama 5-7 menit atau sampai warna kulit berubah', 0, 0, 1, 0, 0, '2021-11-14 01:49:33', '2021-11-14 01:49:33'),
 (6, 6, NULL, 'Chicken-Siomai.jpg', 45, 2, 80, '15 lembar Kulit Pangsit / Wonton Skin\n50 gram Wortel / Carrot cincang halus\n300 gram Ayam Paha / Chicken Thigh Giling Halus\n150 gram Udang / Prawn potong kecil kasar\n2 sdm Tepung Tapioka / Tapioca Flour\nDaun Bawang / Spring Onion iris tipis\n2.0 sdt PURA Himalayan Salt\n2.0 sdt PURA Chicken Extract\n2.0 sdm Gula Putih / White Sugar\n1.0 sdm Minyak Wijen / Sesame Oil', '1. campur ayam, udang dan daun bawang kedalam mangkuk\n2. masukan pura himalayan salt, chicken extract, gula, minyak wijen dan tepung tapioka. aduk sampai tercampurn rata\n3. tutup mangkuk dengan plastic wrap, simpan di dalam kulkas selama 10-15 menit sampai campuran daging agak mengeras agar lebih mudah dibentuk.\n4. siapkan kulit pangsing, dan bentuk campuran daging dengan kulit pangsit\n5. oleskan minyak di dasar besek bambu, lalu susun siumay yg sudah dibentuk. taburi cincangan wortel di atas siumay\n6. kukus siumay selama 7-10 menit. angkat dan sajikan\"', 0, 0, 0, 0, 0, '2021-11-14 01:54:13', '2021-11-14 01:54:13'),
 (7, 7, NULL, 'honey-bbq-chicken.jpg', 50, 2, 282, '500gr Paha Ayam tanpa tulang\n100gr Pok Coy 1 lembar jadi 2\n6 tbsp Madu\n3 tbsp Gula\n1 tsp PURA Himalayan Salt\n1 tsp PURA Chicken Extract\n1 tsp Saus Tiram\n1/2 tsp Ngoh Yong\n1 tbsp Kecap Asin\n1 tsp Kecap hitam\n2 tbsp Tahu Merah\n1 tbsp Air Tahu Merah\n1 tbsp Hoisin', '1. masukan ayam kedalam mangkuk\n2. masukan madu, gula, pura himalayan salt, pura chicken extract, saus tiram, gohiong, kecap asin, kecap hitam, tahu merah, cairan tahu merah dan hoisin kedalam mangkuk.\n3. tutup mangkuk dengan plastik wrap, simpan didalam kulkas minimal 3 - 6 jam\n4. panaskan oven dengan suhu 150*c\n5. tata ayam di loyang dengan baking/cooling rack. simpan bahan marinasi untuk olesan\n6. oven ayam selama 40 menit, 20 menit setiap sisi\n7. oleskan bahan marinasi setiap 10 menit\n8. setelah matang, potong ayam sesuai selera dan sajikan dengan sayur pok coy', 0, 0, 0, 1, 0, '2021-11-14 01:56:19', '2021-11-14 01:56:19'),
@@ -419,14 +470,18 @@ INSERT INTO `recipe_details` (`id`, `id_recipe`, `short_description`, `recipe_im
 -- Table structure for table `recipe_favorites`
 --
 
-CREATE TABLE `recipe_favorites` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `id_user` bigint(20) UNSIGNED NOT NULL,
-  `id_recipe` bigint(20) UNSIGNED NOT NULL,
-  `time_show` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `recipe_favorites`;
+CREATE TABLE IF NOT EXISTS `recipe_favorites` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_user` bigint UNSIGNED NOT NULL,
+  `id_recipe` bigint UNSIGNED NOT NULL,
+  `time_show` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `recipe_favorites_id_user_foreign` (`id_user`),
+  KEY `recipe_favorites_id_recipe_foreign` (`id_recipe`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `recipe_favorites`
@@ -441,17 +496,20 @@ INSERT INTO `recipe_favorites` (`id`, `id_user`, `id_recipe`, `time_show`, `crea
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `check` tinyint(1) DEFAULT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`)
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
@@ -472,24 +530,27 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `ch
 -- Table structure for table `user_details`
 --
 
-CREATE TABLE `user_details` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `id_user` bigint(20) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `user_details`;
+CREATE TABLE IF NOT EXISTS `user_details` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_user` bigint UNSIGNED NOT NULL,
   `born_date` date DEFAULT NULL,
-  `phone_number` varchar(13) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `body_mass_index` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone_number` varchar(13) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `body_mass_index` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `weight` double(8,2) DEFAULT NULL,
   `height` double(8,2) DEFAULT NULL,
-  `tension` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tension` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `cholesterol` tinyint(1) DEFAULT NULL,
   `diabetes` tinyint(1) DEFAULT NULL,
   `uric_acid` tinyint(1) DEFAULT NULL,
   `stomach_acid` tinyint(1) DEFAULT NULL,
   `hyper_tension` tinyint(1) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_details_id_user_foreign` (`id_user`)
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `user_details`
@@ -511,10 +572,11 @@ INSERT INTO `user_details` (`id`, `id_user`, `born_date`, `phone_number`, `image
 -- Stand-in structure for view `viewuser`
 -- (See below for the actual view)
 --
-CREATE TABLE `viewuser` (
-`count(users)` bigint(21)
-,`count(food_materials)` bigint(21)
-,`count(recipes)` bigint(21)
+DROP VIEW IF EXISTS `viewuser`;
+CREATE TABLE IF NOT EXISTS `viewuser` (
+`count(users)` bigint
+,`count(food_materials)` bigint
+,`count(recipes)` bigint
 );
 
 -- --------------------------------------------------------
@@ -524,163 +586,8 @@ CREATE TABLE `viewuser` (
 --
 DROP TABLE IF EXISTS `viewuser`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `viewuser`  AS SELECT count(`users`.`id`) AS `count(users)`, count(`food_materials`.`id`) AS `count(food_materials)`, count(`recipes`.`id`) AS `count(recipes)` FROM ((`users` join `food_materials`) join `recipes`) ;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `control_calories`
---
-ALTER TABLE `control_calories`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `control_calories_id_user_foreign` (`id_user`);
-
---
--- Indexes for table `failed_jobs`
---
-ALTER TABLE `failed_jobs`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `food_materials`
---
-ALTER TABLE `food_materials`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `food_material_favorites`
---
-ALTER TABLE `food_material_favorites`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `food_material_favorites_id_user_foreign` (`id_user`),
-  ADD KEY `food_material_favorites_id_food_material_foreign` (`id_food_material`);
-
---
--- Indexes for table `migrations`
---
-ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `password_resets`
---
-ALTER TABLE `password_resets`
-  ADD KEY `password_resets_email_index` (`email`);
-
---
--- Indexes for table `personal_access_tokens`
---
-ALTER TABLE `personal_access_tokens`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
-  ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
-
---
--- Indexes for table `recipes`
---
-ALTER TABLE `recipes`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `recipe_details`
---
-ALTER TABLE `recipe_details`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `recipe_details_id_recipe_foreign` (`id_recipe`);
-
---
--- Indexes for table `recipe_favorites`
---
-ALTER TABLE `recipe_favorites`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `recipe_favorites_id_user_foreign` (`id_user`),
-  ADD KEY `recipe_favorites_id_recipe_foreign` (`id_recipe`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`);
-
---
--- Indexes for table `user_details`
---
-ALTER TABLE `user_details`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_details_id_user_foreign` (`id_user`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `control_calories`
---
-ALTER TABLE `control_calories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `failed_jobs`
---
-ALTER TABLE `failed_jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `food_materials`
---
-ALTER TABLE `food_materials`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `food_material_favorites`
---
-ALTER TABLE `food_material_favorites`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `migrations`
---
-ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- AUTO_INCREMENT for table `personal_access_tokens`
---
-ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
-
---
--- AUTO_INCREMENT for table `recipes`
---
-ALTER TABLE `recipes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
-
---
--- AUTO_INCREMENT for table `recipe_details`
---
-ALTER TABLE `recipe_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
-
---
--- AUTO_INCREMENT for table `recipe_favorites`
---
-ALTER TABLE `recipe_favorites`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT for table `user_details`
---
-ALTER TABLE `user_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+DROP VIEW IF EXISTS `viewuser`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `viewuser`  AS  select count(`users`.`id`) AS `count(users)`,count(`food_materials`.`id`) AS `count(food_materials)`,count(`recipes`.`id`) AS `count(recipes)` from ((`users` join `food_materials`) join `recipes`) ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
