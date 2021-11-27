@@ -8,9 +8,8 @@ class ControlCalory extends Model
 {
     public $table = "control_calories";
     protected $fillable = [
-        'user_calory',
         'id_user',
-        'reminder',
+        'user_calory',
     ];
 
     public function user(){

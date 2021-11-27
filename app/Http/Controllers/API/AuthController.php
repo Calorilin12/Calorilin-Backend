@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\UserDetail;
+use App\ControlCalory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -20,6 +21,10 @@ class AuthController extends Controller
         $createUser->save();
 
         UserDetail::create([
+            'id_user' => $createUser->id,
+        ]);
+
+        ControlCalory::created([
             'id_user' => $createUser->id,
         ]);
  
