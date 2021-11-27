@@ -1,5 +1,6 @@
 <?php
 
+use App\FoodMaterialFavorite;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\ControlCaloryController;
 use App\Http\Controllers\DashboardController;
@@ -66,6 +67,9 @@ Route::middleware(['auth:sanctum'])->group(function ()
     Route::post('/food-material-favorites/{id_user}/{id_food_material}', [FoodMaterialFavoriteController::class, 'food_material_favorites']);
     Route::get('/food-material-favorites/{id}', [FoodMaterialFavoriteController::class, 'food_material_favorites_show']);
     Route::delete('/food-material-favorites/{id}', [FoodMaterialFavoriteController::class, 'food_material_favorites_delete']);
+    //Gate::allows('admin-only')
+    Route::get('/food-material-favorites', [FoodMaterialFavorite::class, 'food_material_favorites_all']);
+    //Gate::allows('admin-only')
 
     Route::get('/control-calory/{id_user}', [ControlCaloryController::class, 'control_calories']);
     //Gate::allows('admin-only')

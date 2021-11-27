@@ -18,7 +18,7 @@ class RecipeFavoriteController extends Controller
             // Hanya User dengan role admin yang dapat mengakses ini
             $recipe_favorites = RecipeFavorite::all();
 
-            return response()->json(["data" => $recipe_favorites], 201);
+            return response()->json(["data" => $recipe_favorites], 200);
         }
         return response()->json(["message" => "Anda tidak memiliki akses"], 403);
     }

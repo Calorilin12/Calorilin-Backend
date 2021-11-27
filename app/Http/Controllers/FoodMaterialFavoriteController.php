@@ -7,6 +7,7 @@ use App\FoodMaterial;
 use App\FoodMaterialFavorite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class FoodMaterialFavoriteController extends Controller
 {
@@ -44,6 +45,16 @@ class FoodMaterialFavoriteController extends Controller
             ->first();
 
         return response()->json($food_material_favorites, 200);
+    }
+
+    public function food_material_favorites_all(){
+        if (Gate::allows('admin-only')) {
+            // Hanya User dengan role admin yang dapat mengakses ini
+            $food_material_favorites = FoodMaterialFavorite::all();
+
+            return response()->json(["data" => $food_material_favorites], 200);
+        }
+        return response()->json(["message" => "Anda tidak memiliki akses"], 403);
     }
 
     public function food_material_favorites_delete($id)
