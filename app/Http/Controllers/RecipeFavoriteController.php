@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\ControlCalory;
+use App\RecipeDetail;
 use App\RecipeFavorite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,6 +31,20 @@ class RecipeFavoriteController extends Controller
             'time_show' => $request->time_show,
         ]);
 
+        $recipe = RecipeDetail::find($id_recipe);
+
+        $control_calory = DB::table('control_calories')
+            ->where('id_user', '=', $id_user)
+            ->first();
+
+        $total_calory = $recipe->total_calory + $control_calory->user_calory;
+
+        ControlCalory::where('id_user', '=', $id_user)
+            ->first()
+            ->update([
+                'user_calory' => $total_calory,
+            ]);
+
         return response()->json(["message" => "Resep berhasil disimpan"], 201);
     }
 
@@ -45,6 +61,22 @@ class RecipeFavoriteController extends Controller
 
     public function recipe_favorites_delete($id)
     {
+        $recipe_favorite = RecipeFavorite::find($id);
+
+        $recipe = RecipeDetail::find($recipe_favorite->id_recipe);
+
+        $control_calory = DB::table('control_calories')
+            ->where('id_user', '=', $recipe_favorite->id_user)
+            ->first();
+
+        $total_calory = $control_calory->user_calory - $recipe->total_calory;
+
+        ControlCalory::where('id_user', '=', $recipe_favorite->id_user)
+            ->first()
+            ->update([
+                'user_calory' => $total_calory,
+            ]);
+
         RecipeFavorite::find($id)->delete();
 
         return response()->json(["message" => "Resep berhasil dihapus"], 201);

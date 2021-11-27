@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\ControlCalory;
+use App\FoodMaterial;
 use App\FoodMaterialFavorite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +17,20 @@ class FoodMaterialFavoriteController extends Controller
             'id_food_material' => $id_food_material,
             'time_show' => $request->time_show,
         ]);
+
+        $food_material = FoodMaterial::find($id_food_material);
+
+        $control_calory = DB::table('control_calories')
+            ->where('id_user', '=', $id_user)
+            ->first();
+
+        $total_calory = $food_material->calory + $control_calory->user_calory;
+
+        ControlCalory::where('id_user', '=', $id_user)
+            ->first()
+            ->update([
+                'user_calory' => $total_calory,
+            ]);
 
         return response()->json(["message" => "Food Material berhasil disimpan"], 201);
     }
@@ -32,6 +48,22 @@ class FoodMaterialFavoriteController extends Controller
 
     public function food_material_favorites_delete($id)
     {
+        $food_material_favorite = FoodMaterialFavorite::find($id);
+
+        $food_material = FoodMaterial::find($food_material_favorite->id_food_material);
+
+        $control_calory = DB::table('control_calories')
+            ->where('id_user', '=', $food_material_favorite->id_user)
+            ->first();
+
+        $total_calory = $control_calory->user_calory - $food_material->calory;
+
+        ControlCalory::where('id_user', '=', $food_material_favorite->id_user)
+            ->first()
+            ->update([
+                'user_calory' => $total_calory,
+            ]);
+
         FoodMaterialFavorite::find($id)->delete();
 
         return response()->json(["message" => "Food Material berhasil dihapus"], 201);
