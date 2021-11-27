@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3308
--- Generation Time: Nov 27, 2021 at 09:38 AM
+-- Generation Time: Nov 27, 2021 at 09:46 AM
 -- Server version: 8.0.21
 -- PHP Version: 7.4.9
 
@@ -31,7 +31,6 @@ DROP TABLE IF EXISTS `control_calories`;
 CREATE TABLE IF NOT EXISTS `control_calories` (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_calory` double(8,2) NOT NULL,
-  `reminder` date NOT NULL,
   `id_user` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -105,14 +104,7 @@ CREATE TABLE IF NOT EXISTS `food_material_favorites` (
   PRIMARY KEY (`id`),
   KEY `food_material_favorites_id_user_foreign` (`id_user`),
   KEY `food_material_favorites_id_food_material_foreign` (`id_food_material`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `food_material_favorites`
---
-
-INSERT INTO `food_material_favorites` (`id`, `id_user`, `id_food_material`, `time_show`, `created_at`, `updated_at`) VALUES
-(3, 8, 2, 'Pagi', '2021-11-14 21:22:01', '2021-11-14 21:22:01');
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -186,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
 --
 
 INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `name`, `token`, `abilities`, `last_used_at`, `created_at`, `updated_at`) VALUES
-(1, 'App\\User', 1, 'Login Token', '602619b4fa4fd9f2330e0078b2bfd5d8031e7c593ad8e583a3b134f235914578', '[\"*\"]', '2021-11-27 09:37:22', '2021-11-12 20:29:01', '2021-11-27 09:37:22'),
+(1, 'App\\User', 1, 'Login Token', '602619b4fa4fd9f2330e0078b2bfd5d8031e7c593ad8e583a3b134f235914578', '[\"*\"]', '2021-11-27 09:41:00', '2021-11-12 20:29:01', '2021-11-27 09:41:00'),
 (2, 'App\\User', 2, 'Register Token', '95cc4db4acccc3f1495cffc94f1b6cb5fad5eace400dc23edb686cb1ae1ebeca', '[\"*\"]', NULL, '2021-11-12 22:22:51', '2021-11-12 22:22:51'),
 (3, 'App\\User', 3, 'Register Token', 'e55363915b041ee5ff6973ccef42e6a6c971ec2e9ba2a27f6113f7194a4c1b16', '[\"*\"]', NULL, '2021-11-12 22:38:20', '2021-11-12 22:38:20'),
 (4, 'App\\User', 4, 'Register Token', 'f0acbbfd3668b2cc02f93a16258d770c0e22e75feb2b8149d3005dcc508176cf', '[\"*\"]', NULL, '2021-11-12 23:36:41', '2021-11-12 23:36:41'),
@@ -479,14 +471,7 @@ CREATE TABLE IF NOT EXISTS `recipe_favorites` (
   PRIMARY KEY (`id`),
   KEY `recipe_favorites_id_user_foreign` (`id_user`),
   KEY `recipe_favorites_id_recipe_foreign` (`id_recipe`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `recipe_favorites`
---
-
-INSERT INTO `recipe_favorites` (`id`, `id_user`, `id_recipe`, `time_show`, `created_at`, `updated_at`) VALUES
-(2, 4, 15, 'Pagi', '2021-11-18 03:51:11', '2021-11-18 03:51:11');
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -507,20 +492,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `check`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Calorilin', 'admin@admin.com', NULL, '$2y$10$vXNWGdLA8e.R2qQkF0ZJt.08VyW/4zO9DLYRTXmKrD2OTCA00uWeu', 1, NULL, '2021-11-12 08:57:27', '2021-11-12 08:57:27'),
-(4, 'Fabyan Kindarya', 'fabyan@calorilin.com', NULL, '$2y$10$VH3QXGn5zirM0vGbE7X.m.EJ7UFBuQLLjyAw3Hhl05ja0adlGNmb2', 0, NULL, '2021-11-12 23:36:41', '2021-11-12 23:36:41'),
-(6, 'testt', 'test12@gmail.com', NULL, '$2y$10$jRES8wWLjgT7Mn6S.8xk3ePvBarM.VziOcLJZQXQJBe2X9jb.QjhW', 0, NULL, '2021-11-13 23:25:47', '2021-11-13 23:25:47'),
-(7, 'Zaid Abdillah', 'zaidabdillah18@gmail.com', NULL, '$2y$10$BSu3KrzeDIh393fkQ7JnkuKFeSjEfGYXDpgso7dfF/zB5MJqQf4ny', 0, NULL, '2021-11-14 01:19:38', '2021-11-23 01:05:46'),
-(8, 'faiq', 'faiq@ganteng.com', NULL, '$2y$10$XBlRWzAyU7uHxw9rm5XuOO8QtS4iVslBdePyahhP0.U3YnNB9czXG', 0, NULL, '2021-11-14 18:34:32', '2021-11-14 18:34:32'),
-(9, 'Stefanus Irgy', 'stefanus@irgy.com', NULL, '$2y$10$Dm1pF8EiZ.BP5H09jgtY9uWFt8zb5f1258JPbLqTJRYvGJUfADf3q', 0, NULL, '2021-11-15 09:48:38', '2021-11-15 09:48:38'),
-(10, 'zero', 'zerotiertes@ttt.com', NULL, '$2y$10$tWeHxqWUtMEjo/prlG1JROEj0WuEuXbH2/n6hJI4LDr2yvUa/mG8q', 0, NULL, '2021-11-17 09:18:01', '2021-11-17 09:18:01');
+(1, 'Calorilin', 'admin@admin.com', NULL, '$2y$10$vXNWGdLA8e.R2qQkF0ZJt.08VyW/4zO9DLYRTXmKrD2OTCA00uWeu', 1, NULL, '2021-11-12 08:57:27', '2021-11-12 08:57:27');
 
 -- --------------------------------------------------------
 
@@ -548,44 +527,14 @@ CREATE TABLE IF NOT EXISTS `user_details` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_details_id_user_foreign` (`id_user`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `user_details`
 --
 
 INSERT INTO `user_details` (`id`, `id_user`, `born_date`, `phone_number`, `image`, `body_mass_index`, `weight`, `height`, `tension`, `cholesterol`, `diabetes`, `uric_acid`, `stomach_acid`, `hyper_tension`, `created_at`, `updated_at`) VALUES
-(1, 1, '2021-12-12', '820211212', '', 'Berat Badan Kurang', 55.00, 175.00, '130/85', NULL, NULL, NULL, NULL, NULL, '2021-11-12 09:49:19', '2021-11-15 06:15:06'),
-(4, 4, '2001-09-15', '085157766074', NULL, 'Berat Badan Normal', 60.00, 175.00, '130/85', NULL, NULL, NULL, NULL, NULL, '2021-11-12 23:36:41', '2021-11-16 09:17:27'),
-(5, 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-11-13 23:22:02', '2021-11-13 23:22:02'),
-(6, 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-11-13 23:25:47', '2021-11-13 23:25:47'),
-(7, 7, '2000-03-20', '081331913558', 'funny-baby.jpeg', 'Berat Badan Berlebih', 80.00, 170.00, '120/80', 0, 1, 0, 0, 0, '2021-11-14 01:19:38', '2021-11-24 10:09:47'),
-(8, 8, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-11-14 18:34:32', '2021-11-14 18:34:32'),
-(9, 9, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-11-15 09:48:38', '2021-11-15 09:48:38'),
-(10, 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-11-17 09:18:01', '2021-11-17 09:18:01');
-
--- --------------------------------------------------------
-
---
--- Stand-in structure for view `viewuser`
--- (See below for the actual view)
---
-DROP VIEW IF EXISTS `viewuser`;
-CREATE TABLE IF NOT EXISTS `viewuser` (
-`count(users)` bigint
-,`count(food_materials)` bigint
-,`count(recipes)` bigint
-);
-
--- --------------------------------------------------------
-
---
--- Structure for view `viewuser`
---
-DROP TABLE IF EXISTS `viewuser`;
-
-DROP VIEW IF EXISTS `viewuser`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `viewuser`  AS  select count(`users`.`id`) AS `count(users)`,count(`food_materials`.`id`) AS `count(food_materials)`,count(`recipes`.`id`) AS `count(recipes)` from ((`users` join `food_materials`) join `recipes`) ;
+(1, 1, '2021-12-12', '820211212', '', 'Berat Badan Kurang', 55.00, 175.00, '130/85', NULL, NULL, NULL, NULL, NULL, '2021-11-12 09:49:19', '2021-11-15 06:15:06');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
