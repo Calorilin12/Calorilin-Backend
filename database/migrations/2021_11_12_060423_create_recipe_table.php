@@ -18,6 +18,7 @@ class CreateRecipeTable extends Migration
             $table->string('name');
             $table->string('made_by');
             $table->string('level_of_difficult');
+            $table->string('category');
             $table->date('publish_date');
             $table->timestamps();
         });

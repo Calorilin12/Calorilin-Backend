@@ -40,10 +40,11 @@ class RecipeController extends Controller
                 'name' => $request->name,
                 'made_by' => $request->made_by,
                 'level_of_difficult' => $request->level_of_difficult,
+                'category' => $request->category,
                 'publish_date' => $request->publish_date
             ]);
 
-            if ($request->recipe_image != null) {
+            if ($request->file('recipe_image') != null) {
                 $file = $request->file('recipe_image');
                 $nama_file = $file->getClientOriginalName();
                 $tujuan_upload = 'recipe-detail-images';
@@ -88,6 +89,7 @@ class RecipeController extends Controller
                     'name' => $request->name,
                     'made_by' => $request->made_by,
                     'level_of_difficult' => $request->level_of_difficult,
+                    'category' => $request->category,
                     'publish-date' => $request->publish_date
                 ]);
 

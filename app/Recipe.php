@@ -10,6 +10,7 @@ class Recipe extends Model
         'name',
         'made_by',
         'level_of_difficult',
+        'category',
         'publish_date',
     ];
 }
