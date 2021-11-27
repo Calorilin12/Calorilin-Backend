@@ -5,9 +5,22 @@ namespace App\Http\Controllers;
 use App\RecipeFavorite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class RecipeFavoriteController extends Controller
 {
+
+    public function recipe_favorites_all()
+    {
+        if (Gate::allows('admin-only')) {
+            // Hanya User dengan role admin yang dapat mengakses ini
+            $recipe_favorites = RecipeFavorite::all();
+
+            return response()->json(["data" => $recipe_favorites], 201);
+        }
+        return response()->json(["message" => "Anda tidak memiliki akses"], 403);
+    }
+
     public function recipe_favorites($id_user, $id_recipe, Request $request)
     {
         RecipeFavorite::create([

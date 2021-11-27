@@ -48,6 +48,7 @@ Route::middleware(['auth:sanctum'])->group(function ()
     Route::delete('/recipes/{id}', [RecipeController::class, 'recipes_delete']);
     //Gate::allows('admin-only')
 
+    Route::get('/recipe-favorites', [RecipeFavoriteController::class, 'recipe_favorites_all']);
     Route::post('/recipe-favorites/{id_user}/{id_recipe}', [RecipeFavoriteController::class, 'recipe_favorites']);
     Route::get('/recipe-favorites/{id}', [RecipeFavoriteController::class, 'recipe_favorites_show']);
     Route::delete('/recipe-favorites/{id_recipe_favorites}', [RecipeFavoriteController::class, 'recipe_favorites_delete']);
