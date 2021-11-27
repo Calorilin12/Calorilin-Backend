@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ControlCalory;
 use App\User;
 use App\UserDetail;
 use Illuminate\Http\Request;
@@ -55,6 +56,7 @@ class UserController extends Controller
             $user_details = UserDetail::find($id);
             File::delete('user-detail-images/' . $user_details->image);
             $user_details->delete();
+            ControlCalory::where('id_user', '=', $id)->delete();
 
             return response()->json(["message" => "User telah dihapus"], 201);
         }
