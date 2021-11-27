@@ -48,10 +48,12 @@ Route::middleware(['auth:sanctum'])->group(function ()
     Route::delete('/recipes/{id}', [RecipeController::class, 'recipes_delete']);
     //Gate::allows('admin-only')
 
-    Route::get('/recipe-favorites', [RecipeFavoriteController::class, 'recipe_favorites_all']);
     Route::post('/recipe-favorites/{id_user}/{id_recipe}', [RecipeFavoriteController::class, 'recipe_favorites']);
     Route::get('/recipe-favorites/{id}', [RecipeFavoriteController::class, 'recipe_favorites_show']);
     Route::delete('/recipe-favorites/{id_recipe_favorites}', [RecipeFavoriteController::class, 'recipe_favorites_delete']);
+    //Gate::allows('admin-only')
+    Route::get('/recipe-favorites', [RecipeFavoriteController::class, 'recipe_favorites_all']);
+    //Gate::allows('admin-only')
 
     Route::get('/food-materials', [FoodMaterialController::class, 'food_materials']);
     Route::get('/food-materials/{id}', [FoodMaterialController::class, 'food_materials_find']);
@@ -65,11 +67,9 @@ Route::middleware(['auth:sanctum'])->group(function ()
     Route::get('/food-material-favorites/{id}', [FoodMaterialFavoriteController::class, 'food_material_favorites_show']);
     Route::delete('/food-material-favorites/{id}', [FoodMaterialFavoriteController::class, 'food_material_favorites_delete']);
 
-    Route::get('/control-calory', [ControlCaloryController::class, 'control_calories']);
+    Route::get('/control-calory/{id_user}', [ControlCaloryController::class, 'control_calories']);
     //Gate::allows('admin-only')
-    Route::post('/control-calory', [ControlCaloryController::class, 'create']);
-    Route::put('/control-calory/{id}', [ControlCaloryController::class, 'update']);
-    Route::delete('/control-calory/{id}', [ControlCaloryController::class, 'delete']);
+    Route::get('/control-calory', [ControlCaloryController::class, 'control_calories_all']);
     //Gate::allows('admin-only')
 
     //Gate::allows('admin-only')
