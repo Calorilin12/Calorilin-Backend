@@ -24,7 +24,7 @@ class AuthController extends Controller
             'id_user' => $createUser->id,
         ]);
 
-        ControlCalory::created([
+        ControlCalory::create([
             'id_user' => $createUser->id,
         ]);
  
