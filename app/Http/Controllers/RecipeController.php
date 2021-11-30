@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Recipe;
 use App\RecipeDetail;
+use App\UserDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
@@ -81,7 +83,7 @@ class RecipeController extends Controller
 
     public function recipes_update($id, Request $request)
     {
-        
+
         if (Gate::allows('admin-only')) {
             // Hanya User dengan role admin yang dapat mengakses ini
             Recipe::find($id)
@@ -144,46 +146,74 @@ class RecipeController extends Controller
 
     public function recipes_find_by_disease(Request $request)
     {
-        if ($request->disease == "Cholesterol") {
-            $cholesterol = 1;
-            $diabetes = 0;
-            $uric_acid = 0;
-            $stomach_acid = 0;
-            $hyper_tension = 0;
-        } else if ($request->disease == "Diabetes") {
-            $cholesterol = 0;
-            $diabetes = 1;
-            $uric_acid = 0;
-            $stomach_acid = 0;
-            $hyper_tension = 0;
-        } else if ($request->disease == "Asam Urat") {
-            $cholesterol = 0;
-            $diabetes = 0;
-            $uric_acid = 1;
-            $stomach_acid = 0;
-            $hyper_tension = 0;
-        } else if ($request->disease == "Asam Lambung") {
-            $cholesterol = 0;
-            $diabetes = 0;
-            $uric_acid = 0;
-            $stomach_acid = 1;
-            $hyper_tension = 0;
-        } else if ($request->disease == "Hipertensi") {
-            $cholesterol = 0;
-            $diabetes = 0;
-            $uric_acid = 0;
-            $stomach_acid = 0;
-            $hyper_tension = 1;
+
+        $query = DB::table('recipes')
+            ->leftJoin('recipe_details', 'recipe_details.id_recipe', '=', 'recipes.id');
+
+        $diseases = explode(',', $request->disease);
+
+        if (in_array("Cholesterol", $diseases)) {
+            $query = $query->where('recipe_details.cholesterol', '=', 1);
         }
 
-        $recipes = DB::table('recipes')
-            ->leftJoin('recipe_details', 'recipe_details.id_recipe', '=', 'recipes.id')
-            ->where('recipe_details.cholesterol', '!=', $cholesterol)
-            ->orWhere('recipe_details.diabetes', '!=', $diabetes)
-            ->orWhere('recipe_details.uric_acid', '!=', $uric_acid)
-            ->orWhere('recipe_details.stomach_acid', '!=', $stomach_acid)
-            ->orWhere('recipe_details.hyper_tension', '!=', $hyper_tension)
-            ->get();
+        if (in_array("Diabetes", $diseases)) {
+            $query = $query->where('recipe_details.diabetes', '=', 1);
+        }
+
+        if (in_array("Asam Urat", $diseases)) {
+            $query = $query->where('recipe_details.uric_acid', '=', 1);
+        }
+
+        if (in_array("Asam Lambung", $diseases)) {
+            $query = $query->where('recipe_details.stomach_acid', '=', 1);
+        }
+
+        if (in_array("Hipertensi", $diseases)) {
+            $query = $query->where('recipe_details.hyper_tension', '=', 1);
+        }
+
+        $recipes = $query->get();
+
+        // if ($request->disease == "Cholesterol") {
+        //     $cholesterol = 1;
+        //     $diabetes = 0;
+        //     $uric_acid = 0;
+        //     $stomach_acid = 0;
+        //     $hyper_tension = 0;
+        // } else if ($request->disease == "Diabetes") {
+        //     $cholesterol = 0;
+        //     $diabetes = 1;
+        //     $uric_acid = 0;
+        //     $stomach_acid = 0;
+        //     $hyper_tension = 0;
+        // } else if ($request->disease == "Asam Urat") {
+        //     $cholesterol = 0;
+        //     $diabetes = 0;
+        //     $uric_acid = 1;
+        //     $stomach_acid = 0;
+        //     $hyper_tension = 0;
+        // } else if ($request->disease == "Asam Lambung") {
+        //     $cholesterol = 0;
+        //     $diabetes = 0;
+        //     $uric_acid = 0;
+        //     $stomach_acid = 1;
+        //     $hyper_tension = 0;
+        // } else if ($request->disease == "Hipertensi") {
+        //     $cholesterol = 0;
+        //     $diabetes = 0;
+        //     $uric_acid = 0;
+        //     $stomach_acid = 0;
+        //     $hyper_tension = 1;
+        // }
+
+        // $recipes = DB::table('recipes')
+        //     ->leftJoin('recipe_details', 'recipe_details.id_recipe', '=', 'recipes.id')
+        //     ->where('recipe_details.cholesterol', '!=', $cholesterol)
+        //     ->orWhere('recipe_details.diabetes', '!=', $diabetes)
+        //     ->orWhere('recipe_details.uric_acid', '!=', $uric_acid)
+        //     ->orWhere('recipe_details.stomach_acid', '!=', $stomach_acid)
+        //     ->orWhere('recipe_details.hyper_tension', '!=', $hyper_tension)
+        //     ->get();
 
         return response()->json($recipes, 200);
     }
