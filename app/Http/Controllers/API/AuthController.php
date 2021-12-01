@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\UserDetail;
 use App\ControlCalory;
+use App\DailyHealthy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -26,6 +27,14 @@ class AuthController extends Controller
 
         ControlCalory::create([
             'id_user' => $createUser->id,
+        ]);
+
+        DailyHealthy::create([
+            'id_user' => $createUser->id,
+            'push_up' => 0,
+            'sit_up' => 0,
+            'run' => 0,
+            'drinks' => 0,
         ]);
  
         $token = $createUser->createToken('Register Token')->plainTextToken;

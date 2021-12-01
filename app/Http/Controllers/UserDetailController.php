@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\DailyHealthy;
 use App\UserDetail;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 class UserDetailController extends Controller
@@ -43,11 +45,11 @@ class UserDetailController extends Controller
 
         $body_mass_index_count = ($request->weight / $tinggi_badan_kuadrat);
         if ($body_mass_index_count < 18.5) {
-            UserDetail::find($id)->update(['body_mass_index' => "Berat Badan Kurang"]);
+            UserDetail::find($id)->update(['body_mass_index' => "Kurus"]);
         } else if (($body_mass_index_count >= 18.5) && ($body_mass_index_count <= 22.9)) {
-            UserDetail::find($id)->update(['body_mass_index' => "Berat Badan Normal"]);
+            UserDetail::find($id)->update(['body_mass_index' => "Ideal"]);
         } else if (($body_mass_index_count >= 23) && ($body_mass_index_count <= 29.9)) {
-            UserDetail::find($id)->update(['body_mass_index' => "Berat Badan Berlebih"]);
+            UserDetail::find($id)->update(['body_mass_index' => "Gemuk"]);
         } else if ($body_mass_index_count >= 30) {
             UserDetail::find($id)->update(['body_mass_index' => "Obesitas"]);
         }

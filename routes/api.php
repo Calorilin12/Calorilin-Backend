@@ -4,6 +4,7 @@ use App\FoodMaterialFavorite;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\ControlCaloryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DailyHealthyController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserDetailController;
@@ -79,6 +80,12 @@ Route::middleware(['auth:sanctum'])->group(function ()
     //Gate::allows('admin-only')
     Route::get('/dashboard', [DashboardController::class, 'dashboard']);
     //Gate::allows('admin-only')
+
+    Route::get('/daily-healthy-activity/{id_user}', [DailyHealthyController::class, 'daily_healthy_activity']);
+    Route::put('/daily-healthy-activity-push-up/{id_user}', [DailyHealthyController::class, 'daily_healthy_activity_push_up']);
+    Route::put('/daily-healthy-activity-sit-up/{id_user}', [DailyHealthyController::class, 'daily_healthy_activity_sit_up']);
+    Route::put('/daily-healthy-activity-run/{id_user}', [DailyHealthyController::class, 'daily_healthy_activity_run']);
+    Route::put('/daily-healthy-activity-drinks/{id_user}', [DailyHealthyController::class, 'daily_healthy_activity_drinks']);
 });
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
