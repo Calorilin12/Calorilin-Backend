@@ -36,11 +36,11 @@ class FoodMaterialFavoriteController extends Controller
         return response()->json(["message" => "Food Material berhasil disimpan"], 201);
     }
 
-    public function food_material_favorites_show($id_user)
+    public function food_material_favorites_show($id)
     {
         $food_material_favorites = DB::table('food_material_favorites')
             ->leftJoin('food_materials', 'food_materials.id', '=', 'food_material_favorites.id_food_material')
-            ->where('food_material_favorites.id_user', '=', $id_user)
+            ->where('food_material_favorites.id', '=', $id)
             ->select('food_materials.id', 'food_materials.name', 'food_materials.serve', 'food_materials.type', 'food_materials.fat', 'food_materials.carbo', 'food_materials.calory', 'food_materials.protein', 'food_material_favorites.time_show')
             ->get();
 
@@ -50,7 +50,11 @@ class FoodMaterialFavoriteController extends Controller
     public function food_material_favorites_all(){
         if (Gate::allows('admin-only')) {
             // Hanya User dengan role admin yang dapat mengakses ini
-            $food_material_favorites = FoodMaterialFavorite::all();
+            $food_material_favorites = DB::table('food_material_favorites')
+            ->leftJoin('users', 'users.id', 'food_material_favorites.id_user', )
+            ->leftJoin('food_materials', 'food_materials.id', 'food_material_favorites.id_food_material')
+            ->select('food_material_favorites.id', 'food_material_favorites.id_user', 'users.name AS username', 'food_materials.name', 'food_materials.calory')
+            ->get();
 
             return response()->json(["data" => $food_material_favorites], 200);
         }

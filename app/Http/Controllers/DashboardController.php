@@ -175,8 +175,8 @@ class DashboardController extends Controller
 
             ];
 
-            return response()->json(["data $yearBefore" => $dataYearBefore, 
-            "data $yearNow" => $dataYearNow, "dashboard" => $response], 200);
+            return response()->json(["data$yearBefore" => $dataYearBefore, 
+            "data$yearNow" => $dataYearNow, "dashboard" => $response], 200);
         }
 
         return response()->json(["message" => "Anda tidak memiliki akses"], 403);
