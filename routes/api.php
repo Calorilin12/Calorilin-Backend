@@ -7,11 +7,12 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DailyHealthyController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\RecipeFavoriteController;
+use App\Http\Controllers\ReportBugController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserDetailController;
 use App\Http\Controllers\FoodMaterialController;
 use App\Http\Controllers\FoodMaterialFavoriteController;
-use App\Http\Controllers\RecipeFavoriteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -92,6 +93,12 @@ Route::middleware(['auth:sanctum'])->group(function ()
     //Gate::allows('admin-only')
     Route::get('/feedback', [FeedbackController::class, 'feedback_all']);
     Route::delete('/feedback/{id}', [FeedbackController::class, 'feedback_delete']);
+    //Gate::allows('admin-only')
+
+    Route::post('/report-bug/{id_user}', [ReportBugController::class, 'report_bug_write']);
+    //Gate::allows('admin-only')
+    Route::get('/report-bug', [ReportBugController::class, 'report_bug_all']);
+    Route::delete('/report-bug/{id}', [ReportBugController::class, 'report_bug_delete']);
     //Gate::allows('admin-only')
 });
 
