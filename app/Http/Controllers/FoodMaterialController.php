@@ -12,14 +12,12 @@ class FoodMaterialController extends Controller
 {
     public function food_materials()
     {
-
         $food_materials = FoodMaterial::all();
         return response()->json($food_materials, 200);
     }
 
     public function food_materials_find($id)
     {
-
         $food_materials = FoodMaterial::find($id);
         return response()->json($food_materials, 200);
     }
@@ -51,7 +49,6 @@ class FoodMaterialController extends Controller
             return response()->json(["message" => "Sukses membuat food material", "data" => $food_materials], 201);
         }
         return response()->json(["message" => "Anda tidak memiliki akses"], 403);
-        // return response()->json(200);
     }
 
     public function food_materials_update($id, Request $request)
