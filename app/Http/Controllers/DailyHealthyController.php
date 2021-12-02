@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\DailyHealthy;
-use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -11,6 +10,17 @@ class DailyHealthyController extends Controller
 {
     public function daily_healthy_activity($id_user)
     {
+        $daily = DailyHealthy::find($id_user);
+        if (date('Y-m-d', strtotime(now())) != date('Y-m-d', strtotime($daily->updated_at))){
+            DB::table('daily-healthy')->where('id_user', $id_user)
+            ->update([
+                'push_up' => 0,
+                'sit_up' => 0,
+                'run' => 0,
+                'drinks' => 0,
+            ]);
+        }
+
         $daily_healthy = DB::table('daily_healthy')
             ->leftJoin('user_details', 'user_details.id_user', '=', 'daily_healthy.id_user')
             ->where('daily_healthy.id_user', $id_user)
