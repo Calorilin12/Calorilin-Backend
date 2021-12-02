@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3308
--- Generation Time: Dec 02, 2021 at 07:14 AM
+-- Generation Time: Dec 02, 2021 at 07:28 AM
 -- Server version: 8.0.21
 -- PHP Version: 7.4.9
 
@@ -100,7 +100,7 @@ DROP TABLE IF EXISTS `feedbacks`;
 CREATE TABLE IF NOT EXISTS `feedbacks` (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `id_user` int NOT NULL,
-  `feedback` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `feedback` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -252,7 +252,7 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
 --
 
 INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `name`, `token`, `abilities`, `last_used_at`, `created_at`, `updated_at`) VALUES
-(1, 'App\\User', 1, 'Login Token', '602619b4fa4fd9f2330e0078b2bfd5d8031e7c593ad8e583a3b134f235914578', '[\"*\"]', '2021-12-02 07:14:10', '2021-11-12 20:29:01', '2021-12-02 07:14:10'),
+(1, 'App\\User', 1, 'Login Token', '602619b4fa4fd9f2330e0078b2bfd5d8031e7c593ad8e583a3b134f235914578', '[\"*\"]', '2021-12-02 07:27:42', '2021-11-12 20:29:01', '2021-12-02 07:27:42'),
 (2, 'App\\User', 2, 'Register Token', '95cc4db4acccc3f1495cffc94f1b6cb5fad5eace400dc23edb686cb1ae1ebeca', '[\"*\"]', NULL, '2021-11-12 22:22:51', '2021-11-12 22:22:51'),
 (3, 'App\\User', 3, 'Register Token', 'e55363915b041ee5ff6973ccef42e6a6c971ec2e9ba2a27f6113f7194a4c1b16', '[\"*\"]', NULL, '2021-11-12 22:38:20', '2021-11-12 22:38:20'),
 (4, 'App\\User', 4, 'Register Token', 'f0acbbfd3668b2cc02f93a16258d770c0e22e75feb2b8149d3005dcc508176cf', '[\"*\"]', NULL, '2021-11-12 23:36:41', '2021-11-12 23:36:41'),
@@ -579,6 +579,30 @@ CREATE TABLE IF NOT EXISTS `recipe_favorites` (
 
 INSERT INTO `recipe_favorites` (`id`, `id_user`, `id_recipe`, `time_show`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, 'Pagi', '2021-11-27 10:24:32', '2021-11-27 10:24:32');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `report_bugs`
+--
+
+DROP TABLE IF EXISTS `report_bugs`;
+CREATE TABLE IF NOT EXISTS `report_bugs` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_user` int NOT NULL,
+  `report_bug` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `report_bugs`
+--
+
+INSERT INTO `report_bugs` (`id`, `id_user`, `report_bug`, `created_at`, `updated_at`) VALUES
+(1, 2, 'Pada rekomendasi makanan terdapat bug', '2021-12-02 07:26:22', '2021-12-02 07:26:22'),
+(2, 2, 'Bug pada laporan bug', '2021-12-02 07:27:00', '2021-12-02 07:27:00');
 
 -- --------------------------------------------------------
 
