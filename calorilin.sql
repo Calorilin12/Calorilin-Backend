@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3308
--- Generation Time: Nov 29, 2021 at 07:48 AM
+-- Generation Time: Dec 02, 2021 at 04:57 AM
 -- Server version: 8.0.21
 -- PHP Version: 7.4.9
 
@@ -36,14 +36,42 @@ CREATE TABLE IF NOT EXISTS `control_calories` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `control_calories_id_user_foreign` (`id_user`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `control_calories`
 --
 
 INSERT INTO `control_calories` (`id`, `user_calory`, `id_user`, `created_at`, `updated_at`) VALUES
-(1, 448.00, 1, '2021-11-27 09:54:14', '2021-11-29 06:48:39');
+(1, 448.00, 1, '2021-11-27 09:54:14', '2021-11-29 06:48:39'),
+(2, 327.00, 2, '2021-12-02 04:51:37', '2021-12-02 04:53:28');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `daily_healthy`
+--
+
+DROP TABLE IF EXISTS `daily_healthy`;
+CREATE TABLE IF NOT EXISTS `daily_healthy` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_user` int NOT NULL,
+  `push_up` tinyint(1) DEFAULT NULL,
+  `sit_up` tinyint(1) DEFAULT NULL,
+  `run` tinyint(1) DEFAULT NULL,
+  `drinks` int DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `daily_healthy`
+--
+
+INSERT INTO `daily_healthy` (`id`, `id_user`, `push_up`, `sit_up`, `run`, `drinks`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, 1, 2, '2021-12-02 00:59:49', '2021-12-02 00:59:49'),
+(2, 2, 0, 0, 0, 0, '2021-12-02 04:51:37', '2021-12-02 04:51:37');
 
 -- --------------------------------------------------------
 
@@ -118,7 +146,15 @@ CREATE TABLE IF NOT EXISTS `food_material_favorites` (
   PRIMARY KEY (`id`),
   KEY `food_material_favorites_id_user_foreign` (`id_user`),
   KEY `food_material_favorites_id_food_material_foreign` (`id_food_material`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `food_material_favorites`
+--
+
+INSERT INTO `food_material_favorites` (`id`, `id_user`, `id_food_material`, `time_show`, `created_at`, `updated_at`) VALUES
+(1, 2, 2, 'Siang', '2021-12-02 04:53:14', '2021-12-02 04:53:14'),
+(2, 2, 4, 'Malam', '2021-12-02 04:53:28', '2021-12-02 04:53:28');
 
 -- --------------------------------------------------------
 
@@ -185,14 +221,14 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=203 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=207 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `personal_access_tokens`
 --
 
 INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `name`, `token`, `abilities`, `last_used_at`, `created_at`, `updated_at`) VALUES
-(1, 'App\\User', 1, 'Login Token', '602619b4fa4fd9f2330e0078b2bfd5d8031e7c593ad8e583a3b134f235914578', '[\"*\"]', '2021-11-29 07:45:59', '2021-11-12 20:29:01', '2021-11-29 07:45:59'),
+(1, 'App\\User', 1, 'Login Token', '602619b4fa4fd9f2330e0078b2bfd5d8031e7c593ad8e583a3b134f235914578', '[\"*\"]', '2021-12-02 04:53:28', '2021-11-12 20:29:01', '2021-12-02 04:53:28'),
 (2, 'App\\User', 2, 'Register Token', '95cc4db4acccc3f1495cffc94f1b6cb5fad5eace400dc23edb686cb1ae1ebeca', '[\"*\"]', NULL, '2021-11-12 22:22:51', '2021-11-12 22:22:51'),
 (3, 'App\\User', 3, 'Register Token', 'e55363915b041ee5ff6973ccef42e6a6c971ec2e9ba2a27f6113f7194a4c1b16', '[\"*\"]', NULL, '2021-11-12 22:38:20', '2021-11-12 22:38:20'),
 (4, 'App\\User', 4, 'Register Token', 'f0acbbfd3668b2cc02f93a16258d770c0e22e75feb2b8149d3005dcc508176cf', '[\"*\"]', NULL, '2021-11-12 23:36:41', '2021-11-12 23:36:41'),
@@ -393,7 +429,11 @@ INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `n
 (199, 'App\\User', 1, 'Login Token', '974eda70ac3fdcaa38f5fd90398abfba1942296bc62f33f5f2e1324f54c34c0c', '[\"*\"]', '2021-11-28 11:55:37', '2021-11-28 11:55:28', '2021-11-28 11:55:37'),
 (200, 'App\\User', 1, 'Login Token', '63cf91a4696e3c7532931c21885fb1737174d1d02ad44114f5443e5e09175d98', '[\"*\"]', '2021-11-28 11:58:44', '2021-11-28 11:58:37', '2021-11-28 11:58:44'),
 (201, 'App\\User', 1, 'Login Token', '164446c31255373e19655ab1f050ebff027877b890ba889cb324bc81be6d36c7', '[\"*\"]', '2021-11-28 11:59:31', '2021-11-28 11:59:26', '2021-11-28 11:59:31'),
-(202, 'App\\User', 1, 'Login Token', 'ccb11122a25099ab615a0750bdaa4c132335c8d98fa49251f80f1d8842357abe', '[\"*\"]', '2021-11-29 03:15:58', '2021-11-29 02:51:49', '2021-11-29 03:15:58');
+(202, 'App\\User', 1, 'Login Token', 'ccb11122a25099ab615a0750bdaa4c132335c8d98fa49251f80f1d8842357abe', '[\"*\"]', '2021-11-29 03:15:58', '2021-11-29 02:51:49', '2021-11-29 03:15:58'),
+(203, 'App\\User', 1, 'Login Token', 'ae78ebae85bf1b29a4d6aff9f9f121ba472237ea6684a8c22bbff7a1d917b71c', '[\"*\"]', NULL, '2021-12-02 03:24:06', '2021-12-02 03:24:06'),
+(204, 'App\\User', 1, 'Login Token', '58bb28cc4ee6c511509f15c59df64e0e3c2d4f8e4c19bd5017fc8fc5c7cb7d85', '[\"*\"]', '2021-12-02 04:38:17', '2021-12-02 03:48:21', '2021-12-02 04:38:17'),
+(205, 'App\\User', 1, 'Login Token', '92fd0d15ef1b1b6a2656f4d80e7ba8e876c9acdecd89031edfbf9d7db4f7628f', '[\"*\"]', '2021-12-02 04:39:27', '2021-12-02 04:37:42', '2021-12-02 04:39:27'),
+(206, 'App\\User', 2, 'Register Token', 'c0a9acb2c61863fc4b034500d345c0daeb9fa93a1adb79c5bdbf077dec9eda00', '[\"*\"]', NULL, '2021-12-02 04:51:37', '2021-12-02 04:51:37');
 
 -- --------------------------------------------------------
 
@@ -407,7 +447,7 @@ CREATE TABLE IF NOT EXISTS `recipes` (
   `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `made_by` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `level_of_difficult` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `publish_date` date NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -535,14 +575,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `check`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Calorilin', 'admin@admin.com', NULL, '$2y$10$vXNWGdLA8e.R2qQkF0ZJt.08VyW/4zO9DLYRTXmKrD2OTCA00uWeu', 1, NULL, '2021-11-12 08:57:27', '2021-11-12 08:57:27');
+(1, 'Calorilin', 'admin@admin.com', NULL, '$2y$10$vXNWGdLA8e.R2qQkF0ZJt.08VyW/4zO9DLYRTXmKrD2OTCA00uWeu', 1, NULL, '2021-11-12 08:57:27', '2021-11-12 08:57:27'),
+(2, 'Fabyan Kindarya', 'fabyan@calorilin.com', NULL, '$2y$10$Q3fkKcLjsgqgNgiQyP3TaOxTcBiLOrM7hT/zhphsgLBSPZv0D7u2q', 0, NULL, '2021-12-02 04:51:37', '2021-12-02 04:51:37');
 
 -- --------------------------------------------------------
 
@@ -570,14 +611,15 @@ CREATE TABLE IF NOT EXISTS `user_details` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_details_id_user_foreign` (`id_user`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `user_details`
 --
 
 INSERT INTO `user_details` (`id`, `id_user`, `born_date`, `phone_number`, `image`, `body_mass_index`, `weight`, `height`, `tension`, `cholesterol`, `diabetes`, `uric_acid`, `stomach_acid`, `hyper_tension`, `created_at`, `updated_at`) VALUES
-(1, 1, '2021-12-12', '08xxx', 'calorilin.jpeg', 'Berat Badan Kurang', 55.00, 175.00, '130/85', 1, 1, 0, 1, 0, '2021-11-12 09:49:19', '2021-11-29 01:22:21');
+(1, 1, '2021-12-12', '08xxx', 'calorilin.jpeg', 'Berat Badan Kurang', 55.00, 175.00, '130/85', 1, 1, 0, 1, 0, '2021-11-12 09:49:19', '2021-11-29 01:22:21'),
+(2, 2, '2001-09-15', '085157766074', 'Foto Jas.jpg', 'Ideal', 60.00, 180.00, '130/85', 1, 0, 0, 0, 1, '2021-12-02 04:51:37', '2021-12-02 04:52:42');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
