@@ -46,6 +46,7 @@ Route::middleware(['auth:sanctum'])->group(function ()
     Route::get('/recipes/{id}', [RecipeController::class, 'recipes_find']);
     Route::get('/recipes-find-by-disease', [RecipeController::class, 'recipes_find_by_disease']);
     Route::get('/recipes-find-by-name', [RecipeController::class, 'recipes_find_by_name']);
+    Route::get('/recipes-find-by-category', [RecipeController::class, 'recipes_find_by_category']);
     //Gate::allows('admin-only')
     Route::post('/recipes', [RecipeController::class, 'recipes_create']);
     Route::put('/recipes/{id}', [RecipeController::class, 'recipes_update']);
