@@ -13,6 +13,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserDetailController;
 use App\Http\Controllers\FoodMaterialController;
 use App\Http\Controllers\FoodMaterialFavoriteController;
+use App\Http\Controllers\TentangKamiController;
+use App\Http\Controllers\PenggunaanAplikasiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -101,6 +103,9 @@ Route::middleware(['auth:sanctum'])->group(function ()
     Route::get('/report-bug', [ReportBugController::class, 'report_bug_all']);
     Route::delete('/report-bug/{id}', [ReportBugController::class, 'report_bug_delete']);
     //Gate::allows('admin-only')
+
+    Route::get('/tentang-kami', [TentangKamiController::class, 'tentang_kami']);
+    Route::get('/penggunaan-aplikasi', [PenggunaanAplikasiController::class, 'penggunaan_aplikasi']);
 });
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
