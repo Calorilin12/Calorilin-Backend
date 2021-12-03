@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3308
--- Generation Time: Dec 02, 2021 at 07:28 AM
+-- Generation Time: Dec 03, 2021 at 03:44 AM
 -- Server version: 8.0.21
 -- PHP Version: 7.4.9
 
@@ -224,6 +224,25 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
   `created_at` timestamp NULL DEFAULT NULL,
   KEY `password_resets_email_index` (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `penggunaan_aplikasi`
+--
+
+DROP TABLE IF EXISTS `penggunaan_aplikasi`;
+CREATE TABLE IF NOT EXISTS `penggunaan_aplikasi` (
+  `judul` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `penggunaan_aplikasi` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `penggunaan_aplikasi`
+--
+
+INSERT INTO `penggunaan_aplikasi` (`judul`, `penggunaan_aplikasi`) VALUES
+('Penggunaan Aplikasi', 'Anda menyatakan dan menjamin bahwa anda adalah individu yang secara hukum berhak dan cakap untuk mengadakan dan mengikatkan diri dalam perjanjian berdasarkan hukum Negara Republik Indonesia, khususnya Ketentuan Penggunaan, untuk menggunakan Aplikasi. Apabila ketentuan tersebut tidak terpenuhi, Kami atau afiliasi Kami atau Mitra Kami, berhak berdasarkan hukum untuk membatalkan setiap perjanjian yang dibuat dengan anda. Anda selanjutnya menyatakan dan menjamin bahwa anda memiliki hak, wewenang dan kapasitas untuk menggunakan Layanan dan mematuhi Ketentuan Penggunaan. Jika anda mendaftarkan untuk dan atas nama suatu institusi, anda juga menyatakan dan menjamin bahwa anda berwenang untuk bertindak untuk dan atas nama institusi tersebut dalam mengadakan serta mengikatkan institusi tersebut pada Ketentuan Penggunaan ini dan mendaftarkan institusi tersebut untuk penggunaan Layanan dalam\r\n\r\nKami mengumpulkan dan memproses informasi dan Data Pribadi anda seperti nama, alamat, nomor kartu identitas, nomor telepon, alamat surat elektronik, tanggal lahir dan lokasi anda ketika anda mendaftarkan diri pada Aplikasi. Anda wajib untuk memberikan informasi yang akurat dan lengkap serta memperbaharui informasi tersebut dari waktu ke waktu dan setuju untuk memberikan kepada Kami bukti identitas apapun yang secara wajar Kami minta agar Kami dapat menyediakan Layanan secara lengkap dan maksimal kepada anda.\r\n\r\nDalam hal terjadi pengungkapan kata sandi atas akun Aplikasi anda dengan cara apapun yang terjadi bukan atas kesalahan Kami dan mengakibatkan penggunaan yang tidak sah dan/atau tanpa kewenangan atas akun Aplikasi anda, permintaan informasi yang dilakukan melalui Aplikasi akan tetap dianggap sebagai permintaan yang sah kecuali anda memberitahu Kami tentang hal tersebut sebelum Kami memberikan Layanan yang diminta tersebut.\r\n\r\nAnda wajib melaporkan kepada Kami bila anda kehilangan kendali atas akun Aplikasi anda. Anda bertanggung jawab atas setiap penggunaan akun Aplikasi anda meskipun jika akun tersebut telah disalahgunakan oleh pihak lain.\r\n\r\nAnda dapat melakukan pengunggahan informasi, foto, video, konten, penilaian, komentar dalam fitur produk review yang terdapat dalam Aplikasi, dimana hasil unggahan anda akan dapat dikonsumsi oleh pengguna Aplikasi lainnya. Anda dilarang untuk melakukan pengunggahan yang mengandung unsur suku, agama, ras dan antargolongan (“SARA”), pornografi, pelanggaran hak kekayaan intelektual. Kami berhak untuk melakukan penghapusan atau pemblokiran atas hasil unggahan anda apabila unggahan tersebut melanggar Ketentuan Penggunaan.\r\n\r\nAnda tidak diperkenankan untuk membahayakan, menyalahgunakan, mengubah atau memodifikasi Aplikasi dengan cara apapun. Kami berhak untuk menghentikan penggunaan atas akun Aplikasi anda lebih lanjut jika anda menggunakan Aplikasi tanpa mematuhi Ketentuan Penggunaan.\r\n\r\nAnda hanya diizinkan untuk menggunakan Aplikasi ini untuk mempergunakan Layanan yang disediakan dalam Aplikasi ini dan keperluan lain sesuai peraturan perundang-undangan yang berlaku. Untuk lebih tegasnya, anda dilarang menggunakan Aplikasi ini untuk melakukan penipuan dalam bentuk apapun dan/atau membuat ketidaknyamanan terhadap pihak lain maupun pihak yang menyediakan Layanan, menyalahgunakan segala informasi yang anda peroleh dari penggunaan Layanan, serta melakukan tindakan apapun yang melecehkan atau mengancam pihak yang menyediakan Layanan.\r\n\r\nInformasi yang diberikan oleh Kami dan/atau Mitra Kami tidak dapat diartikan sebagai suatu penawaran mengikat atau saran. Keputusan untuk menggunakan Layanan sepenuhnya berada dalam kekuasaan anda. Setiap hal yang anda putuskan dan/atau lakukan atas dasar kebergantungan pada informasi dalam Aplikasi ini merupakan risiko yang ditanggung oleh anda sendiri sepenuhnya.\r\n\r\nAnda memahami dan setuju bahwa penggunaan Aplikasi oleh anda tunduk pula pada Kebijakan Privasi Kami sebagaimana dapat diubah dari waktu ke waktu. Dengan menggunakan Aplikasi, anda dianggap memberikan persetujuan yang diatur dalam Kebijakan Privasi Kami.\r\n\r\nAnda dilarang menggunakan Layanan dalam Aplikasi untuk hal-hal yang dilarang oleh hukum dan peraturan perundang-undangan yang berlaku.');
 
 -- --------------------------------------------------------
 
@@ -590,7 +609,7 @@ DROP TABLE IF EXISTS `report_bugs`;
 CREATE TABLE IF NOT EXISTS `report_bugs` (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `id_user` int NOT NULL,
-  `report_bug` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `report_bug` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -603,6 +622,25 @@ CREATE TABLE IF NOT EXISTS `report_bugs` (
 INSERT INTO `report_bugs` (`id`, `id_user`, `report_bug`, `created_at`, `updated_at`) VALUES
 (1, 2, 'Pada rekomendasi makanan terdapat bug', '2021-12-02 07:26:22', '2021-12-02 07:26:22'),
 (2, 2, 'Bug pada laporan bug', '2021-12-02 07:27:00', '2021-12-02 07:27:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tentang_kami`
+--
+
+DROP TABLE IF EXISTS `tentang_kami`;
+CREATE TABLE IF NOT EXISTS `tentang_kami` (
+  `judul` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tentang_kami` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tentang_kami`
+--
+
+INSERT INTO `tentang_kami` (`judul`, `tentang_kami`) VALUES
+('Tentang Kami', 'Kesehatan tubuh manusia akan selalu berubah, dan penyebabnya selalu karena pola makan. karena itulah Calorilin ada.\r\nMenjadi platform dan karya anak bangsa.\r\nMemberi kemudahan pada pengguna dalam memngelola pola makan.\r\n\r\nSekarang adalah masa dimana era digital semakin berkembang.\r\nsegala aktivitas manusia semakin mudah karena teknologi.\r\n\r\nMari menjadi pelopor pola hidup sehat.\r\nBerkiblat pada nilai kesehatan makanan dan nilai kemudahan, mendorong setiap orang agar dapat hidup sehat.\r\n\r\nSemoga apa yang tersaji di Calorilin ikut memberi kemudahan dan manfaat bagi setiap orang yang menggunakannya.\r\n\r\nSalam kami,\r\n\r\nTim Calorilin');
 
 -- --------------------------------------------------------
 

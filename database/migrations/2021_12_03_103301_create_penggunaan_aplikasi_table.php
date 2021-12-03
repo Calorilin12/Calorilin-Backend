@@ -15,7 +15,7 @@ class CreatePenggunaanAplikasiTable extends Migration
     {
         Schema::create('penggunaan_aplikasi', function (Blueprint $table) {
             $table->string('judul');
-            $table->string('penggunaan_aplikasi');
+            $table->longText('penggunaan_aplikasi');
         });
     }
 
