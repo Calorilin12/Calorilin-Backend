@@ -56,7 +56,7 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if ($user || Hash::check($request->password, $user->password)) {
+        if ($user && Hash::check($request->password, $user->password)) {
             $token = $user->createToken('Login Token')->plainTextToken;
 
             $response = [
@@ -66,7 +66,7 @@ class AuthController extends Controller
 
             return response($response, 201);
         } else {
-            return response()->json(401);
+            return response()->json(["message" => "Your Email or Password is Incorrect"], 401);
         }
     }
 
