@@ -4,21 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class FoodSchedule extends Model
+class ReportBug extends Model
 {
-    public $table = "food_schedules";
-
+    public $table = "report_bugs";
     protected $fillable = [
-        'schedule_date',
         'id_user',
-        'id_food',
+        'report_bug',
     ];
 
     public function user(){
         return $this->belongsTo('App\User', 'id_user');
-    }
-
-    public function food(){
-        return $this->belongsTo('App\Food', 'id_food');
     }
 }

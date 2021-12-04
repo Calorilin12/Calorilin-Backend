@@ -4,12 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ControlCalory extends Model
+class DailyHealthy extends Model
 {
-    public $table = "control_calories";
+    public $table = "daily_healthy";
     protected $fillable = [
         'id_user',
-        'user_calory',
+        'push_up',
+        'sit_up',
+        'run',
+        'drinks',
     ];
 
     public function user(){

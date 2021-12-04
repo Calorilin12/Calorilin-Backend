@@ -4,34 +4,40 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\User;
+use App\UserDetail;
+use App\ControlCalory;
+use App\DailyHealthy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function register(Request $input)
+    public function register(Request $request)
     {
-        $input->validate([
-            'image' => 'mimes:jpeg,png,jpg|max:2048'
-        ]);
-
         $createUser = new User;
-        $createUser->name = $input->name;
-        $createUser->phone = $input->phone;
-        $createUser->born = $input->born;
-        $createUser->email = $input->email;
-        $createUser->password = Hash::make($input->password);
-
-        $file = $input->file('image');
-        $nama_file = $file->getClientOriginalName();
-        $tujuan_upload = 'user-images';
-        $file->move($tujuan_upload, $nama_file);
-
-        $createUser->image = $nama_file;
-        $createUser->check = $input->check;
+        $createUser->name = $request->name;
+        $createUser->email = $request->email;
+        $createUser->password = Hash::make($request->password);
+        $createUser->check = 0;
         $createUser->save();
 
-        $token = $createUser->createToken('CalorilinRegisterToken')->plainTextToken;
+        UserDetail::create([
+            'id_user' => $createUser->id,
+        ]);
+
+        ControlCalory::create([
+            'id_user' => $createUser->id,
+        ]);
+
+        DailyHealthy::create([
+            'id_user' => $createUser->id,
+            'push_up' => 0,
+            'sit_up' => 0,
+            'run' => 0,
+            'drinks' => 0,
+        ]);
+ 
+        $token = $createUser->createToken('Register Token')->plainTextToken;
 
         $response = [
             'user' => $createUser,
@@ -50,9 +56,8 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if($user || Hash::check($request->password, $user->password))
-        {
-            $token = $user->createToken('CalorilinLoginToken')->plainTextToken;
+        if ($user && Hash::check($request->password, $user->password)) {
+            $token = $user->createToken('Login Token')->plainTextToken;
 
             $response = [
                 'user' => $user,
@@ -60,10 +65,8 @@ class AuthController extends Controller
             ];
 
             return response($response, 201);
-        }
-        else
-        {
-            return response()->json(401);
+        } else {
+            return response()->json(["message" => "Your Email or Password is Incorrect"], 401);
         }
     }
 

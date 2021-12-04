@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateControlCaloriesTable extends Migration
+class CreatePenggunaanAplikasiTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateControlCaloriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('control_calories', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('id_user')->constrained('users');
-            $table->float('user_calory')->nullable();
-            $table->timestamps();
+        Schema::create('penggunaan_aplikasi', function (Blueprint $table) {
+            $table->string('judul');
+            $table->longText('penggunaan_aplikasi');
         });
     }
 
@@ -28,6 +26,6 @@ class CreateControlCaloriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('control_calories');
+        Schema::dropIfExists('penggunaan_aplikasi');
     }
 }

@@ -4,12 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ControlCalory extends Model
+class Feedback extends Model
 {
-    public $table = "control_calories";
+    public $table = "feedbacks";
     protected $fillable = [
         'id_user',
-        'user_calory',
+        'feedback',
     ];
 
     public function user(){
