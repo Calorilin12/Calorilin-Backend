@@ -17,19 +17,19 @@ RUN apk -U --no-cache add php7 php7-dom php7-phar php7-json \
 COPY --from=composer:latest /usr/bin/composer /usr/bin/
 
 # Copy app to docker
-COPY ./src/calorilin-BE /www
-COPY ./Dockerfile/etc/php/local.ini /usr/local/etc/php/conf.d/local.ini
+COPY . /www
+COPY ./etc/php/local.ini /usr/local/etc/php/conf.d/local.ini
 
 # Give directories permission
 RUN chown -R php:nginx /www \
     && find /www -type d -exec chmod -R 555 {} \; \
-    && find /www -type f -exec chmod -R 444 {} \; \
-    && find /www/storage /www/bootstrap/cache -type d -exec chmod -R 755 {} \; \
-    && find /www/storage /www/bootstrap/cache -type f -exec chmod -R 644 {} \;
+    && find /www -type f -exec chmod -R 444 {} \; 
+    # && find /www/storage /www/bootstrap/cache -type d -exec chmod -R 755 {} \; \
+    # && find /www/storage /www/bootstrap/cache -type f -exec chmod -R 644 {} \;
 
 # Initialize app
-RUN composer install --no-dev --no-scripts --no-progress \
-    && php artisan storage:link
+RUN composer install --no-dev --no-scripts --no-progress 
+    # && php artisan storage:link
 
 # Optimize app
 RUN php artisan optimize:clear
