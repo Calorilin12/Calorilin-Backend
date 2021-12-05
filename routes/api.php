@@ -39,6 +39,7 @@ Route::middleware(['auth:sanctum'])->group(function ()
 
     Route::get('/users/{id}', [UserController::class, 'users_find']);
     Route::put('/users/{id}', [UserController::class, 'users_update']);
+    Route::put('/users_password/{id}', [UserController::class, 'users_update_password']);
     //Gate::allows('admin-only')
     Route::get('/users', [UserController::class, 'users']);
     Route::delete('/users/{id}', [UserController::class, 'users_delete']);
