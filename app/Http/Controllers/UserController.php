@@ -51,13 +51,13 @@ class UserController extends Controller
     {
         $userLama = User::find($id);
 
-        if (Hash::check($request->passwordLama, $userLama->password)) {
+        if (Hash::check($request->passwordLama, $userLama->password) == true) {
             DB::table('users')->where('id', $id)
                 ->update([
                     'password' => Hash::make($request->password)
                 ]);
 
-            return response()->json(["message" => "User berhasil diubah"], 201);
+            return response()->json(["message" => "Password updated successfully"], 201);
         } else {
             return response()->json(["message" => "Wrong Old Password"], 403);
         }
