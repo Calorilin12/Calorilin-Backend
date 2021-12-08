@@ -28,7 +28,8 @@ RUN chown -R php:nginx /www \
     # && find /www/storage /www/bootstrap/cache -type f -exec chmod -R 644 {} \;
 
 # Initialize app
-RUN composer install --no-dev --no-scripts --no-progress 
+RUN composer install --no-dev --no-scripts --no-progress \
+    && composer dump-autoload
     # && php artisan storage:link
 
 # Optimize app
