@@ -5,6 +5,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\ControlCaloryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DailyHealthyController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\RecipeFavoriteController;
@@ -104,6 +105,9 @@ Route::middleware(['auth:sanctum'])->group(function ()
     Route::get('/report-bug', [ReportBugController::class, 'report_bug_all']);
     Route::delete('/report-bug/{id}', [ReportBugController::class, 'report_bug_delete']);
     //Gate::allows('admin-only')
+
+    Route::get('/search-favorite', [FavoriteController::class, 'search_favorite']);
+    Route::get('/favorite/{id_user}', [FavoriteController::class, 'favorite_show']);
 
     Route::get('/tentang-kami', [TentangKamiController::class, 'tentang_kami']);
     Route::get('/penggunaan-aplikasi', [PenggunaanAplikasiController::class, 'penggunaan_aplikasi']);
