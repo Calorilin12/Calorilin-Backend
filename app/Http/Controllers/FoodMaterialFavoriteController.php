@@ -48,14 +48,15 @@ class FoodMaterialFavoriteController extends Controller
         return response()->json($food_material_favorites, 200);
     }
 
-    public function food_material_favorites_all(){
+    public function food_material_favorites_all()
+    {
         if (Gate::allows('admin-only')) {
             // Hanya User dengan role admin yang dapat mengakses ini
             $food_material_favorites = DB::table('food_material_favorites')
-            ->leftJoin('users', 'users.id', 'food_material_favorites.id_user', )
-            ->leftJoin('food_materials', 'food_materials.id', 'food_material_favorites.id_food_material')
-            ->select('food_material_favorites.id', 'food_material_favorites.id_user', 'users.name AS username', 'food_materials.name', 'food_materials.calory')
-            ->get();
+                ->leftJoin('users', 'users.id', 'food_material_favorites.id_user',)
+                ->leftJoin('food_materials', 'food_materials.id', 'food_material_favorites.id_food_material')
+                ->select('food_material_favorites.id', 'food_material_favorites.id_user', 'users.name AS username', 'food_materials.name', 'food_materials.calory')
+                ->get();
 
             return response()->json(["data" => $food_material_favorites], 200);
         }
@@ -83,5 +84,28 @@ class FoodMaterialFavoriteController extends Controller
         FoodMaterialFavorite::find($id)->delete();
 
         return response()->json(["message" => "Food Material berhasil dihapus"], 201);
+    }
+
+    public function food_material_favorites_by_time_show($id_user, Request $request)
+    {
+        $query1 = DB::table('food_material_favorites')
+            ->leftJoin('food_materials', 'food_materials.id', '=', 'food_material_favorites.id_food_material')
+            ->where('food_material_favorites.id_user', '=', $id_user);
+
+        if ($request->time_show == "Pagi") {
+            $query1 = $query1->where('food_material_favorites.time_show', '=', "Pagi");
+        }
+
+        if ($request->time_show == "Siang") {
+            $query1 = $query1->where('food_material_favorites.time_show', '=', "Siang");
+        }
+
+        if ($request->time_show == "Sore") {
+            $query1 = $query1->where('food_material_favorites.time_show', '=', "Sore");
+        }
+
+        $food_material_favorites = $query1->get();
+
+        return response()->json(["food_materials" => $food_material_favorites], 200);
     }
 }
