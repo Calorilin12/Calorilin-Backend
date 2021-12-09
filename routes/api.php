@@ -108,6 +108,7 @@ Route::middleware(['auth:sanctum'])->group(function ()
 
     Route::get('/search-favorite', [FavoriteController::class, 'search_favorite']);
     Route::get('/favorite/{id_user}', [FavoriteController::class, 'favorite_show']);
+    Route::get('/favorite-by-time-show/{id_user}', [FavoriteController::class, 'favorite_by_time_show']);
 
     Route::get('/tentang-kami', [TentangKamiController::class, 'tentang_kami']);
     Route::get('/penggunaan-aplikasi', [PenggunaanAplikasiController::class, 'penggunaan_aplikasi']);
