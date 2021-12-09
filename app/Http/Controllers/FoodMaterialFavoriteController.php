@@ -104,6 +104,10 @@ class FoodMaterialFavoriteController extends Controller
             $query1 = $query1->where('food_material_favorites.time_show', '=', "Sore");
         }
 
+        if ($request->time_show == "Default") {
+            $query1 = $query1->where('food_material_favorites.time_show', '=', "Default");
+        }
+
         $food_material_favorites = $query1->get();
 
         return response()->json(["food_materials" => $food_material_favorites], 200);
