@@ -110,6 +110,6 @@ class FoodMaterialFavoriteController extends Controller
 
         $food_material_favorites = $query1->get();
 
-        return response()->json(["food_materials" => $food_material_favorites], 200);
+        return response()->json($food_material_favorites, 200);
     }
 }

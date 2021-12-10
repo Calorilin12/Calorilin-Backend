@@ -75,7 +75,7 @@ Route::middleware(['auth:sanctum'])->group(function ()
     Route::post('/food-material-favorites/{id_user}/{id_food_material}', [FoodMaterialFavoriteController::class, 'food_material_favorites']);
     Route::get('/food-material-favorites/{id}', [FoodMaterialFavoriteController::class, 'food_material_favorites_show']);
     Route::delete('/food-material-favorites/{id}', [FoodMaterialFavoriteController::class, 'food_material_favorites_delete']);
-    Route::get('/food-material-favorites-by-time-show/{id}', [FoodMaterialFavoriteController::class, 'food_material_favorites_by_time_show']);
+    Route::get('/food-material-favorites-by-time-show/{id_user}', [FoodMaterialFavoriteController::class, 'food_material_favorites_by_time_show']);
     //Gate::allows('admin-only')
     Route::get('/food-material-favorites', [FoodMaterialFavoriteController::class, 'food_material_favorites_all']);
     //Gate::allows('admin-only')
