@@ -15,8 +15,8 @@ class CreateFoodMaterialFavoritesTable extends Migration
     {
         Schema::create('food_material_favorites', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_user')->constrained('users');
-            $table->foreignId('id_food_material')->constrained('food_materials');
+            $table->foreignId('id_user');
+            $table->foreignId('id_food_material');
             $table->timestamps();
         });
     }

@@ -15,7 +15,7 @@ class CreateRecipeDetailTable extends Migration
     {
         Schema::create('recipe_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_recipe')->constrained('recipe');
+            $table->foreignId('id_recipe');
             $table->string('short_description');
             $table->string('recipe_image')->nullable();
             $table->integer('duration');

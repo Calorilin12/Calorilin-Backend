@@ -15,7 +15,7 @@ class CreateFeedbacksTable extends Migration
     {
         Schema::create('feedbacks', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_user')->constrained('users');
+            $table->integer('id_user');
             $table->longText('feedback');
             $table->timestamps();
         });

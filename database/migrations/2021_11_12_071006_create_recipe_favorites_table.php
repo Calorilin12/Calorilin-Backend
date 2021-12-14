@@ -15,8 +15,8 @@ class CreateRecipeFavoritesTable extends Migration
     {
         Schema::create('recipe_favorites', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_user')->constrained('users');
-            $table->foreignId('id_recipe')->constrained('recipe');
+            $table->foreignId('id_user');
+            $table->foreignId('id_recipe');
             $table->string('time_show');
             $table->timestamps();
         });

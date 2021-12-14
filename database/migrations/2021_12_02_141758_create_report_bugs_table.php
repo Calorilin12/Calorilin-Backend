@@ -15,7 +15,7 @@ class CreateReportBugsTable extends Migration
     {
         Schema::create('report_bugs', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_user')->constrained('users');
+            $table->integer('id_user');
             $table->longText('report_bug');
             $table->timestamps();
         });

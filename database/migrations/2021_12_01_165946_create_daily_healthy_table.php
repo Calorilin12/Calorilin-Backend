@@ -15,7 +15,7 @@ class CreateDailyHealthyTable extends Migration
     {
         Schema::create('daily_healthy', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_user')->constrained('users');
+            $table->integer('id_user');
             $table->boolean('push_up')->nullable();
             $table->boolean('sit_up')->nullable();
             $table->boolean('run')->nullable();
