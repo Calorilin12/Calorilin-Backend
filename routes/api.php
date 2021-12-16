@@ -2,6 +2,7 @@
 
 use App\FoodMaterialFavorite;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ControlCaloryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DailyHealthyController;
@@ -32,8 +33,9 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::middleware(['auth:sanctum'])->group(function ()
-{
+Route::post('/contact-write', [ContactController::class, 'contact_write']);
+
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::put('/user-details/{id}', [UserDetailController::class, 'user_details_update']);
@@ -113,6 +115,11 @@ Route::middleware(['auth:sanctum'])->group(function ()
 
     Route::get('/tentang-kami', [TentangKamiController::class, 'tentang_kami']);
     Route::get('/penggunaan-aplikasi', [PenggunaanAplikasiController::class, 'penggunaan_aplikasi']);
+
+    //Gate::allows('admin-only')
+    Route::get('/contacts', [ContactController::class, 'contact_all']);
+    Route::delete('/contact/{id}', [ContactController::class, 'contact_delete']);
+    //Gate::allows('admin-only')
 });
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
