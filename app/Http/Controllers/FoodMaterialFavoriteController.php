@@ -112,4 +112,48 @@ class FoodMaterialFavoriteController extends Controller
 
         return response()->json($food_material_favorites, 200);
     }
+
+    public function food_material_favorites_get_total_calories($id_user, Request $request)
+    {
+        $total = 0;
+        $query = DB::table('food_material_favorites')
+            ->leftJoin('food_materials', 'food_materials.id', '=', 'food_material_favorites.id_food_material')
+            ->where('food_material_favorites.id_user', '=', $id_user);
+
+        if ($request->time_show == "Pagi") {
+            $query = $query->where('food_material_favorites.time_show', '=', "Pagi")->get();
+
+            foreach($query as $q){
+                $total += $q->calory;
+            }
+        }
+
+        if ($request->time_show == "Siang") {
+            $query = $query->where('food_material_favorites.time_show', '=', "Siang")->get();
+
+            foreach($query as $q){
+                $total += $q->calory;
+            }
+        }
+
+        if ($request->time_show == "Sore") {
+            $query = $query->where('food_material_favorites.time_show', '=', "Sore")->get();
+
+            foreach($query as $q){
+                $total += $q->calory;
+            }
+        }
+
+        if ($request->time_show == "Default") {
+            $query = $query->where('food_material_favorites.time_show', '=', "Default")->get();
+            
+            foreach($query as $q){
+                $total += $q->calory;
+            }
+        }
+
+        $get_calories = $total;
+
+        return response()->json($get_calories, 200);
+    }
 }
