@@ -173,6 +173,6 @@ class FoodMaterialFavoriteController extends Controller
         $get_carbo = $karbohidrat;
         $get_protein = $protein;
 
-        return response()->json([$get_calories, $get_fat, $get_carbo, $get_protein], 200);
+        return response()->json(["calories" => $get_calories, "fat" => $get_fat, "carbo" => $get_carbo, "protein" => $get_protein], 200);
     }
 }
