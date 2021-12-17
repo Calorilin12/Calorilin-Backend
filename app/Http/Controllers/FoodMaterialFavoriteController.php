@@ -113,9 +113,13 @@ class FoodMaterialFavoriteController extends Controller
         return response()->json($food_material_favorites, 200);
     }
 
-    public function food_material_favorites_get_total_calories($id_user, Request $request)
+    public function food_material_favorites_get_total_nutrition($id_user, Request $request)
     {
         $total = 0;
+        $lemak = 0;
+        $karbohidrat = 0;
+        $protein = 0;
+
         $query = DB::table('food_material_favorites')
             ->leftJoin('food_materials', 'food_materials.id', '=', 'food_material_favorites.id_food_material')
             ->where('food_material_favorites.id_user', '=', $id_user);
@@ -125,6 +129,9 @@ class FoodMaterialFavoriteController extends Controller
 
             foreach($query as $q){
                 $total += $q->calory;
+                $lemak += $q->fat;
+                $karbohidrat += $q->carbo;
+                $protein += $q->protein;
             }
         }
 
@@ -133,6 +140,9 @@ class FoodMaterialFavoriteController extends Controller
 
             foreach($query as $q){
                 $total += $q->calory;
+                $lemak += $q->fat;
+                $karbohidrat += $q->carbo;
+                $protein += $q->protein;
             }
         }
 
@@ -141,6 +151,9 @@ class FoodMaterialFavoriteController extends Controller
 
             foreach($query as $q){
                 $total += $q->calory;
+                $lemak += $q->fat;
+                $karbohidrat += $q->carbo;
+                $protein += $q->protein;
             }
         }
 
@@ -149,11 +162,17 @@ class FoodMaterialFavoriteController extends Controller
             
             foreach($query as $q){
                 $total += $q->calory;
+                $lemak += $q->fat;
+                $karbohidrat += $q->carbo;
+                $protein += $q->protein;
             }
         }
 
         $get_calories = $total;
+        $get_fat = $lemak;
+        $get_carbo = $karbohidrat;
+        $get_protein = $protein;
 
-        return response()->json($get_calories, 200);
+        return response()->json([$get_calories, $get_fat, $get_carbo, $get_protein], 200);
     }
 }
