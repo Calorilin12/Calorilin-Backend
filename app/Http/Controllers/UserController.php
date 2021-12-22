@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\ControlCalory;
+use App\DailyHealthy;
+use App\FoodMaterialFavorite;
+use App\RecipeFavorite;
 use App\User;
 use App\UserDetail;
 use Illuminate\Http\Request;
@@ -72,6 +75,15 @@ class UserController extends Controller
             File::delete('user-detail-images/' . $user_details->image);
             $user_details->delete();
             ControlCalory::where('id_user', '=', $id)->delete();
+            DailyHealthy::where('id_user', '=', $id)->delete();
+
+            if (DB::table('food_material_favorites')->where('id_user', '=', $id)->first()) {
+                FoodMaterialFavorite::where('id_user', '=', $id)->delete();
+            }
+            
+            if (DB::table('recipe_favorites')->where('id_user', '=', $id)->first()) {
+                RecipeFavorite::where('id_user', '=', $id)->delete();
+            }
 
             return response()->json(["message" => "User telah dihapus"], 201);
         }
