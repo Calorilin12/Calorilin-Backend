@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Recipe;
 use App\RecipeDetail;
-use App\UserDetail;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
@@ -189,20 +187,20 @@ class RecipeController extends Controller
         $query = DB::table('recipes')
             ->leftJoin('recipe_details', 'recipe_details.id_recipe', '=', 'recipes.id');
         
-        if($request->category == "Makanan Ringan"){
-            $query = $query->where('recipes.category', '=', "Makanan Ringan");
+        if($request->category == "Daging"){
+            $query = $query->where('recipes.category', '=', "Daging");
         }
 
-        if($request->category == "Makanan Berat"){
-            $query = $query->where('recipes.category', '=', "Makanan Berat");
+        if($request->category == "Sayur"){
+            $query = $query->where('recipes.category', '=', "Sayur");
+        }
+
+        if($request->category == "Buah"){
+            $query = $query->where('recipes.category', '=', "Buah");
         }
 
         if($request->category == "Minuman"){
             $query = $query->where('recipes.category', '=', "Minuman");
-        }
-
-        if($request->category == "Makanan Sehat"){
-            $query = $query->where('recipes.category', '=', "Makanan Sehat");
         }
 
         $recipes = $query->get();

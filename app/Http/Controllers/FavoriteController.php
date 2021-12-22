@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\FoodMaterial;
-use App\FoodMaterialFavorite;
 use App\Recipe;
-use App\RecipeFavorite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,6 +18,10 @@ class FavoriteController extends Controller
     }
 
     public function favorite_show($id_user){
+        $control_calory = DB::table('control_calories')
+            ->where('id_user', '=', $id_user)
+            ->first();
+
         $recipe_favorites = DB::table('recipe_favorites')
             ->leftJoin('recipes', 'recipes.id', '=', 'recipe_favorites.id_recipe')
             ->where('recipe_favorites.id_user', '=', $id_user)
@@ -32,7 +34,7 @@ class FavoriteController extends Controller
             ->select('food_material_favorites.time_show', 'food_materials.id', 'food_materials.name', 'food_materials.serve', 'food_materials.type', 'food_materials.fat', 'food_materials.carbo', 'food_materials.calory', 'food_materials.protein')
             ->get();
         
-        return response()->json(["recipes" => $recipe_favorites, "food_materials" => $food_material_favorites], 200);
+        return response()->json(["control_calories" => $control_calory, "recipes" => $recipe_favorites, "food_materials" => $food_material_favorites], 200);
     }
 
     public function favorite_by_time_show($id_user, Request $request){

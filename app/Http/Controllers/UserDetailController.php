@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\DailyHealthy;
 use App\UserDetail;
-
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 class UserDetailController extends Controller
