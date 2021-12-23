@@ -33,6 +33,8 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/contact-write', [ContactController::class, 'contact_write']);
+Route::get('/tentang-kami', [TentangKamiController::class, 'tentang_kami']);
+Route::get('/penggunaan-aplikasi', [PenggunaanAplikasiController::class, 'penggunaan_aplikasi']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -112,9 +114,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/search-favorite', [FavoriteController::class, 'search_favorite']);
     Route::get('/favorite/{id_user}', [FavoriteController::class, 'favorite_show']);
     Route::get('/favorite-by-time-show/{id_user}', [FavoriteController::class, 'favorite_by_time_show']);
-
-    Route::get('/tentang-kami', [TentangKamiController::class, 'tentang_kami']);
-    Route::get('/penggunaan-aplikasi', [PenggunaanAplikasiController::class, 'penggunaan_aplikasi']);
 
     //Gate::allows('admin-only')
     Route::get('/contacts', [ContactController::class, 'contact_all']);
