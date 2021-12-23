@@ -81,7 +81,7 @@ class FoodMaterialFavoriteController extends Controller
                 'user_calory' => $total_calory,
             ]);
 
-        FoodMaterialFavorite::find($id)->delete();
+        $food_material_favorite->delete();
 
         return response()->json(["message" => "Food Material berhasil dihapus"], 201);
     }

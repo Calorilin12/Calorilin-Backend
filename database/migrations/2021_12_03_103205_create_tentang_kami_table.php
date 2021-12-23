@@ -14,6 +14,7 @@ class CreateTentangKamiTable extends Migration
     public function up()
     {
         Schema::create('tentang_kami', function (Blueprint $table) {
+            $table->id();
             $table->string('judul');
             $table->longText('tentang_kami');
         });

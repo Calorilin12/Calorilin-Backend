@@ -14,6 +14,7 @@ class CreatePenggunaanAplikasiTable extends Migration
     public function up()
     {
         Schema::create('penggunaan_aplikasi', function (Blueprint $table) {
+            $table->id();
             $table->string('judul');
             $table->longText('penggunaan_aplikasi');
         });
