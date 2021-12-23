@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3308
--- Generation Time: Dec 22, 2021 at 04:10 PM
+-- Generation Time: Dec 23, 2021 at 06:04 AM
 -- Server version: 8.0.21
 -- PHP Version: 7.4.9
 
@@ -37,14 +37,7 @@ CREATE TABLE IF NOT EXISTS `contacts` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `contacts`
---
-
-INSERT INTO `contacts` (`id`, `name`, `email`, `phone_number`, `comment`, `created_at`, `updated_at`) VALUES
-(1, 'Fabyan Kindarya', 'kukli@calorilin.com', '085157766076', 'Saya ingin mengadakan kerja sama dengan aplikasi registrasi magang saya sehingga dapat mengetahui apakah pendaftar sehat atau tidak', '2021-12-16 16:25:42', '2021-12-16 16:25:42');
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -61,7 +54,14 @@ CREATE TABLE IF NOT EXISTS `control_calories` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `control_calories_id_user_foreign` (`id_user`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `control_calories`
+--
+
+INSERT INTO `control_calories` (`id`, `user_calory`, `id_user`, `created_at`, `updated_at`) VALUES
+(1, NULL, 2, '2021-12-23 06:01:52', '2021-12-23 06:01:52');
 
 -- --------------------------------------------------------
 
@@ -80,7 +80,14 @@ CREATE TABLE IF NOT EXISTS `daily_healthy` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `daily_healthy`
+--
+
+INSERT INTO `daily_healthy` (`id`, `id_user`, `push_up`, `sit_up`, `run`, `drinks`, `created_at`, `updated_at`) VALUES
+(1, 2, 0, 0, 0, 0, '2021-12-23 06:01:52', '2021-12-23 06:01:52');
 
 -- --------------------------------------------------------
 
@@ -113,15 +120,7 @@ CREATE TABLE IF NOT EXISTS `feedbacks` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `feedbacks`
---
-
-INSERT INTO `feedbacks` (`id`, `id_user`, `feedback`, `created_at`, `updated_at`) VALUES
-(1, 2, 'Saran saya aplikasi ini lebih dipercepat lagi. Terima Kasih.', '2021-12-02 07:12:42', '2021-12-02 07:12:42'),
-(2, 2, 'Kedepannya beri animasi yang bagus.', '2021-12-02 07:13:17', '2021-12-02 07:13:17');
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -238,16 +237,18 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
 
 DROP TABLE IF EXISTS `penggunaan_aplikasi`;
 CREATE TABLE IF NOT EXISTS `penggunaan_aplikasi` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `judul` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `penggunaan_aplikasi` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `penggunaan_aplikasi` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `penggunaan_aplikasi`
 --
 
-INSERT INTO `penggunaan_aplikasi` (`judul`, `penggunaan_aplikasi`) VALUES
-('Penggunaan Aplikasi', 'Anda menyatakan dan menjamin bahwa anda adalah individu yang secara hukum berhak dan cakap untuk mengadakan dan mengikatkan diri dalam perjanjian berdasarkan hukum Negara Republik Indonesia, khususnya Ketentuan Penggunaan, untuk menggunakan Aplikasi. Apabila ketentuan tersebut tidak terpenuhi, Kami atau afiliasi Kami atau Mitra Kami, berhak berdasarkan hukum untuk membatalkan setiap perjanjian yang dibuat dengan anda. Anda selanjutnya menyatakan dan menjamin bahwa anda memiliki hak, wewenang dan kapasitas untuk menggunakan Layanan dan mematuhi Ketentuan Penggunaan. Jika anda mendaftarkan untuk dan atas nama suatu institusi, anda juga menyatakan dan menjamin bahwa anda berwenang untuk bertindak untuk dan atas nama institusi tersebut dalam mengadakan serta mengikatkan institusi tersebut pada Ketentuan Penggunaan ini dan mendaftarkan institusi tersebut untuk penggunaan Layanan dalam\r\n\r\nKami mengumpulkan dan memproses informasi dan Data Pribadi anda seperti nama, alamat, nomor kartu identitas, nomor telepon, alamat surat elektronik, tanggal lahir dan lokasi anda ketika anda mendaftarkan diri pada Aplikasi. Anda wajib untuk memberikan informasi yang akurat dan lengkap serta memperbaharui informasi tersebut dari waktu ke waktu dan setuju untuk memberikan kepada Kami bukti identitas apapun yang secara wajar Kami minta agar Kami dapat menyediakan Layanan secara lengkap dan maksimal kepada anda.\r\n\r\nDalam hal terjadi pengungkapan kata sandi atas akun Aplikasi anda dengan cara apapun yang terjadi bukan atas kesalahan Kami dan mengakibatkan penggunaan yang tidak sah dan/atau tanpa kewenangan atas akun Aplikasi anda, permintaan informasi yang dilakukan melalui Aplikasi akan tetap dianggap sebagai permintaan yang sah kecuali anda memberitahu Kami tentang hal tersebut sebelum Kami memberikan Layanan yang diminta tersebut.\r\n\r\nAnda wajib melaporkan kepada Kami bila anda kehilangan kendali atas akun Aplikasi anda. Anda bertanggung jawab atas setiap penggunaan akun Aplikasi anda meskipun jika akun tersebut telah disalahgunakan oleh pihak lain.\r\n\r\nAnda dapat melakukan pengunggahan informasi, foto, video, konten, penilaian, komentar dalam fitur produk review yang terdapat dalam Aplikasi, dimana hasil unggahan anda akan dapat dikonsumsi oleh pengguna Aplikasi lainnya. Anda dilarang untuk melakukan pengunggahan yang mengandung unsur suku, agama, ras dan antargolongan (“SARA”), pornografi, pelanggaran hak kekayaan intelektual. Kami berhak untuk melakukan penghapusan atau pemblokiran atas hasil unggahan anda apabila unggahan tersebut melanggar Ketentuan Penggunaan.\r\n\r\nAnda tidak diperkenankan untuk membahayakan, menyalahgunakan, mengubah atau memodifikasi Aplikasi dengan cara apapun. Kami berhak untuk menghentikan penggunaan atas akun Aplikasi anda lebih lanjut jika anda menggunakan Aplikasi tanpa mematuhi Ketentuan Penggunaan.\r\n\r\nAnda hanya diizinkan untuk menggunakan Aplikasi ini untuk mempergunakan Layanan yang disediakan dalam Aplikasi ini dan keperluan lain sesuai peraturan perundang-undangan yang berlaku. Untuk lebih tegasnya, anda dilarang menggunakan Aplikasi ini untuk melakukan penipuan dalam bentuk apapun dan/atau membuat ketidaknyamanan terhadap pihak lain maupun pihak yang menyediakan Layanan, menyalahgunakan segala informasi yang anda peroleh dari penggunaan Layanan, serta melakukan tindakan apapun yang melecehkan atau mengancam pihak yang menyediakan Layanan.\r\n\r\nInformasi yang diberikan oleh Kami dan/atau Mitra Kami tidak dapat diartikan sebagai suatu penawaran mengikat atau saran. Keputusan untuk menggunakan Layanan sepenuhnya berada dalam kekuasaan anda. Setiap hal yang anda putuskan dan/atau lakukan atas dasar kebergantungan pada informasi dalam Aplikasi ini merupakan risiko yang ditanggung oleh anda sendiri sepenuhnya.\r\n\r\nAnda memahami dan setuju bahwa penggunaan Aplikasi oleh anda tunduk pula pada Kebijakan Privasi Kami sebagaimana dapat diubah dari waktu ke waktu. Dengan menggunakan Aplikasi, anda dianggap memberikan persetujuan yang diatur dalam Kebijakan Privasi Kami.\r\n\r\nAnda dilarang menggunakan Layanan dalam Aplikasi untuk hal-hal yang dilarang oleh hukum dan peraturan perundang-undangan yang berlaku.');
+INSERT INTO `penggunaan_aplikasi` (`id`, `judul`, `penggunaan_aplikasi`) VALUES
+(1, 'Penggunaan Aplikasi', 'Anda menyatakan dan menjamin bahwa anda adalah individu yang secara hukum berhak dan cakap untuk mengadakan dan mengikatkan diri dalam perjanjian berdasarkan hukum Negara Republik Indonesia, khususnya Ketentuan Penggunaan, untuk menggunakan Aplikasi. Apabila ketentuan tersebut tidak terpenuhi, Kami atau afiliasi Kami atau Mitra Kami, berhak berdasarkan hukum untuk membatalkan setiap perjanjian yang dibuat dengan anda. Anda selanjutnya menyatakan dan menjamin bahwa anda memiliki hak, wewenang dan kapasitas untuk menggunakan Layanan dan mematuhi Ketentuan Penggunaan. Jika anda mendaftarkan untuk dan atas nama suatu institusi, anda juga menyatakan dan menjamin bahwa anda berwenang untuk bertindak untuk dan atas nama institusi tersebut dalam mengadakan serta mengikatkan institusi tersebut pada Ketentuan Penggunaan ini dan mendaftarkan institusi tersebut untuk penggunaan Layanan dalam\r\n\r\nKami mengumpulkan dan memproses informasi dan Data Pribadi anda seperti nama, alamat, nomor kartu identitas, nomor telepon, alamat surat elektronik, tanggal lahir dan lokasi anda ketika anda mendaftarkan diri pada Aplikasi. Anda wajib untuk memberikan informasi yang akurat dan lengkap serta memperbaharui informasi tersebut dari waktu ke waktu dan setuju untuk memberikan kepada Kami bukti identitas apapun yang secara wajar Kami minta agar Kami dapat menyediakan Layanan secara lengkap dan maksimal kepada anda.\r\n\r\nDalam hal terjadi pengungkapan kata sandi atas akun Aplikasi anda dengan cara apapun yang terjadi bukan atas kesalahan Kami dan mengakibatkan penggunaan yang tidak sah dan/atau tanpa kewenangan atas akun Aplikasi anda, permintaan informasi yang dilakukan melalui Aplikasi akan tetap dianggap sebagai permintaan yang sah kecuali anda memberitahu Kami tentang hal tersebut sebelum Kami memberikan Layanan yang diminta tersebut.\r\n\r\nAnda wajib melaporkan kepada Kami bila anda kehilangan kendali atas akun Aplikasi anda. Anda bertanggung jawab atas setiap penggunaan akun Aplikasi anda meskipun jika akun tersebut telah disalahgunakan oleh pihak lain.\r\n\r\nAnda dapat melakukan pengunggahan informasi, foto, video, konten, penilaian, komentar dalam fitur produk review yang terdapat dalam Aplikasi, dimana hasil unggahan anda akan dapat dikonsumsi oleh pengguna Aplikasi lainnya. Anda dilarang untuk melakukan pengunggahan yang mengandung unsur suku, agama, ras dan antargolongan (“SARA”), pornografi, pelanggaran hak kekayaan intelektual. Kami berhak untuk melakukan penghapusan atau pemblokiran atas hasil unggahan anda apabila unggahan tersebut melanggar Ketentuan Penggunaan.\r\n\r\nAnda tidak diperkenankan untuk membahayakan, menyalahgunakan, mengubah atau memodifikasi Aplikasi dengan cara apapun. Kami berhak untuk menghentikan penggunaan atas akun Aplikasi anda lebih lanjut jika anda menggunakan Aplikasi tanpa mematuhi Ketentuan Penggunaan.\r\n\r\nAnda hanya diizinkan untuk menggunakan Aplikasi ini untuk mempergunakan Layanan yang disediakan dalam Aplikasi ini dan keperluan lain sesuai peraturan perundang-undangan yang berlaku. Untuk lebih tegasnya, anda dilarang menggunakan Aplikasi ini untuk melakukan penipuan dalam bentuk apapun dan/atau membuat ketidaknyamanan terhadap pihak lain maupun pihak yang menyediakan Layanan, menyalahgunakan segala informasi yang anda peroleh dari penggunaan Layanan, serta melakukan tindakan apapun yang melecehkan atau mengancam pihak yang menyediakan Layanan.\r\n\r\nInformasi yang diberikan oleh Kami dan/atau Mitra Kami tidak dapat diartikan sebagai suatu penawaran mengikat atau saran. Keputusan untuk menggunakan Layanan sepenuhnya berada dalam kekuasaan anda. Setiap hal yang anda putuskan dan/atau lakukan atas dasar kebergantungan pada informasi dalam Aplikasi ini merupakan risiko yang ditanggung oleh anda sendiri sepenuhnya.\r\n\r\nAnda memahami dan setuju bahwa penggunaan Aplikasi oleh anda tunduk pula pada Kebijakan Privasi Kami sebagaimana dapat diubah dari waktu ke waktu. Dengan menggunakan Aplikasi, anda dianggap memberikan persetujuan yang diatur dalam Kebijakan Privasi Kami.\r\n\r\nAnda dilarang menggunakan Layanan dalam Aplikasi untuk hal-hal yang dilarang oleh hukum dan peraturan perundang-undangan yang berlaku.');
 
 -- --------------------------------------------------------
 
@@ -269,15 +270,16 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `personal_access_tokens`
 --
 
 INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `name`, `token`, `abilities`, `last_used_at`, `created_at`, `updated_at`) VALUES
-(1, 'App\\User', 1, 'Login Token', '602619b4fa4fd9f2330e0078b2bfd5d8031e7c593ad8e583a3b134f235914578', '[\"*\"]', '2021-12-22 10:42:06', '2021-11-12 20:29:01', '2021-12-22 10:42:06'),
-(2, 'App\\User', 2, 'Register Token', '95cc4db4acccc3f1495cffc94f1b6cb5fad5eace400dc23edb686cb1ae1ebeca', '[\"*\"]', NULL, '2021-11-12 22:22:51', '2021-11-12 22:22:51');
+(1, 'App\\User', 1, 'Login Token', '602619b4fa4fd9f2330e0078b2bfd5d8031e7c593ad8e583a3b134f235914578', '[\"*\"]', '2021-12-23 05:27:22', '2021-11-12 20:29:01', '2021-12-23 05:27:22'),
+(2, 'App\\User', 2, 'Register Token', '95cc4db4acccc3f1495cffc94f1b6cb5fad5eace400dc23edb686cb1ae1ebeca', '[\"*\"]', NULL, '2021-11-12 22:22:51', '2021-11-12 22:22:51'),
+(3, 'App\\User', 2, 'Register Token', '8ebc5f4e6595df0d4ee82e014719c04d0e326e51cb98417d2b7a32d5097dc45f', '[\"*\"]', NULL, '2021-12-23 06:01:52', '2021-12-23 06:01:52');
 
 -- --------------------------------------------------------
 
@@ -407,15 +409,7 @@ CREATE TABLE IF NOT EXISTS `report_bugs` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `report_bugs`
---
-
-INSERT INTO `report_bugs` (`id`, `id_user`, `report_bug`, `created_at`, `updated_at`) VALUES
-(1, 2, 'Pada rekomendasi makanan terdapat bug', '2021-12-02 07:26:22', '2021-12-02 07:26:22'),
-(2, 2, 'Bug pada laporan bug', '2021-12-02 07:27:00', '2021-12-02 07:27:00');
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -425,16 +419,18 @@ INSERT INTO `report_bugs` (`id`, `id_user`, `report_bug`, `created_at`, `updated
 
 DROP TABLE IF EXISTS `tentang_kami`;
 CREATE TABLE IF NOT EXISTS `tentang_kami` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `judul` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tentang_kami` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `tentang_kami` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `tentang_kami`
 --
 
-INSERT INTO `tentang_kami` (`judul`, `tentang_kami`) VALUES
-('Tentang Kami', 'Kesehatan tubuh manusia akan selalu berubah, dan penyebabnya selalu karena pola makan. karena itulah Calorilin ada.\r\nMenjadi platform dan karya anak bangsa.\r\nMemberi kemudahan pada pengguna dalam memngelola pola makan.\r\n\r\nSekarang adalah masa dimana era digital semakin berkembang.\r\nsegala aktivitas manusia semakin mudah karena teknologi.\r\n\r\nMari menjadi pelopor pola hidup sehat.\r\nBerkiblat pada nilai kesehatan makanan dan nilai kemudahan, mendorong setiap orang agar dapat hidup sehat.\r\n\r\nSemoga apa yang tersaji di Calorilin ikut memberi kemudahan dan manfaat bagi setiap orang yang menggunakannya.\r\n\r\nSalam kami,\r\n\r\nTim Calorilin');
+INSERT INTO `tentang_kami` (`id`, `judul`, `tentang_kami`) VALUES
+(1, 'Tentang Kami', 'Kesehatan tubuh manusia akan selalu berubah, dan penyebabnya selalu karena pola makan. karena itulah Calorilin ada.\r\nMenjadi platform dan karya anak bangsa.\r\nMemberi kemudahan pada pengguna dalam memngelola pola makan.\r\n\r\nSekarang adalah masa dimana era digital semakin berkembang.\r\nsegala aktivitas manusia semakin mudah karena teknologi.\r\n\r\nMari menjadi pelopor pola hidup sehat.\r\nBerkiblat pada nilai kesehatan makanan dan nilai kemudahan, mendorong setiap orang agar dapat hidup sehat.\r\n\r\nSemoga apa yang tersaji di Calorilin ikut memberi kemudahan dan manfaat bagi setiap orang yang menggunakannya.\r\n\r\nSalam kami,\r\n\r\nTim Calorilin');
 
 -- --------------------------------------------------------
 
@@ -455,14 +451,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `check`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Calorilin', 'admin@admin.com', NULL, '$2y$10$ta7DD3Y6OZLIyj9zBDNgHur5tpTvSGuuwnIJMghhYZnn3tJzD5pgy', 1, NULL, '2021-11-12 08:57:27', '2021-12-05 08:14:17');
+(1, 'Calorilin', 'admin@admin.com', NULL, '$2y$10$ta7DD3Y6OZLIyj9zBDNgHur5tpTvSGuuwnIJMghhYZnn3tJzD5pgy', 1, NULL, '2021-11-12 08:57:27', '2021-12-05 08:14:17'),
+(2, 'Calorilin Test', 'calorilintest@gmail.com', NULL, '$2y$10$Aw5k.0e/2B/dvwa9gO85L.M19XLB.BXEYXOXUPlQ12r28b4Nsjok2', 0, NULL, '2021-12-23 06:01:52', '2021-12-23 06:01:52');
 
 -- --------------------------------------------------------
 
@@ -490,14 +487,15 @@ CREATE TABLE IF NOT EXISTS `user_details` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_details_id_user_foreign` (`id_user`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `user_details`
 --
 
 INSERT INTO `user_details` (`id`, `id_user`, `born_date`, `phone_number`, `image`, `body_mass_index`, `weight`, `height`, `tension`, `cholesterol`, `diabetes`, `uric_acid`, `stomach_acid`, `hyper_tension`, `created_at`, `updated_at`) VALUES
-(1, 1, '2021-12-12', '08xxx', 'calorilin.jpeg', 'Berat Badan Kurang', 55.00, 175.00, '130/85', 1, 1, 0, 1, 0, '2021-11-12 09:49:19', '2021-11-29 01:22:21');
+(1, 1, '2021-12-12', '08xxx', 'calorilin.jpeg', 'Berat Badan Kurang', 55.00, 175.00, '130/85', 1, 1, 0, 1, 0, '2021-11-12 09:49:19', '2021-11-29 01:22:21'),
+(2, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-12-23 06:01:52', '2021-12-23 06:01:52');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
