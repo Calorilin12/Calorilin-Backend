@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\FoodMaterial;
-use App\Recipe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class FavoriteController extends Controller
 {
     public function search_favorite(Request $request){
-        $recipes = Recipe::where('name', 'LIKE', "%" . $request->name . "%")->get();
+        $recipes = DB::table('recipes')->where('name', 'LIKE', "%" . $request->name . "%")->get();
 
-        $food_materials = FoodMaterial::where('name', 'LIKE', "%" . $request->name . "%")->get();
+        $food_materials = DB::table('food_materials')->where('name', 'LIKE', "%" . $request->name . "%")->get();
         
         return response()->json(["recipes" => $recipes, "food_materials" => $food_materials], 200);
     }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Recipe;
-use App\RecipeDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -53,7 +52,7 @@ class RecipeController extends Controller
                 $nama_file = null;
             }
 
-            RecipeDetail::create([
+            DB::table('recipe_details')->insert([
                 'id_recipe' => $recipe->id,
                 'short_description' => $request->short_description,
                 'recipe_image' => $nama_file,
@@ -84,16 +83,15 @@ class RecipeController extends Controller
 
         if (Gate::allows('admin-only')) {
             // Hanya User dengan role admin yang dapat mengakses ini
-            Recipe::find($id)
-                ->update([
+            DB::table('recipes')->where('id', $id)->update([
                     'name' => $request->name,
                     'made_by' => $request->made_by,
                     'level_of_difficult' => $request->level_of_difficult,
                     'category' => $request->category,
                     'publish-date' => $request->publish_date
-                ]);
+            ]);
 
-            $recipe_details = RecipeDetail::find($id);
+            $recipe_details = DB::table('recipe_details')->where('id', $id)->first();
 
             if ($request->file('recipe_image') != null) {
                 File::delete('recipe-detail-images/' . $recipe_details->recipe_image);
@@ -106,7 +104,7 @@ class RecipeController extends Controller
                 $nama_file = $recipe_details->recipe_image;
             }
 
-            RecipeDetail::find($id)
+            DB::table('recipe_details')->where('id', $id)
                 ->update([
                     'short_description' => $request->short_description,
                     'recipe_image' => $nama_file,
@@ -132,8 +130,8 @@ class RecipeController extends Controller
 
         if (Gate::allows('admin-only')) {
             // Hanya User dengan role admin yang dapat mengakses ini
-            Recipe::find($id)->delete();
-            $recipe_details = RecipeDetail::find($id);
+            DB::table('recipes')->where('id', $id)->delete();
+            $recipe_details = DB::table('recipe_details')->where('id', $id)->first();
             File::delete('recipe-detail-images/' . $recipe_details->recipe_image);
             $recipe_details->delete();
 
@@ -177,7 +175,7 @@ class RecipeController extends Controller
 
     public function recipes_find_by_name(Request $request)
     {
-        $recipes = Recipe::where('name', 'LIKE', "%" . $request->name . "%")->get();
+        $recipes = DB::table('recipes')->where('name', 'LIKE', "%" . $request->name . "%")->get();
 
         return response()->json($recipes, 200);
     }

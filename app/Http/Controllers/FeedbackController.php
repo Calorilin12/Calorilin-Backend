@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Feedback;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class FeedbackController extends Controller
 {
     public function feedback_write($id_user, Request $request)
     {
-        Feedback::create([
+        DB::table('feedbacks')->insert([
             'id_user' => $id_user,
             'feedback' => $request->feedback,
         ]);
@@ -22,7 +22,7 @@ class FeedbackController extends Controller
     {
         if (Gate::allows('admin-only')) {
             // Hanya User dengan role admin yang dapat mengakses ini
-            $feedbacks = Feedback::all();
+            $feedbacks = DB::table('feedbacks')->get();
 
             return response()->json($feedbacks, 200);
         }
@@ -33,7 +33,7 @@ class FeedbackController extends Controller
     {
         if (Gate::allows('admin-only')) {
             // Hanya User dengan role admin yang dapat mengakses ini
-            Feedback::find($id)->delete();
+            DB::table('feedbacks')->where('id', $id)->delete();
 
             return response()->json(["message" => "Feedback deleted"], 201);
         }

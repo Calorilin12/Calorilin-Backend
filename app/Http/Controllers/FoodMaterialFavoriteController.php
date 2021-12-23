@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\ControlCalory;
-use App\FoodMaterial;
-use App\FoodMaterialFavorite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -13,13 +10,13 @@ class FoodMaterialFavoriteController extends Controller
 {
     public function food_material_favorites($id_user, $id_food_material, Request $request)
     {
-        FoodMaterialFavorite::create([
+        DB::table('food_material_favorites')->insert([
             'id_user' => $id_user,
             'id_food_material' => $id_food_material,
             'time_show' => $request->time_show,
         ]);
 
-        $food_material = FoodMaterial::find($id_food_material);
+        $food_material = DB::table('food_material_favorites')->where('id', $id_food_material)->first();
 
         $control_calory = DB::table('control_calories')
             ->where('id_user', '=', $id_user)
@@ -27,8 +24,7 @@ class FoodMaterialFavoriteController extends Controller
 
         $total_calory = $food_material->calory + $control_calory->user_calory;
 
-        ControlCalory::where('id_user', '=', $id_user)
-            ->first()
+        DB::table('control_calories')->where('id_user', '=', $id_user)
             ->update([
                 'user_calory' => $total_calory,
             ]);
@@ -65,9 +61,9 @@ class FoodMaterialFavoriteController extends Controller
 
     public function food_material_favorites_delete($id)
     {
-        $food_material_favorite = FoodMaterialFavorite::find($id);
+        $food_material_favorite = DB::table('food_material_favorites')->where('id', $id)->first();
 
-        $food_material = FoodMaterial::find($food_material_favorite->id_food_material);
+        $food_material = DB::table('food_materials')->where('id', $food_material_favorite->id_food_material)->first();
 
         $control_calory = DB::table('control_calories')
             ->where('id_user', '=', $food_material_favorite->id_user)
@@ -75,7 +71,7 @@ class FoodMaterialFavoriteController extends Controller
 
         $total_calory = $control_calory->user_calory - $food_material->calory;
 
-        ControlCalory::where('id_user', '=', $food_material_favorite->id_user)
+        DB::table('control_calories')->where('id_user', '=', $food_material_favorite->id_user)
             ->first()
             ->update([
                 'user_calory' => $total_calory,

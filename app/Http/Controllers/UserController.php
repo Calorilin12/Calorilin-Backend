@@ -2,12 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\ControlCalory;
-use App\DailyHealthy;
-use App\FoodMaterialFavorite;
-use App\RecipeFavorite;
-use App\User;
-use App\UserDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -41,7 +35,7 @@ class UserController extends Controller
 
     public function users_update($id, Request $request)
     {
-        User::find($id)
+        DB::table('users')->where('id', $id)
             ->update([
                 'name' => $request->name,
                 'email' => $request->email,
@@ -52,7 +46,7 @@ class UserController extends Controller
 
     public function users_update_password($id, Request $request)
     {
-        $userLama = User::find($id);
+        $userLama = DB::table('users')->where('id', $id)->first();
 
         if (Hash::check($request->passwordLama, $userLama->password) == true) {
             DB::table('users')->where('id', $id)
@@ -70,19 +64,19 @@ class UserController extends Controller
     {
         if (Gate::allows('admin-only')) {
             // Hanya User dengan role admin yang dapat mengakses ini
-            User::find($id)->delete();
-            $user_details = UserDetail::find($id);
+            DB::table('users')->where('id', $id)->delete();
+            $user_details = DB::table('user_detailss')->where('id', $id)->first();
             File::delete('user-detail-images/' . $user_details->image);
             $user_details->delete();
-            ControlCalory::where('id_user', '=', $id)->delete();
-            DailyHealthy::where('id_user', '=', $id)->delete();
+            DB::table('control_calories')->where('id_user', '=', $id)->delete();
+            DB::table('daily_healthy')->where('id_user', '=', $id)->delete();
 
             if (DB::table('food_material_favorites')->where('id_user', '=', $id)->first()) {
-                FoodMaterialFavorite::where('id_user', '=', $id)->delete();
+                DB::table('food_material_favorites')->where('id_user', '=', $id)->delete();
             }
             
             if (DB::table('recipe_favorites')->where('id_user', '=', $id)->first()) {
-                RecipeFavorite::where('id_user', '=', $id)->delete();
+                DB::table('recipe_favorites')->where('id_user', '=', $id)->delete();
             }
 
             return response()->json(["message" => "User telah dihapus"], 201);

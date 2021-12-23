@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\UserDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 class UserDetailController extends Controller
 {
     public function user_details_update($id, Request $request)
     {
-        $user = UserDetail::find($id);
+        $user = DB::table('user_details')->where('id', $id)->first();
         File::delete('user-detail-images/' . $user->image);
         
         if ($request->file('image') != null) {
@@ -22,7 +22,7 @@ class UserDetailController extends Controller
             $nama_file = $user->image;
         }
 
-        UserDetail::find($id)
+        DB::table('user_details')->where('id', $id)
             ->update([
                 'id_user' => $id,
                 'born_date' => $request->born_date,
@@ -42,16 +42,16 @@ class UserDetailController extends Controller
 
         $body_mass_index_count = ($request->weight / $tinggi_badan_kuadrat);
         if ($body_mass_index_count < 18.5) {
-            UserDetail::find($id)->update(['body_mass_index' => "Kurus"]);
+            DB::table('user_details')->where('id', $id)->update(['body_mass_index' => "Kurus"]);
         } else if (($body_mass_index_count >= 18.5) && ($body_mass_index_count <= 22.9)) {
-            UserDetail::find($id)->update(['body_mass_index' => "Ideal"]);
+            DB::table('user_details')->where('id', $id)->update(['body_mass_index' => "Ideal"]);
         } else if (($body_mass_index_count >= 23) && ($body_mass_index_count <= 29.9)) {
-            UserDetail::find($id)->update(['body_mass_index' => "Gemuk"]);
+            DB::table('user_details')->where('id', $id)->update(['body_mass_index' => "Gemuk"]);
         } else if ($body_mass_index_count >= 30) {
-            UserDetail::find($id)->update(['body_mass_index' => "Obesitas"]);
+            DB::table('user_details')->where('id', $id)->update(['body_mass_index' => "Obesitas"]);
         }
 
-        $userss = UserDetail::find($id);
+        $userss = DB::table('user_details')->where('id', $id)->first();
 
         return response()->json(["message" => "User Detail berhasil diubah", "data" => $userss], 201);
     }

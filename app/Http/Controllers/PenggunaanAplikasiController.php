@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\PenggunaanAplikasi;
+use Illuminate\Support\Facades\DB;
 
 class PenggunaanAplikasiController extends Controller
 {
     public function penggunaan_aplikasi(){
-        $penggunaan_aplikasi = PenggunaanAplikasi::find(1);
+        $penggunaan_aplikasi = DB::table('penggunaan_aplikasi')->where('id', 1)->first();
 
         return response($penggunaan_aplikasi, 200);
     }

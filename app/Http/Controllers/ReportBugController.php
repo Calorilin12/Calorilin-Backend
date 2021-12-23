@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\ReportBug;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class ReportBugController extends Controller
 {
     public function report_bug_write($id_user, Request $request)
     {
-        ReportBug::create([
+        DB::table('report_bugs')->insert([
             'id_user' => $id_user,
             'report_bug' => $request->report_bug,
         ]);
@@ -22,7 +22,7 @@ class ReportBugController extends Controller
     {
         if (Gate::allows('admin-only')) {
             // Hanya User dengan role admin yang dapat mengakses ini
-            $report_bugs = ReportBug::all();
+            $report_bugs = DB::table('report_bugs')->get();
 
             return response()->json($report_bugs, 200);
         }
@@ -33,7 +33,7 @@ class ReportBugController extends Controller
     {
         if (Gate::allows('admin-only')) {
             // Hanya User dengan role admin yang dapat mengakses ini
-            ReportBug::find($id)->delete();
+            DB::table('report_bugs')->where('id', $id)->delete();
 
             return response()->json(["message" => "Report deleted"], 201);
         }

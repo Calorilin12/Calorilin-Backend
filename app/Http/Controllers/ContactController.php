@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class ContactController extends Controller
 {
     public function contact_write(Request $request)
     {
-        Contact::create([
+        DB::table('contacts')->insert([
             'name' => $request->name,
             'email' => $request->email,
             'phone_number' => $request->phone_number,
@@ -23,7 +23,7 @@ class ContactController extends Controller
     public function contact_all(){
         if (Gate::allows('admin-only')) {
             // Hanya User dengan role admin yang dapat mengakses ini
-            $contacts = Contact::all();
+            $contacts = DB::table('contacts')->get();
 
             return response()->json($contacts, 200);
         }
@@ -34,7 +34,7 @@ class ContactController extends Controller
     {
         if (Gate::allows('admin-only')) {
             // Hanya User dengan role admin yang dapat mengakses ini
-            Contact::find($id)->delete();
+            DB::table('contacts')->where('id', $id)->delete();
 
             return response()->json(["message" => "Message deleted"], 201);
         }
