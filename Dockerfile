@@ -26,8 +26,8 @@ RUN chown -R php:nginx /www \
     && find /www -type f -exec chmod -R 444 {} \; \
     && find /www/public -type d -exec chmod -R 777 {} \; \
     && find /www/public -type f -exec chmod -R 777 {} \; \
-    && find /www/storage /www/bootstrap/cache -type d -exec chmod -R 755 {} \; \
-    && find /www/storage /www/bootstrap/cache -type f -exec chmod -R 644 {} \;
+    && find /www/storage /www/bootstrap/cache -type d -exec chmod -R 777 {} \; \
+    && find /www/storage /www/bootstrap/cache -type f -exec chmod -R 777 {} \;
 
 # Initialize app
 RUN composer install --no-dev --no-scripts --no-progress \
