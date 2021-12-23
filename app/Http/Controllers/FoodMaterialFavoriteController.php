@@ -90,7 +90,8 @@ class FoodMaterialFavoriteController extends Controller
     {
         $query1 = DB::table('food_material_favorites')
             ->leftJoin('food_materials', 'food_materials.id', '=', 'food_material_favorites.id_food_material')
-            ->where('food_material_favorites.id_user', '=', $id_user);
+            ->where('food_material_favorites.id_user', '=', $id_user)
+            ->select('food_material_favorites.id', 'food_material_favorites.id_user', 'food_material_favorites.id_food_material', 'food_material_favorites.time_show', 'food_materials.name', 'food_materials.serve', 'food_materials.type', 'food_materials.image', 'food_materials.fat', 'food_materials.carbo', 'food_materials.protein', 'food_materials.calory');
 
         if ($request->time_show == "Pagi") {
             $query1 = $query1->where('food_material_favorites.time_show', '=', "Pagi");
