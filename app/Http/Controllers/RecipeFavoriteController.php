@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\ControlCalory;
-use App\RecipeDetail;
-use App\RecipeFavorite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;

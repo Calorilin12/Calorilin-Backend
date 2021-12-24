@@ -20,8 +20,8 @@ class CreateUserDetailTable extends Migration
             $table->string('phone_number')->nullable();
             $table->string('image')->nullable();
             $table->string('body_mass_index')->nullable();
-            $table->float('weight')->nullable();
-            $table->float('height')->nullable();
+            $table->float('weight', 6, 2)->nullable();
+            $table->float('height', 5, 2)->nullable();
             $table->string('tension')->nullable();
             $table->boolean('cholesterol')->nullable();
             $table->boolean('diabetes')->nullable();

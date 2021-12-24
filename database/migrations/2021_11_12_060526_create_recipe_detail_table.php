@@ -20,7 +20,7 @@ class CreateRecipeDetailTable extends Migration
             $table->string('recipe_image')->nullable();
             $table->integer('duration');
             $table->integer('total_eater');
-            $table->integer('total_calory');
+            $table->float('total_calory', 6, 2);
             $table->longText('compositions');
             $table->longText('steps_of_make');
             $table->boolean('cholesterol');

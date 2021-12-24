@@ -19,10 +19,10 @@ class CreateFoodMaterialsTable extends Migration
             $table->string('serve');
             $table->string('type')->nullable();
             $table->string('image')->nullable();
-            $table->float('fat');
-            $table->float('carbo');
-            $table->float('calory');
-            $table->float('protein');
+            $table->float('fat', 5, 2);
+            $table->float('carbo', 5, 2);
+            $table->float('calory', 5, 2);
+            $table->float('protein', 5, 2);
             $table->timestamps();
         });
     }
