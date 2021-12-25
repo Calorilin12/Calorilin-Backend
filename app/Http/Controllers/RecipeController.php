@@ -149,23 +149,23 @@ class RecipeController extends Controller
         $diseases = explode(',', $request->disease);
 
         if (in_array("Cholesterol", $diseases)) {
-            $query = $query->where('recipe_details.cholesterol', '=', 1);
+            $query = $query->where('recipe_details.cholesterol', '!=', 1);
         }
 
         if (in_array("Diabetes", $diseases)) {
-            $query = $query->where('recipe_details.diabetes', '=', 1);
+            $query = $query->where('recipe_details.diabetes', '!=', 1);
         }
 
         if (in_array("Asam Urat", $diseases)) {
-            $query = $query->where('recipe_details.uric_acid', '=', 1);
+            $query = $query->where('recipe_details.uric_acid', '!=', 1);
         }
 
         if (in_array("Asam Lambung", $diseases)) {
-            $query = $query->where('recipe_details.stomach_acid', '=', 1);
+            $query = $query->where('recipe_details.stomach_acid', '!=', 1);
         }
 
         if (in_array("Hipertensi", $diseases)) {
-            $query = $query->where('recipe_details.hyper_tension', '=', 1);
+            $query = $query->where('recipe_details.hyper_tension', '!=', 1);
         }
 
         $recipes = $query->get();
