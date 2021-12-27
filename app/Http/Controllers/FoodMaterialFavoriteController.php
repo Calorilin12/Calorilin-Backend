@@ -46,17 +46,13 @@ class FoodMaterialFavoriteController extends Controller
 
     public function food_material_favorites_all()
     {
-        if (Gate::allows('admin-only')) {
-            // Hanya User dengan role admin yang dapat mengakses ini
-            $food_material_favorites = DB::table('food_material_favorites')
-                ->leftJoin('users', 'users.id', 'food_material_favorites.id_user',)
-                ->leftJoin('food_materials', 'food_materials.id', 'food_material_favorites.id_food_material')
-                ->select('food_material_favorites.id', 'food_material_favorites.id_user', 'users.name AS username', 'food_materials.name', 'food_materials.calory')
-                ->get();
+        $food_material_favorites = DB::table('food_material_favorites')
+            ->leftJoin('users', 'users.id', 'food_material_favorites.id_user',)
+            ->leftJoin('food_materials', 'food_materials.id', 'food_material_favorites.id_food_material')
+            ->select('food_material_favorites.id', 'food_material_favorites.id_user', 'users.name AS username', 'food_materials.name', 'food_materials.calory')
+            ->get();
 
-            return response()->json(["data" => $food_material_favorites], 200);
-        }
-        return response()->json(["message" => "Anda tidak memiliki akses"], 403);
+        return response()->json(["data" => $food_material_favorites], 200);
     }
 
     public function food_material_favorites_delete($id)
