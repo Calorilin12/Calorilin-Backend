@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3308
--- Generation Time: Dec 25, 2021 at 07:26 PM
+-- Generation Time: Dec 27, 2021 at 12:16 AM
 -- Server version: 8.0.21
 -- PHP Version: 7.4.9
 
@@ -277,7 +277,7 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
 --
 
 INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `name`, `token`, `abilities`, `last_used_at`, `created_at`, `updated_at`) VALUES
-(1, 'App\\User', 1, 'Login Token', '602619b4fa4fd9f2330e0078b2bfd5d8031e7c593ad8e583a3b134f235914578', '[\"*\"]', '2021-12-23 07:01:10', '2021-11-12 20:29:01', '2021-12-23 07:01:10'),
+(1, 'App\\User', 1, 'Login Token', '602619b4fa4fd9f2330e0078b2bfd5d8031e7c593ad8e583a3b134f235914578', '[\"*\"]', '2021-12-25 19:30:20', '2021-11-12 20:29:01', '2021-12-25 19:30:20'),
 (2, 'App\\User', 2, 'Register Token', '95cc4db4acccc3f1495cffc94f1b6cb5fad5eace400dc23edb686cb1ae1ebeca', '[\"*\"]', NULL, '2021-11-12 22:22:51', '2021-11-12 22:22:51'),
 (3, 'App\\User', 2, 'Register Token', '8ebc5f4e6595df0d4ee82e014719c04d0e326e51cb98417d2b7a32d5097dc45f', '[\"*\"]', NULL, '2021-12-23 06:01:52', '2021-12-23 06:01:52');
 
