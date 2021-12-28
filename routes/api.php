@@ -89,9 +89,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/control-calory', [ControlCaloryController::class, 'control_calories_all']);
     //Gate::allows('admin-only')
 
-    //Gate::allows('admin-only')
     Route::get('/dashboard', [DashboardController::class, 'dashboard']);
-    //Gate::allows('admin-only')
 
     Route::get('/daily-healthy-activity/{id_user}', [DailyHealthyController::class, 'daily_healthy_activity']);
     Route::put('/daily-healthy-activity-push-up/{id_user}', [DailyHealthyController::class, 'daily_healthy_activity_push_up']);
