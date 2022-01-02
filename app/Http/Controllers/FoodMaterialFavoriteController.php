@@ -16,7 +16,7 @@ class FoodMaterialFavoriteController extends Controller
             'time_show' => $request->time_show,
         ]);
 
-        $food_material = DB::table('food_material_favorites')->where('id', $id_food_material)->first();
+        $food_material = DB::table('food_materials')->where('id', $id_food_material)->first();
 
         $control_calory = DB::table('control_calories')
             ->where('id_user', '=', $id_user)
@@ -68,12 +68,11 @@ class FoodMaterialFavoriteController extends Controller
         $total_calory = $control_calory->user_calory - $food_material->calory;
 
         DB::table('control_calories')->where('id_user', '=', $food_material_favorite->id_user)
-            ->first()
             ->update([
                 'user_calory' => $total_calory,
             ]);
 
-        $food_material_favorite->delete();
+        DB::table('food_material_favorites')->where('id', $id)->delete();
 
         return response()->json(["message" => "Food Material berhasil dihapus"], 201);
     }
