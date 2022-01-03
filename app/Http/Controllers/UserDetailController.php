@@ -11,9 +11,9 @@ class UserDetailController extends Controller
     public function user_details_update($id, Request $request)
     {
         $user = DB::table('user_details')->where('id', $id)->first();
-        File::delete('user-detail-images/' . $user->image);
         
         if ($request->file('image') != null) {
+            File::delete('user-detail-images/' . $user->image);
             $file = $request->file('image');
             $nama_file = $file->getClientOriginalName();
             $tujuan_upload = 'user-detail-images';

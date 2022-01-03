@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ControlCaloryController;
 use App\Http\Controllers\DashboardController;
@@ -117,6 +118,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/contacts', [ContactController::class, 'contact_all']);
     Route::delete('/contact/{id}', [ContactController::class, 'contact_delete']);
     //Gate::allows('admin-only')
+
+    //Gate::allows('admin-only')
+    Route::post('/article', [ArticleController::class, 'create_article']);
+    Route::delete('/article/{id}', [ArticleController::class, 'article_delete']);
+    Route::put('/article/{id}', [ArticleController::class, 'article_update']);
+    //Gate::allows('admin-only')
+    Route::get('/article/{id}', [ArticleController::class, 'article_show']);
+
+    
 });
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
