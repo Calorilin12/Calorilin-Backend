@@ -22,8 +22,7 @@ class UserDetailController extends Controller
             $nama_file = $user->image;
         }
 
-        DB::table('user_details')->where('id', $id)
-            ->update([
+        DB::table('user_details')->where('id', $id)->update([
                 'id_user' => $id,
                 'born_date' => $request->born_date,
                 'phone_number' => $request->phone_number,
@@ -36,7 +35,7 @@ class UserDetailController extends Controller
                 'uric_acid' => $request->uric_acid,
                 'stomach_acid' => $request->stomach_acid,
                 'hyper_tension' => $request->hyper_tension,
-            ]);
+        ]);
         
         $tinggi_badan_kuadrat = ((($request->height / 100)) * (($request->height / 100)));
 
@@ -54,5 +53,21 @@ class UserDetailController extends Controller
         $userss = DB::table('user_details')->where('id', $id)->first();
 
         return response()->json(["message" => "User Detail berhasil diubah", "data" => $userss], 201);
+    }
+
+    public function user_details_update_image($id, Request $request){
+        $user = DB::table('user_details')->where('id', $id)->first();
+
+        File::delete('user-detail-images/' . $user->image);
+        $file = $request->file('image');
+        $nama_file = $file->getClientOriginalName();
+        $tujuan_upload = 'user-detail-images';
+        $file->move($tujuan_upload, $nama_file);
+
+        DB::table('user_details')->where('id', $id)->update([
+            'image' => $nama_file,
+        ]);
+
+        return response()->json(["message" => "Foto berhasil diubah"], 201);
     }
 }

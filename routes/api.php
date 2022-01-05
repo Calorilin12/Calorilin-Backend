@@ -41,6 +41,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::put('/user-details/{id}', [UserDetailController::class, 'user_details_update']);
+    Route::put('/user-details-image/{id}', [UserDetailController::class, 'user_details_update_image']);
 
     Route::get('/users/{id}', [UserController::class, 'users_find']);
     Route::put('/users/{id}', [UserController::class, 'users_update']);
@@ -126,7 +127,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //Gate::allows('admin-only')
     Route::get('/article/{id}', [ArticleController::class, 'article_show']);
     Route::get('/article', [ArticleController::class, 'article_all']);
-    
 });
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
