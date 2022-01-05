@@ -125,7 +125,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/article/{id}', [ArticleController::class, 'article_update']);
     //Gate::allows('admin-only')
     Route::get('/article/{id}', [ArticleController::class, 'article_show']);
-
+    Route::get('/article', [ArticleController::class, 'article_all']);
     
 });
 
