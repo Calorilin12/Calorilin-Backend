@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3308
--- Generation Time: Jan 05, 2022 at 07:17 AM
+-- Generation Time: Jan 06, 2022 at 01:47 AM
 -- Server version: 8.0.21
 -- PHP Version: 7.4.9
 
@@ -31,7 +31,7 @@ DROP TABLE IF EXISTS `articles`;
 CREATE TABLE IF NOT EXISTS `articles` (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `content` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `writer` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `article_image` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -297,7 +297,7 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
 INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `name`, `token`, `abilities`, `last_used_at`, `created_at`, `updated_at`) VALUES
 (1, 'App\\User', 1, 'Login Token', '602619b4fa4fd9f2330e0078b2bfd5d8031e7c593ad8e583a3b134f235914578', '[\"*\"]', '2022-01-05 07:16:25', '2021-11-12 20:29:01', '2022-01-05 07:16:25'),
 (2, 'App\\User', 2, 'Register Token', '95cc4db4acccc3f1495cffc94f1b6cb5fad5eace400dc23edb686cb1ae1ebeca', '[\"*\"]', NULL, '2021-11-12 22:22:51', '2021-11-12 22:22:51'),
-(3, 'App\\User', 2, 'Register Token', '8ebc5f4e6595df0d4ee82e014719c04d0e326e51cb98417d2b7a32d5097dc45f', '[\"*\"]', NULL, '2021-12-23 06:01:52', '2021-12-23 06:01:52');
+(3, 'App\\User', 2, 'Register Token', '8ebc5f4e6595df0d4ee82e014719c04d0e326e51cb98417d2b7a32d5097dc45f', '[\"*\"]', '2022-01-05 08:58:06', '2021-12-23 06:01:52', '2022-01-05 08:58:06');
 
 -- --------------------------------------------------------
 
@@ -513,7 +513,7 @@ CREATE TABLE IF NOT EXISTS `user_details` (
 
 INSERT INTO `user_details` (`id`, `id_user`, `born_date`, `phone_number`, `image`, `body_mass_index`, `weight`, `height`, `tension`, `cholesterol`, `diabetes`, `uric_acid`, `stomach_acid`, `hyper_tension`, `created_at`, `updated_at`) VALUES
 (1, 1, '2021-12-12', '08xxx', 'calorilin.jpeg', 'Berat Badan Kurang', 55.00, 175.00, '130/85', 1, 1, 0, 1, 0, '2021-11-12 09:49:19', '2021-11-29 01:22:21'),
-(2, 2, '2001-09-15', '085157766074', 'funny-baby.jpeg', 'Ideal', 60.00, 180.00, '130/85', 1, 0, 0, 0, 1, '2021-12-23 06:01:52', '2021-12-23 06:01:52');
+(2, 2, '2001-09-15', '085157766074', 'susu.png', 'Ideal', 60.00, 180.00, '130/85', 1, 0, 0, 0, 1, '2021-12-23 06:01:52', '2021-12-23 06:01:52');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
