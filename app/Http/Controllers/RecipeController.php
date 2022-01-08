@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Recipe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -14,6 +13,7 @@ class RecipeController extends Controller
     {
         $recipes = DB::table('recipes')
             ->leftJoin('recipe_details', 'recipe_details.id_recipe', '=', 'recipes.id')
+            ->select('recipes.id', 'recipes.name', 'recipes.made_by', 'recipes.level_of_difficult', 'recipes.category', 'recipes.publish_date', 'recipe_details.short_description', 'recipe_details.recipe_image', 'recipe_details.duration', 'recipe_details.total_eater', 'recipe_details.total_calory', 'recipe_details.compositions', 'recipe_details.step_of_make', 'recipe_details.cholesterol', 'recipe_details.diabetes', 'recipe_details.stomach_acid', 'recipe_details.hyper_tension')
             ->get();
 
         return response()->json($recipes, 200);
@@ -23,6 +23,7 @@ class RecipeController extends Controller
     {
         $recipes = DB::table('recipes')
             ->leftJoin('recipe_details', 'recipe_details.id_recipe', '=', 'recipes.id')
+            ->select('recipes.id', 'recipes.name', 'recipes.made_by', 'recipes.level_of_difficult', 'recipes.category', 'recipes.publish_date', 'recipe_details.short_description', 'recipe_details.recipe_image', 'recipe_details.duration', 'recipe_details.total_eater', 'recipe_details.total_calory', 'recipe_details.compositions', 'recipe_details.step_of_make', 'recipe_details.cholesterol', 'recipe_details.diabetes', 'recipe_details.stomach_acid', 'recipe_details.hyper_tension')
             ->where('recipes.id', '=', $id)
             ->get();
 
@@ -31,11 +32,10 @@ class RecipeController extends Controller
 
     public function recipes_create(Request $request)
     {
-
         if (Gate::allows('admin-only')) {
             // Hanya User dengan role admin yang dapat mengakses ini
 
-            $recipe = Recipe::create([
+            DB::table('recipes')->insert([
                 'name' => $request->name,
                 'made_by' => $request->made_by,
                 'level_of_difficult' => $request->level_of_difficult,
@@ -51,6 +51,8 @@ class RecipeController extends Controller
             } else {
                 $nama_file = null;
             }
+
+            $recipe = DB::table('recipes')->select('id')->where('name', $request->name)->first();
 
             DB::table('recipe_details')->insert([
                 'id_recipe' => $recipe->id,
@@ -68,12 +70,7 @@ class RecipeController extends Controller
                 'stomach_acid' => $request->stomach_acid,
             ]);
 
-            $recipes = DB::table('recipes')
-                ->leftJoin('recipe_details', 'recipe_details.id_recipe', '=', 'recipes.id')
-                ->where('recipes.id', '=', $recipe->id)
-                ->get();
-
-            return response()->json(["message" => "Sukses membuat resep", "data" => $recipes], 201);
+            return response()->json(["message" => "Sukses membuat resep"], 201);
         }
         return response()->json(["message" => "Anda tidak memiliki akses"], 403);
     }
