@@ -13,7 +13,7 @@ class RecipeController extends Controller
     {
         $recipes = DB::table('recipes')
             ->leftJoin('recipe_details', 'recipe_details.id_recipe', '=', 'recipes.id')
-            ->select('recipes.id', 'recipes.name', 'recipes.made_by', 'recipes.level_of_difficult', 'recipes.category', 'recipes.publish_date', 'recipe_details.short_description', 'recipe_details.recipe_image', 'recipe_details.duration', 'recipe_details.total_eater', 'recipe_details.total_calory', 'recipe_details.compositions', 'recipe_details.step_of_make', 'recipe_details.cholesterol', 'recipe_details.diabetes', 'recipe_details.stomach_acid', 'recipe_details.hyper_tension')
+            ->select('recipes.id', 'recipes.name', 'recipes.made_by', 'recipes.level_of_difficult', 'recipes.category', 'recipes.publish_date', 'recipe_details.short_description', 'recipe_details.recipe_image', 'recipe_details.duration', 'recipe_details.total_eater', 'recipe_details.total_calory', 'recipe_details.compositions', 'recipe_details.steps_of_make', 'recipe_details.cholesterol', 'recipe_details.diabetes', 'recipe_details.stomach_acid', 'recipe_details.hyper_tension')
             ->get();
 
         return response()->json($recipes, 200);
@@ -81,11 +81,11 @@ class RecipeController extends Controller
         if (Gate::allows('admin-only')) {
             // Hanya User dengan role admin yang dapat mengakses ini
             DB::table('recipes')->where('id', $id)->update([
-                    'name' => $request->name,
-                    'made_by' => $request->made_by,
-                    'level_of_difficult' => $request->level_of_difficult,
-                    'category' => $request->category,
-                    'publish-date' => $request->publish_date
+                'name' => $request->name,
+                'made_by' => $request->made_by,
+                'level_of_difficult' => $request->level_of_difficult,
+                'category' => $request->category,
+                'publish-date' => $request->publish_date
             ]);
 
             $recipe_details = DB::table('recipe_details')->where('id', $id)->first();
@@ -116,7 +116,6 @@ class RecipeController extends Controller
                     'uric_acid' => $request->uric_acid,
                     'stomach_acid' => $request->stomach_acid,
                 ]);
-
             return response()->json(["message" => "Resep berhasil diubah"], 201);
         }
         return response()->json(["message" => "Anda tidak memiliki akses"], 403);
@@ -130,7 +129,7 @@ class RecipeController extends Controller
             DB::table('recipes')->where('id', $id)->delete();
             $recipe_details = DB::table('recipe_details')->where('id', $id)->first();
             File::delete('recipe-detail-images/' . $recipe_details->recipe_image);
-            $recipe_details->delete();
+            DB::table('recipe_details')->where('id', $id)->delete();
 
             return response()->json(["message" => "Resep telah dihapus"], 201);
         }
