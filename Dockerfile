@@ -1,4 +1,4 @@
-FROM existenz/webstack:7.3
+FROM existenz/webstack:7.4
 
 # Essentials
 RUN echo "UTC" > /etc/timezone
